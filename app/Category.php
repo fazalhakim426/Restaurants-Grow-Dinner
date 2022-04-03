@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     //
-    protected $fillable = [
-        "category_id",
+    protected $fillable = [ 
         "category_name",
     ];
     //
-    public function product()
+    public function resturants()
     {
-        return $this->hasMany('App\Product', 'category_id');
+        return $this->hasMany(Restaurant::class);
     }
+   
 }
