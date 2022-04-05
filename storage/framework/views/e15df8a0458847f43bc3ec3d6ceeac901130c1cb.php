@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
    <?php echo e(__('page-titles.login')); ?> | <?php echo e(config('app.name', 'Skote')); ?>
 

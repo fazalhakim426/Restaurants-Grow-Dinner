@@ -15,8 +15,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    { 
         $userList = Product::paginate(20);
         return response()->json($userList, 200);
     }

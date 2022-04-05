@@ -3,142 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-
+use App\Http\Requests\CustomerRequest;
+use App\Http\Requests\CustomerUpdateRequest;
+use App\Http\Resources\CustomerResource;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
-{
-    //
-
+{  
     public function index()
     {
-        $students = Customer::all();
-
+        $customer = Customer::all();     
         return response()->json([
             "success" => true,
-            "message" => "Student List",
-            "data" => $students
+            "message" => "Customer List",
+            "data" =>  CustomerResource::collection($customer)
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => ['required', 'string', 'email'],
-            'address' => 'required',
-            'rating' => 'required',
-            'balance' => 'required',
-            'date' => 'required'
-        ]);
-        // dd($data);
-
-        // $input = $request->all();
-        // $validator = Validator::make($input, [
-        //     'name' => 'required',
-        //     'phone' => 'required',
-        //     'email' => ['required','string', 'email'],
-        //     'address' => 'required',
-        //     'rating' => 'required',
-        //     'balance' => 'required',
-        //     'date' => 'required'
-        // ]);
-        // if ($validator->fails()) {
-        //     return  $validator->errors();
-        // }
+        $data = $request->all();
+  
         $customer = Customer::create($data);
+        $data['userable_type']='App\Customer';
+        $data['userable_id'] = $customer->id;
+
+         $customer->user()->save(User::create($data));
+
         return response()->json([
             "success" => true,
             "message" => "Customer created successfully.",
-            "data" => $customer
+            "data" => new CustomerResource($customer), 
         ], 201);
     }
 
-    public function update(Request $request, Customer $customer)
-    {
-        $input = $request->all();
-        dd($request->get('name'));
-        $customer->name = $input['name'];
-        $customer->detail = $input['detail'];
-        $customer->save();
-      
-
-        // $customer = Customer::find($id);
-        $customer->update($request->all());
+    public function update(CustomerUpdateRequest $request, Customer $customer)
+    { 
+        $customer->update($request->all()); 
         
-        return $customer->save();
-
-        $validator = Validator::make($input, [
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => ['required', 'string', 'email'],
-            'address' => 'required',
-            'rating' => 'required',
-            'balance' => 'required',
-            'date' => 'required'
-        ]);
-
-        // if ($validator->fails()) {
-        //     return  $validator->errors();
-        // }
-
-        $customer->name = $input['name'];
-        $customer->phone = $input['phone'];
-        $customer->email = $input['email'];
-        $customer->address = $input['address'];
-        $customer->rating = $input['rating'];
-        $customer->balance = $input['balance'];
-        $customer->date = $input['date'];
-        $customer->save();
-
+        $user = $customer->user;
+        $user->update($request->all());
+        if($request->password){ 
+            $user->update(['password' => Hash::make($request->password)]);
+        }
+          $customer->refresh();  
         return response()->json([
             "success" => true,
             "message" => "Student updated successfully.",
-            "data" => $customer
+            "data" =>new CustomerResource($customer)
         ]);
-
-        // $request->validate([
-        //     'name' => 'required',
-        //     'phone' => 'required',
-        //     'email' => ['required', 'string', 'email'],
-        //     'address' => 'required',
-        //     'rating' => 'required',
-        //     'balance' => 'required',
-        //     'date' => 'required'
-        // ]);
-
-        // $customer = Customer::find($id);
-        // $customer->name = $request->get('name');
-        // $customer->phone = $request->get('phone');
-        // $customer->email = $request->get('email');
-        // $customer->address = $request->get('address');
-        // $customer->rating = $request->get('rating');
-        // $customer->balance = $request->get('balance');
-        // $customer->date = $request->get('date');
-
-        // // dd($customer);
-        // $customer->save();
-
-        // return response()->json([
-        //     "success" => true,
-        //     "message" => "Product updated successfully.",
-        //     "data" => $customer
-        // ]);
+ 
     }
 
     public function show($id)
     {
+     
         $customer = Customer::find($id);
-        return $customer;
+             
         if (is_null($customer)) {
-            return $this->sendError('Product not found.');
+            return response()->json([
+                "success" => false,
+                "message" => "Customer not Found!"
+            ],401);
         }
         return response()->json([
             "success" => true,
-            "message" => "Product retrieved successfully.",
-            "data" => $customer
+            "message" => "Customer retrieved successfully.",
+            "data" => new CustomerResource($customer)
         ]);
     }
 
@@ -149,14 +81,22 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-
+    { 
         $customer = Customer::find($id);
-        $customer->delete();
+        if($customer){
+            $customer->user->delete();
+            $customer->delete();
+            return response()->json([
+                "success" => true,
+                "message" => "Customer deleted successfully."
+            ]);
+        }else{
+            return response()->json([
+                "success" => false,
+                "message" => "Customer not found."
+            ]);
+        }
 
-        return response()->json([
-            "success" => true,
-            "message" => "Customer deleted successfully."
-        ]);
+       
     }
 }

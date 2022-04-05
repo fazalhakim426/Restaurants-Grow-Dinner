@@ -11,6 +11,7 @@ use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Auth\AuthenticationException;
 
 class AuthenticationController extends Controller
 {
@@ -41,22 +42,7 @@ class AuthenticationController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-        ]);
-
-        $user = Authentication::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-        return response()->json($user, 201);
-    }
-
+  
     public function logout(Request $request)
     {
         if (Auth::check()) {
@@ -147,7 +133,7 @@ class AuthenticationController extends Controller
             return response()->json([
                 'message' => 'This password reset token is invalid.'
             ], 404);
-        $user = Authentication::where('email', $passwordReset->email)->first();
+        $user = AuthenticationException::where('email', $passwordReset->email)->first();
         if (!$user)
             return response()->json([
                 'message' => "We can't find a user with that e-mail address."

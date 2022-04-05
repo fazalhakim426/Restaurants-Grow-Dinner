@@ -27,6 +27,6 @@ class Customer extends Model
         return $this->hasMany(WhishList::class);
     }
     protected $fillable = [
-        'name', 'phone', 'email', 'address', 'rating', 'balance', 'date'
+        'dob'
     ];
 }
