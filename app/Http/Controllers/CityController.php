@@ -29,6 +29,7 @@ class CityController extends Controller
         ], 201);
     } 
 
+ 
     public function update(CityUpdateRequest $request ,$id)
     {
         $city = City::find($id);
