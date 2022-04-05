@@ -14,7 +14,12 @@ class City extends Model
    ];
 
 
-    public function department(){
-        return $this->hasMany(Departments::class);
+    public function departments(){
+        return $this->hasMany(Department::class);
+    }
+    
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 }

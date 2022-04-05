@@ -3,10 +3,8 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FinanceController;
-use App\Http\Controllers\EmployeeController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use App\Http\Controllers\EmployeeController; 
+use Illuminate\Support\Facades\Route; 
 
 /*
 |--------------------------------------------------------------------------
@@ -41,17 +39,30 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/customer/{id}', [CustomerController::class,'show']); 
     Route::get('/customer',[CustomerController::class,'index']);
     Route::delete('/customer/{id}', [CustomerController::class,'destroy']);
-    Route::put('/customer/{customer}',[CustomerController::class,'update']);
+    Route::put('/customer/{customer}',[CustomerController::class,'update'])->middleware('role:Customer');;
     //emplooyee
     Route::get('/employee/{id}', [EmployeeController::class,'show']); 
     Route::get('/employee',[EmployeeController::class,'index']);
     Route::delete('/employee/{id}', [EmployeeController::class,'destroy']);
-    Route::put('/employee/{employee}',[EmployeeController::class,'update']);
+    Route::put('/employee/{employee}',[EmployeeController::class,'update'])->middleware('role:Employee');;
     //finance
     Route::get('/finance/{id}', [FinanceController::class,'show']); 
     Route::get('/finance',[FinanceController::class,'index']);
     Route::delete('/finance/{id}', [FinanceController::class,'destroy']);
-    Route::put('/finance/{finance}',[FinanceController::class,'update']);
+    Route::put('/finance/{finance}',[FinanceController::class,'update'])->middleware('role:Finance');
+    //country  
+    Route::resource('country', CountryController::class)->only([
+        'index', 'store','update','destroy'
+    ]);
+    Route::resource('city', CityController::class)->only([
+        'store','update','destroy'
+    ]);  
+    Route::get('/country/{country}/city',[App\Http\Controllers\CityController::class,'index']); 
+
+    Route::resource('department', DepartmentController::class)->only([
+        'store','update','destroy'
+    ]);  
+    Route::get('/city/{city}/departments',[App\Http\Controllers\DepartmentController::class,'index']); 
 
 //admin routes
 Route::group(['middleware' => 'role:Admin'], function() { 
