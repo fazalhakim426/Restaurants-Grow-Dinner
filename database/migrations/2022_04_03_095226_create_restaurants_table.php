@@ -15,6 +15,16 @@ class CreateRestaurantsTable extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
+
+
+            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->string('photo');
+            $table->string('name');
+            $table->string('date_time');
+            $table->string('feedback');
+            //visited restaurants
+
+
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->string('closing_time');
             $table->string('opening_time');

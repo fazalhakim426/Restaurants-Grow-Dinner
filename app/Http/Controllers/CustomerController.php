@@ -28,6 +28,7 @@ class CustomerController extends Controller
         $customer = Customer::create($data);
         $data['userable_type']='App\Customer';
         $data['userable_id'] = $customer->id;
+        $data['password'] = Hash::make($request->password);
 
          $customer->user()->save(User::create($data));
 

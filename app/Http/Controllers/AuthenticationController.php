@@ -9,12 +9,67 @@ use App\PasswordReset;
 use Illuminate\Support\Str;
 use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
+use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthenticationException;
+ 
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticationController extends Controller
 {
+
+       // login not using a provider
+       protected function requestToken(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
+        ]);
+
+        // getting user
+        $user = User::where('email', $request->email)->first();
+       
+        // checking credentials
+        if( !$user || !Hash::check($request->password, $user->password)){
+            throw ValidationException::withMessage([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        // Returning response
+        return response()->json($this->getUserAndToken($user, $request->device_name));
+
+    }
+
+    protected function requestTokenGoogle(Request $request){
+        // Getting the user from socialite using token from google
+        $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
+       
+        // Getting or creating user from db
+        $userFromDb = User::firstOrCreate(
+            ['email' => $user->email],
+            [
+                'email_verified_at' => now(),
+                'name' => $user->name,
+                'status' => true,
+            ]
+            );
+ 
+        // Returning response
+        return response()->json($this->getUserAndToken($userFromDb, $request->device_name));
+    }
+
+    //region Helpers
+
+    private function getUserAndToken(User $user, $device_name){
+        return [
+            'User' => $user,
+            'Access-Token' => $user->createToken($device_name)->plainTextToken,
+        ];
+    }
+    //endregion
+
     public function login(Request $request)
     {
         $request->validate([

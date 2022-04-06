@@ -35,6 +35,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/user', [AuthenticationController::class, 'user']); 
     Route::post('logout', [AuthenticationController::class, 'logout']);
+
+    
+
+Route::post('requestToken', [AuthenticationController::class, 'requestToken']);
+Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestTokenGoogle']);
+
     //customer
     Route::get('/customer/{id}', [CustomerController::class,'show']); 
     Route::get('/customer',[CustomerController::class,'index']);
@@ -85,12 +91,12 @@ Route::group([
     Route::post('reset', [ForgotPasswordController::class, 'reset']);
 });
 
-// Route::get('/redirect', function () {
-//     $query = http_build_query([
-//         'client_id' => 'client-id',
-//         'redirect_uri' => 'http://example.com/callback',
-//         'response_type' => 'code',
-//         'scope' => 'place-orders check-status',
-//     ]);
-//     return redirect('http://your-app.com/oauth/authorize?' . $query);
-// });
+Route::get('/redirect', function () {
+    $query = http_build_query([
+        'client_id' => 'client-id',
+        'redirect_uri' => 'http://example.com/callback',
+        'response_type' => 'code',
+        'scope' => 'place-orders check-status',
+    ]);
+    return redirect('http://your-app.com/oauth/authorize?' . $query);
+});
