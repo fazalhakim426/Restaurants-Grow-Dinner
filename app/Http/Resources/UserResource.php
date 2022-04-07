@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'address' => $this->address,
-            'country' => $this->country,
+            'country' => new CountryResource($this->country),
             'email' => $this->email,
             'phone' => $this->phone,
             'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,

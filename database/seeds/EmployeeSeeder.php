@@ -26,7 +26,7 @@ class EmployeeSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'employee',
             'last_name' => 'LN',
-            'country' => 'Pakistan',
+            'country_id' => 2,
             'phone' => '+92655678956',
             'city' => 'islambad',
             'address' => 'xyz , street s38, house 33',

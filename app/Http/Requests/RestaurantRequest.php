@@ -25,9 +25,8 @@ class RestaurantRequest extends FormRequest
     {
         return [ 
             'first_name' => 'required', 
-            'email' => ['unique:users', 'string', 'email'],
-            'phone' => ['unique:users', 'string'],
-
+            'email' => ['unique:users', 'string', 'email'], 
+            'phone' => ['required','unique:users', 'string','min:11','max:14'], 
             'address' => 'required',  
             'photo' => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
             'menu' => 'mimes:pdf,jpg,png,xlx,csv|max:2048',

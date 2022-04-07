@@ -26,10 +26,10 @@ class FinanceRequest extends FormRequest
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => ['required','unique:users', 'string', 'email'],
-            'phone' => ['required','unique:users', 'string'],
+            'email' => ['required','unique:users', 'string', 'email'], 
+            'phone' => ['required','unique:users', 'string','min:11','max:14'],
             'address' => 'required',  
-            'country' => 'required',
+            'country_id' => 'required',
             'password' => 'required',  
         ];
     }

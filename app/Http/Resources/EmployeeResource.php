@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\CountryResource;
 class EmployeeResource extends JsonResource
 {
     /**
@@ -24,7 +24,7 @@ class EmployeeResource extends JsonResource
             'documents'=> env('APP_URL').'/'. $this->documents,
             'first_name'=> $user->first_name,
             'last_name'=> $user->last_name,  
-            'country'=> $user->country, 
+            'country'=>new CountryResource($user->country), 
             'address'=> $user->address,  
             'email'=> $user->email,  
             'phone'=> $user->phone,  

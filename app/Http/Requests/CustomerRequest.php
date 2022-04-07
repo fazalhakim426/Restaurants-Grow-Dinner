@@ -30,11 +30,11 @@ class CustomerRequest extends FormRequest
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => ['required','unique:users', 'string', 'email'],
-            'phone' => ['required','unique:users', 'string'],
+            'phone' => ['required','unique:users', 'string','min:11','max:14'],
             'address' => 'required', 
-            'country' => 'required',
-            'password' => 'required', 
-            'dob' => 'required' 
+            'country_id' => 'required',
+            'password' => 'required',  
+            'dob' => 'required|date|before:-16 years',
         ];
     }
 }

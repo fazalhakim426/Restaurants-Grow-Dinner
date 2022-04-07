@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name', 
-        'country',
+        'country_id',
         'address', 
         'userable_id',
         'userable_type',
@@ -33,11 +33,12 @@ class User extends Authenticatable
     {
         return $this->morphTo();
     }
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    } 
+
     protected $hidden = [
         'password', 'remember_token',
     ];

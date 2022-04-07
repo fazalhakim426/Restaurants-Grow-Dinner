@@ -20,7 +20,7 @@ class FinanceSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'admin',
             'last_name' => 'LN', 
-            'country' => 'Pakistan', 
+            'country_id' => 4, 
             'address' => 'Abc , street f38, house 87',
             'userable_type'=>'App\Finance',
             'userable_id'=>1,
