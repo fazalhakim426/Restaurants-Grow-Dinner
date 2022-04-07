@@ -24,12 +24,13 @@ class CustomerRequest extends FormRequest
     public function rules()
     {
         return [ 
+            
+            'longitude' => 'required',
+            'latitude' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => ['required','unique:users', 'string', 'email'],
-            'address' => 'required',
-            'phone' => 'required',
-            'city' => 'required',
+            'address' => 'required', 
             'country' => 'required',
             'password' => 'required', 
             'dob' => 'required' 

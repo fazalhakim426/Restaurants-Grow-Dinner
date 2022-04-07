@@ -19,10 +19,8 @@ class FinanceSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'first_name' => 'admin',
-            'last_name' => 'LN',
-            'phone' => '+92747467876',
-            'country' => 'Pakistan',
-            'city' => 'lahore',
+            'last_name' => 'LN', 
+            'country' => 'Pakistan', 
             'address' => 'Abc , street f38, house 87',
             'userable_type'=>'App\Finance',
             'userable_id'=>1,

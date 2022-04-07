@@ -14,30 +14,21 @@ class CreateRestaurantsTable extends Migration
     public function up()
     {
         Schema::create('restaurants', function (Blueprint $table) {
-            $table->id();
-
-
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
+            $table->id(); 
+            $table->foreignId('category_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->string('closing_time')->nullable();
+            $table->string('opening_time')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('description')->nullable(); 
             $table->string('photo');
-            $table->string('name');
-            $table->string('date_time');
-            $table->string('feedback');
-            //visited restaurants
-
-
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->string('closing_time');
-            $table->string('opening_time');
-            $table->string('contact_number'); 
-            $table->string('google_map_location');
-            $table->string('description');
-            $table->string('photo');
-            $table->string('menu');//photo
-            $table->string('instagram_link');
-            $table->string('facebook_link');
-            $table->string('twiter_link');
-            $table->string('website_link');
-            $table->string('informational_tags');
+            $table->string('menu')->nullable();//photo
+            $table->string('instagram_link')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('twiter_link')->nullable();
+            $table->string('website_link')->nullable();
+            $table->string('informational_tags')->nullable();
             $table->timestamps();
         });
     }

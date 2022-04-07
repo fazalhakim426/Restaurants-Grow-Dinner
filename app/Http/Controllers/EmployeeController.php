@@ -11,9 +11,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
-{
-    //
-
+{ 
     public function index()
     {
         $employee = Employee::all();
@@ -87,7 +85,7 @@ class EmployeeController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Employee retrieved successfully.",
-            "data" => new FinanceResource($employee)
+            "data" => new EmployeeResource($employee)
         ]);
     }
 

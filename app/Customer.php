@@ -27,6 +27,6 @@ class Customer extends Model
         return $this->hasMany(WhishList::class);
     }
     protected $fillable = [
-        'dob'
+        'dob','latitude','longitude'
     ];
 }

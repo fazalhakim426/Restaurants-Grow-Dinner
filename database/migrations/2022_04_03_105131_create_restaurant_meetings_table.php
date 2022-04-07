@@ -14,12 +14,9 @@ class CreateRestaurantMeetingsTable extends Migration
     public function up()
     {
         Schema::create('restaurant_meetings', function (Blueprint $table) {
-            $table->id(); 
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('date_time');
-            $table->string('location');
-            $table->string('email');
+            $table->id();   
+            $table->foreignId('employee_id')->constrained()->cascadeOnDelete(); 
+            $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete(); 
             $table->timestamps();
         });
     }

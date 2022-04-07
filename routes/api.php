@@ -56,7 +56,15 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
     Route::get('/finance',[FinanceController::class,'index']);
     Route::delete('/finance/{id}', [FinanceController::class,'destroy']);
     Route::put('/finance/{finance}',[FinanceController::class,'update'])->middleware('role:Finance');
+    //restaurant  
+    // Route::get('/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'show']);
+    // Route::resource('restaurat', RestaurantController::class)->only([
+    //     'index', 'store','update','destroy'
+    // ]);
     //country  
+    Route::resource('restaurant', RestaurantController::class)->only([
+        'index','show','store','update','destroy'
+    ]);
     Route::resource('country', CountryController::class)->only([
         'index', 'store','update','destroy'
     ]);

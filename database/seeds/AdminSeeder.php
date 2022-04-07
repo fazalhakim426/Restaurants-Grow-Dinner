@@ -20,9 +20,7 @@ class AdminSeeder extends Seeder
         DB::table('users')->insert([
             'first_name' => 'admin',
             'last_name' => 'LN',
-            'country' => 'Pakistan',
-            'phone' => '+92877666783',
-            'city' => 'lahore',
+            'country' => 'Pakistan', 
             'address' => 'Abc , street f38, house 87',
             'userable_type'=>'App\Admin',
             'userable_id'=>1,
