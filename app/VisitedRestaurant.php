@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class VisitedRestaurant extends Model
 {
     use HasFactory;
-    public $protected =false; 
+    public $timestamps =false; 
 
-    protected $fillable = ['employee_id','restaurant_id','visit_date_time','feedback','meeting_date_time'];
+    protected $fillable = ['employee_id','restaurant_id','visited_at','feedback'];
 
     public function employee()
     {

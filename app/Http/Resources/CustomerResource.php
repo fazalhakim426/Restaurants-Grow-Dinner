@@ -24,8 +24,10 @@ class CustomerResource extends JsonResource
             'last_name'=> $user->last_name,  
             'country'=> $user->country,
             'address'=> $user->address,  
+            'phone'=> $user->phone,  
             'email'=> $user->email,  
-            'verified' => $user->verified_at?true:false
+             'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,
+            
         ];
     }
 }

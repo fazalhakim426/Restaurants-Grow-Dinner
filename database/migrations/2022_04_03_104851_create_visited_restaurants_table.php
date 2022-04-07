@@ -17,9 +17,8 @@ class CreateVisitedRestaurantsTable extends Migration
             $table->id();  
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete(); 
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
-            $table->string('visit_date_time')->nullable();
-            $table->string('feedback')->nullable();
-            $table->string('meeting_date_time')->nullable();  
+            $table->string('visited_at')->nullable();
+            $table->string('feedback')->nullable(); 
         });
     }
 

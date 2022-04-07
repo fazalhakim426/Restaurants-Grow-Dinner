@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Category;
 use App\City;
 use App\Country;
 use App\Department;
@@ -281,7 +282,11 @@ class CountrySeeder extends Seeder
                 
                 'city_id'=>$city->id,'name'=>  $this->faker->company
         
-        ]);
+            ]);
+
+            Category::create([ 
+                'name'=>  $this->faker->company 
+            ]);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Authentication;
+use App\Http\Resources\UserResource;
 use App\PasswordReset;
 use Illuminate\Support\Str;
 use App\Notifications\PasswordResetRequest;
@@ -19,64 +20,18 @@ use Laravel\Socialite\Facades\Socialite;
 class AuthenticationController extends Controller
 {
 
-       // login not using a provider
-       protected function requestToken(Request $request){
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'device_name' => 'required',
-        ]);
+      
 
-        // getting user
-        $user = User::where('email', $request->email)->first();
-       
-        // checking credentials
-        if( !$user || !Hash::check($request->password, $user->password)){
-            throw ValidationException::withMessage([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
-        }
-
-        // Returning response
-        return response()->json($this->getUserAndToken($user, $request->device_name));
-
-    }
-
-    protected function requestTokenGoogle(Request $request){
-        // Getting the user from socialite using token from google
-        $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
-       
-        // Getting or creating user from db
-        $userFromDb = User::firstOrCreate(
-            ['email' => $user->email],
-            [
-                'email_verified_at' => now(),
-                'name' => $user->name,
-                'status' => true,
-            ]
-            );
- 
-        // Returning response
-        return response()->json($this->getUserAndToken($userFromDb, $request->device_name));
-    }
-
-    //region Helpers
-
-    private function getUserAndToken(User $user, $device_name){
-        return [
-            'User' => $user,
-            'Access-Token' => $user->createToken($device_name)->plainTextToken,
-        ];
-    }
-    //endregion
-
+  
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
+
+        
         $credentials = request(['email', 'password']); 
         if (!Auth::attempt($credentials))
             return response()->json([
@@ -90,12 +45,13 @@ class AuthenticationController extends Controller
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
+            'token_type' => 'Bearer', 
+            'user' => new UserResource($user), 
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
             )->toDateTimeString()
         ]);
-    }
+    }   
 
   
     public function logout(Request $request)
@@ -208,7 +164,7 @@ class AuthenticationController extends Controller
     public function user(Request $request)
     {
         // return $request->user();
-        return response()->json($request->user());
+        return response()->json(new UserResource($request->user()));
     }
 
     /**

@@ -17,8 +17,7 @@ class CreateRestaurantsTable extends Migration
             $table->id(); 
             $table->foreignId('category_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('closing_time')->nullable();
-            $table->string('opening_time')->nullable();
-            $table->string('contact_number')->nullable();
+            $table->string('opening_time')->nullable(); 
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('description')->nullable(); 
@@ -29,6 +28,7 @@ class CreateRestaurantsTable extends Migration
             $table->string('twiter_link')->nullable();
             $table->string('website_link')->nullable();
             $table->string('informational_tags')->nullable();
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

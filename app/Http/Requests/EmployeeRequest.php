@@ -27,6 +27,7 @@ class EmployeeRequest extends FormRequest
             'first_name' => 'required',
             'last_name' => 'required',  
             'email' => ['required','unique:users', 'string', 'email'],
+            'phone' => ['required','unique:users', 'string'], 
             'address' => 'required', 
             'country' => 'required',
             'password' => 'required', 

@@ -27,7 +27,9 @@ class EmployeeResource extends JsonResource
             'country'=> $user->country, 
             'address'=> $user->address,  
             'email'=> $user->email,  
-            'verified' => $user->verified_at?true:false
+            'phone'=> $user->phone,  
+             'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,
+            
         ];
     }
 }
