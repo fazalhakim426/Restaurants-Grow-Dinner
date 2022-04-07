@@ -24,12 +24,9 @@ class RestaurantRequest extends FormRequest
     public function rules()
     {
         return [ 
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required', 
             'email' => ['required','unique:users', 'string', 'email'],
-            'address' => 'required',
-            'phone' => 'required',
-            'city' => 'required',
+            'address' => 'required', 
             'country' => 'required',
             'password' => 'required',  
             'photo' => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
