@@ -25,6 +25,7 @@ class CountryRequest extends FormRequest
     {
         return [
            'name' => 'required|unique:countries',
+           'code' => 'required',
         ];
     }
 }

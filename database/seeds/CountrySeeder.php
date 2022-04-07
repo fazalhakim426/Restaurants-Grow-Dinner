@@ -275,7 +275,7 @@ class CountrySeeder extends Seeder
             $this->faker = Faker::create();
             $number = $this->faker->randomDigit();
 
-            $country = Country::create(['name'=>$value['name']]);
+            $country = Country::create(['name'=>$value['name'],'code'=>$value['code']]);
             $city = City::create(['country_id'=>$country->id,'name'=> $value['name'].' City ']);
             
             Department::create([

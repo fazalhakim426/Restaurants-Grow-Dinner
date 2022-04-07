@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
     Route::post('/finance', [FinanceController::class,'store']);
     Route::post('/employee', [EmployeeController::class,'store']);
 
+    Route::get('country',[App\Http\Controllers\CountryController::class,'index']);
+
 Route::post('/login', [AuthenticationController::class, 'login']);
 
 // Route::post('/products', 'ProductController@store');
@@ -69,7 +71,7 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
     Route::post('/restaurant',[App\Http\Controllers\RestaurantController::class,'admin_store'])->middleware('role:Admin');
 
     Route::resource('country', CountryController::class)->only([
-        'index', 'update','destroy'
+        'update','destroy'
     ]);
     Route::resource('city', CityController::class)->only([
         'store','update','destroy'
