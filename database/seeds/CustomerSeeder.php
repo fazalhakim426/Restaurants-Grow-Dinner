@@ -36,7 +36,7 @@ class CustomerSeeder extends Seeder
             'menu'=> 'default.png',//photo
             'instagram_link'=> 'instagram.com',
             'facebook_link'=> 'facebook.com',
-            'twiter_link'=> 'twitter.com',
+            'twitter_link'=> 'twitter.com',
             'website_link'=> 'website.link',
             'informational_tags'=> '30 minutes,3-5 person',
             'active'=>false,

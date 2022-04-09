@@ -31,7 +31,7 @@ class RestaurantResource extends JsonResource
             "menu" => $this->menu,
             "instagram_link" => $this->instagram_link,
             "facebook_link" => $this->facebook_link,
-            "twiter_link" => $this->twiter_link,
+            "twitter_link" => $this->twitter_link,
             "website_link" => $this->website_link,
             "informational_tags" => $this->informational_tags,
             "created_at" => $this->created_at,  

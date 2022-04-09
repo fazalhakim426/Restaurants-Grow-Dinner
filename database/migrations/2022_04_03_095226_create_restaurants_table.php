@@ -25,7 +25,7 @@ class CreateRestaurantsTable extends Migration
             $table->string('menu')->nullable();//photo
             $table->string('instagram_link')->nullable();
             $table->string('facebook_link')->nullable();
-            $table->string('twiter_link')->nullable();
+            $table->string('twitter_link')->nullable();
             $table->string('website_link')->nullable();
             $table->string('informational_tags')->nullable();
             $table->boolean('active')->default(false);
