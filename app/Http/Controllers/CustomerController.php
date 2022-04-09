@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Http\Requests\CustomerRequest;
-use App\Http\Requests\CustomerUpdateRequest;
+use App\Http\Requests\CustomerRequest; 
 use App\Http\Resources\CustomerResource;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
@@ -39,11 +39,15 @@ class CustomerController extends Controller
         ], 201);
     }
 
-    public function update(CustomerUpdateRequest $request, Customer $customer)
+    public function update(Request $request, Customer $customer)
     { 
         $customer->update($request->all()); 
         
         $user = $customer->user;
+        $request->validate([ 
+            'email' =>'email|unique:users,email,'.$user->id,  
+            'phone' =>'min:11|max:14|unique:users,phone,'.$user->id,  
+        ]);
         $user->update($request->all());
         if($request->password){ 
             $user->update(['password' => Hash::make($request->password)]);

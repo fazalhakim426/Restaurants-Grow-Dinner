@@ -45,6 +45,11 @@ class FinanceController extends Controller
     { 
         $finance->update($request->all()); 
         $user = $finance->user;
+        $request->validate([ 
+            'email' =>'email|unique:users,email,'.$user->id,  
+            'phone' =>'min:11|max:14|unique:users,phone,'.$user->id,  
+        ]);
+        
         $user->update($request->all());
         if($request->password){ 
             $user->update(['password' => Hash::make($request->password)]);

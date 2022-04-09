@@ -22,9 +22,8 @@ class RestaurantUpdateRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [  
-            'email' =>'email|unique:users,email,'.$this->user()->id,  
+    { 
+        return [   
             'photo' => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
             'menu' => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
  

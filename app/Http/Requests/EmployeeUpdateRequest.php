@@ -23,8 +23,7 @@ class EmployeeUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [ 
-            'email' =>'email|unique:users,email,'.$this->user()->id,  
+        return [  
             'documents' => 'mimes:pdf,jpg,png,xlx,csv|max:2048',  
         ];
     }

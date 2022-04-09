@@ -1,12 +1,10 @@
 <?php
-
-use App\Country;
-use App\Department;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\CountrySeeder;
 use Database\Seeders\CustomerSeeder;
 use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\FinanceSeeder;
+use Database\Seeders\RestaurantSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +20,7 @@ class DatabaseSeeder extends Seeder
              CountrySeeder::class,  
              AdminSeeder::class,
              FinanceSeeder::class,
-            //  EmployeeSeeder::class,
+             EmployeeSeeder::class,  
              CustomerSeeder::class,
         ]);
         

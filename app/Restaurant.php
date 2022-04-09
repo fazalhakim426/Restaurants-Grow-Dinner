@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_id','closing_time','opening_time','contact_number',
+    protected $fillable = ['category_id','closing_time','opening_time',
                             'longitude','latitude','description','name','photo','menu','instagram_link',
                             'facebook_link','website_link','informational_tags','twiter_link']; 
     public function category()

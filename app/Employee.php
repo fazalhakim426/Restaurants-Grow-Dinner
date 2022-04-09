@@ -23,7 +23,7 @@ class Employee extends Model
     {
         return $this->hasMany(VisitedRestaurant::class);
     } 
-    public function restaurants(){  
+    public function restaurants(){
         return  $this->visited_restaurants
                      ->map(function($visited_restaurants)
                      {

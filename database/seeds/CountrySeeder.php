@@ -278,10 +278,8 @@ class CountrySeeder extends Seeder
             $country = Country::create(['name'=>$value['name'],'code'=>$value['code']]);
             $city = City::create(['country_id'=>$country->id,'name'=> $value['name'].' City ']);
             
-            Department::create([
-                
-                'city_id'=>$city->id,'name'=>  $this->faker->company
-        
+            Department::create([ 
+                'city_id'=>$city->id,'name'=>  $this->faker->company 
             ]);
 
             Category::create([ 

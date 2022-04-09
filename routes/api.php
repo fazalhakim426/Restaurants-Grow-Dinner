@@ -67,8 +67,12 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
     Route::resource('restaurant',RestaurantController::class)->only([
         'index','show','store','update','destroy'
     ]);
+    Route::get('/employee-restaurant',[App\Http\Controllers\RestaurantController::class,'employee_index'])->middleware('role:Employee'); 
     Route::post('/employee/restaurant',[App\Http\Controllers\RestaurantController::class,'employee_store'])->middleware('role:Employee');
-    Route::post('/restaurant',[App\Http\Controllers\RestaurantController::class,'admin_store'])->middleware('role:Admin');
+    Route::post('/admin/restaurant',[App\Http\Controllers\RestaurantController::class,'admin_store'])->middleware('role:Admin');
+
+    Route::put('/employee/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'employee_update'])->middleware('role:Employee');
+    Route::put('/admin/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'admin_update'])->middleware('role:Admin');
 
     Route::resource('country', CountryController::class)->only([
         'update','destroy'
@@ -79,7 +83,7 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
     Route::get('/country/{country}/city',[App\Http\Controllers\CityController::class,'index']); 
 
     Route::resource('department', DepartmentController::class)->only([
-        'store','update','destroy'
+        'store','destroy'
     ]);  
     Route::get('/city/{city}/departments',[App\Http\Controllers\DepartmentController::class,'index']); 
 

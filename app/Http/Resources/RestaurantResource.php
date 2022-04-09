@@ -16,14 +16,14 @@ class RestaurantResource extends JsonResource
     {
         $user = $this->user;
         return [
-            'name'=> $user->first_name,
+            'id'=> $this->id,
+            'first_name'=> $user->first_name,
             'email'=> $user->email,
             'phone'=> $user->phone,  
             'country'=> $user->country,
             'verified'=> $user->varified_at?true:false,
             "closing_time" => $this->closing_time,
-            "opening_time" => $this->opening_time,
-            "contact_number"=> $this->contact_number,
+            "opening_time" => $this->opening_time, 
             "latitude" => $this->latitude,
             "longitude" => $this->longitude,
             "description" => $this->description,
@@ -34,11 +34,9 @@ class RestaurantResource extends JsonResource
             "twiter_link" => $this->twiter_link,
             "website_link" => $this->website_link,
             "informational_tags" => $this->informational_tags,
-            "created_at" => $this->created_at, 
-            
+            "created_at" => $this->created_at,  
             'category' =>  $this->category,
             'visited_restaurant'=> new VisitedRestaurantRersource($this->visited_restaurant),
-
         ];
     }
 }
