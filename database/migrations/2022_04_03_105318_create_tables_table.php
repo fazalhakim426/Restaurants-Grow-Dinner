@@ -19,8 +19,7 @@ class CreateTablesTable extends Migration
             $table->string('name');
             $table->string('number');
             $table->string('description');
-            $table->string('photo'); 
-            $table->timestamps();
+            $table->string('photo');  
         });
     }
 

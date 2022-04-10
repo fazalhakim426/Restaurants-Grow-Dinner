@@ -5,9 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model; 
 use App\User;
-
-use function PHPSTORM_META\map;
-
+ 
 class Employee extends Model
 {
     use HasFactory;

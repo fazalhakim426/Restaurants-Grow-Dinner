@@ -17,9 +17,8 @@ class CreateBookedTablesTable extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->foreignId('table_id')->constrained()->cascadeOnDelete();
-            $table->string('data');
-            $table->string('time');
-            $table->timestamps();
+            $table->string('date');
+            $table->string('time'); 
 
         });
     }

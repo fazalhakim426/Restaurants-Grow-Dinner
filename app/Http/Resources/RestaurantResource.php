@@ -27,7 +27,7 @@ class RestaurantResource extends JsonResource
             "latitude" => $this->latitude,
             "longitude" => $this->longitude,
             "description" => $this->description,
-            "photo" => $this->photo,
+            "photo" => env('APP_URL').'/'.$this->photo,
             "menu" => $this->menu,
             "instagram_link" => $this->instagram_link,
             "facebook_link" => $this->facebook_link,

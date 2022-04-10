@@ -2,25 +2,20 @@
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\CountrySeeder;
 use Database\Seeders\CustomerSeeder;
-use Database\Seeders\EmployeeSeeder;
-use Database\Seeders\FinanceSeeder;
-use Database\Seeders\RestaurantSeeder;
+use Database\Seeders\EmployeeSeeder; 
+use Database\Seeders\FinanceSeeder; 
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
-{
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
+{ 
+
     public function run()
     {
         $this->call([
              CountrySeeder::class,  
              AdminSeeder::class,
              FinanceSeeder::class,
-             EmployeeSeeder::class,  
+             EmployeeSeeder::class,   
              CustomerSeeder::class,
         ]);
         

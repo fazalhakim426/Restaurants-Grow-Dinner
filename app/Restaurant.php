@@ -8,9 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_id','closing_time','opening_time',
-                            'longitude','latitude','description','name','photo','menu','instagram_link',
-                            'facebook_link','website_link','informational_tags','twitter_link']; 
+    protected $fillable = ['category_id',
+                            'closing_time',
+                            'opening_time',
+                            'longitude',
+                            'latitude',
+                            'description','name',
+                            'photo',
+                            'menu',
+                            'instagram_link',
+                            'facebook_link',
+                            'website_link',
+                            'informational_tags',
+                            'twitter_link'
+                           ]; 
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -22,5 +33,9 @@ class Restaurant extends Model
 
     public function visited_restaurant(){
          return $this->hasOne(VisitedRestaurant::class);
+    }
+    public function tables()
+    {
+        return $this->hasMany(Table::class);
     }
 }

@@ -74,6 +74,11 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
     Route::put('/employee/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'employee_update'])->middleware('role:Employee');
     Route::put('/admin/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'admin_update'])->middleware('role:Admin');
 
+    Route::get('/restaurant/{id}/table',[App\Http\Controllers\TableController::class,'index']);
+    Route::post('/table',[App\Http\Controllers\TableController::class,'store']);
+    Route::put('/table/{id}',[App\Http\Controllers\TableController::class,'update']);
+    Route::delete('table/{id}', [App\Http\Controllers\TableController::class,'destroy']);
+
     Route::resource('country', CountryController::class)->only([
         'update','destroy'
     ]);
