@@ -13,9 +13,9 @@ class BookedTable extends Model
         'customer_id',
         'table_id',
         'date',
-        'time',
+        'time_slot',
     ];
-    
+
     public function customer()
     {
         return $this->belongsTo(Customer::class);

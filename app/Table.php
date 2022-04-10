@@ -15,5 +15,27 @@ class Table extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
+    public function bookedTables()
+    {
+        return $this->hasMany(BookedTable::class);
+    }
+    
+    public function getAllTimeSlotsAttribute()
+    {
+        $interval = 30*60;
+        $restaurant = $this->restaurant;
+        $from = $restaurant->opening_time;
+        $to = $restaurant->closing_time;  
+        $from = strtotime($from);
+        $to = strtotime($to);
+        $slots= array(); 
+
+        while($from<$to){
+           array_push($slots,date('H:i',$from).' - '. date('H:i',$from+$interval));
+           $from = $from+$interval; 
+        }
+        return $slots;
+    }
+   
 
 }

@@ -40,7 +40,7 @@ class CustomerSeeder extends Seeder
              'country_id' => 2,
              'phone' => '+9222267825'.$i, 
              'address' => 'xyz , street s38, house 33',
-             'userable_type'=>'App\Employee',
+             'userable_type'=>'App\Customer',
              'userable_id'=> $customer->id,
              'email' => $i."customer@test.com",
              'password' => Hash::make('password'),
@@ -104,7 +104,14 @@ class CustomerSeeder extends Seeder
               'customer_id' => $customer->id,
               'table_id' => $table->id,
               'date' => '2022-04-10',
-               'time' => '12:33:09',
+               'time_slot' => '09:00 - 09:30',
+          ]);
+
+          BookedTable::create([
+              'customer_id' => $customer->id,
+              'table_id' => $table->id,
+              'date' => '2022-04-10',
+               'time_slot' => '11:00 - 11:30',
           ]);
  
 

@@ -73,7 +73,13 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
 
     Route::put('/employee/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'employee_update'])->middleware('role:Employee');
     Route::put('/admin/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'admin_update'])->middleware('role:Admin');
-
+    
+    //booked table
+    Route::get('/booked-table/free-slots',[App\Http\Controllers\BookedTableController::class,'index'])->middleware('role:Customer');
+    Route::post('/booked-table',[App\Http\Controllers\BookedTableController::class,'store'])->middleware('role:Customer');
+    Route::put('/booked-table/{id}',[App\Http\Controllers\BookedTableController::class,'update'])->middleware('role:Customer');
+    Route::delete('/booked-table/{id}',[App\Http\Controllers\BookedTableController::class,'destroy'])->middleware('role:Customer');
+    //table 
     Route::get('/restaurant/{id}/table',[App\Http\Controllers\TableController::class,'index']);
     Route::post('/table',[App\Http\Controllers\TableController::class,'store']);
     Route::put('/table/{id}',[App\Http\Controllers\TableController::class,'update']);
