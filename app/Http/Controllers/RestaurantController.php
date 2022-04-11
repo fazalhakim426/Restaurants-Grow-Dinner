@@ -42,18 +42,19 @@ class RestaurantController extends Controller
         $page = $options ? $options->page : 1; 
         $itemsPerPage = $options?$options->itemsPerPage:-1;
         $sortBy = $options?$options->sortBy:'distance';
-        $sortDesc = $options?$options->sortDesc:'ASC';  
+        $sortDesc = $options?($options->sortDesc?'DESC':'ASC'):'ASC';  
         $major_query = $this->index_major_query();
-        $count = $major_query->count(); 
- 
-            $restaurant = $major_query->when($itemsPerPage != -1,
+        $count = $major_query->count();  
+         
+            $restaurant = $major_query
+            ->when($itemsPerPage != -1,
                     function ($query) use ($itemsPerPage, $page) {
                         return $query->offset($itemsPerPage * ($page - 1))->take($itemsPerPage);
                     }
                 )
-                ->orderBy($sortBy, $sortDesc)->get();
+                ->orderBy($sortBy, $sortDesc) 
+                ->get();
 
-      
 
         return response()->json([
             "success" => true,
@@ -114,20 +115,21 @@ class RestaurantController extends Controller
         $latitude = $customer->latitude;
         $longitude = $customer->longitude; 
 
-        $mile = 6; 
+        $mile = request()->distance?request()->distance:6; 
 
         $q = request()->q;
         $country_id = request()->country_id;
         $category_id = request()->category_id; 
         return
         Restaurant::select(DB::raw("id, ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( latitude ) ) ) ) AS distance"))
-        ->havingRaw("distance < '$mile'")->when($category_id, function ($q) use ($category_id) {
-                return $q->where('category_id', $category_id);
-             }) 
-          ->when($country_id, function ($q) use ($country_id) {
-            return $q->whereHas('user', function ($q) use ($country_id) {
-                return $q->where('country_id', $country_id);
-            });
+        ->havingRaw("distance < '$mile'")
+        ->when($category_id, function ($q) use ($category_id) {
+            return $q->where('category_id', $category_id);
+        }) 
+        ->when($country_id, function ($q) use ($country_id) {
+         return $q->whereHas('user', function ($q) use ($country_id) {
+            return $q->where('country_id', $country_id);
+        });
         })->whereHas('user', function ($query) use ($q) { 
             return $query->where(function ($query) use ($q) {
                 $query->orWhere('first_name', 'LIKE', '%' . $q . '%')
@@ -138,7 +140,7 @@ class RestaurantController extends Controller
             return $query->orwhere(function ($query) use ($q) {
                 $query->orWhere('description', 'LIKE', '%' . $q . '%');
             });
-        });;
+        });
     }
 
     public function admin_store(RestaurantRequest $request)
