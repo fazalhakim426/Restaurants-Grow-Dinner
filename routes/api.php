@@ -82,6 +82,9 @@ Route::group(['middleware' => 'role:Admin'], function() {
 });
 //customer routes
 Route::group(['middleware' => 'role:Customer'], function() {
+    Route::resource('address',AddressController::class)->only([
+    'index','store','update','destroy'
+    ]);
 }); 
 });
 

@@ -36,7 +36,7 @@ class CustomerController extends Controller
             "success" => true,
             "message" => "Customer created successfully.",
             "data" => new CustomerResource($customer), 
-        ], 201);
+        ]);
     }
 
     public function update(Request $request, Customer $customer)

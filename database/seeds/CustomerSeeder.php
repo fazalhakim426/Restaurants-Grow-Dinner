@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Address;
 use App\BookedTable;
 use App\Customer;
 use App\Restaurant;
@@ -34,9 +35,16 @@ class CustomerSeeder extends Seeder
              'latitude'=>'34.1891089', 
              'longitude'=>'73.2386739',
          ]);
+         Address::create([
+             'customer_id' => $customer->id,
+             'title' => $this->faker->firstName,
+             'address' => $this->faker->address,
+             'longitude' => '34.333434334',
+             'latitude' => '-73.444444444',
+         ]);
          DB::table('users')->insert([
-             'first_name' => $this->faker->text,
-             'last_name' => $this->faker->text,
+             'first_name' => $this->faker->firstName,
+             'last_name' => $this->faker->lastName,
              'country_id' => 2,
              'phone' => '+9222267825'.$i, 
              'address' => 'xyz , street s38, house 33',

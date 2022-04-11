@@ -26,8 +26,8 @@ class CityController extends Controller
             "success" => true,
             "message" => "City created successfully.",
             "data" => $country, 
-        ], 201);
-    } 
+        ]);
+    }
 
  
     public function update(CityUpdateRequest $request ,$id)

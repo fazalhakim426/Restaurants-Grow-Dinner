@@ -26,7 +26,7 @@ class CountryController extends Controller
             "success" => true,
             "message" => "Country created successfully.",
             "data" => $country, 
-        ], 201);
+        ]);
     } 
 
     public function update(CountryRequest $request ,$id)

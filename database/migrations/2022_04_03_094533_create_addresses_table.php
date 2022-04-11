@@ -16,12 +16,10 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
-            $table->string('house_number');
-            $table->string('street_number');
-            $table->string('city');
-            $table->string('country');
-            $table->string('postal_code');
-            $table->timestamps();
+            $table->string('title');
+            $table->string('address');
+            $table->string('latitude');
+            $table->string('longitude');  
         });
     }
 
