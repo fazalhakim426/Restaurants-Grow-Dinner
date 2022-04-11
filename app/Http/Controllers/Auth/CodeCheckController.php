@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CodeCheckController extends Controller
 {
+    
     public function index(Request $request)
     {
         $request->validate([

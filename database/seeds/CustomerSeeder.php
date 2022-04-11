@@ -31,8 +31,8 @@ class CustomerSeeder extends Seeder
             
          $customer = Customer::create([ 
              'dob'=> '2000-09-08 09:03:33', 
-             'latitude'=>'33.2222222', 
-             'longitude'=>'33.333333',
+             'latitude'=>'34.1891089', 
+             'longitude'=>'73.2386739',
          ]);
          DB::table('users')->insert([
              'first_name' => $this->faker->text,
@@ -60,8 +60,8 @@ class CustomerSeeder extends Seeder
             'category_id'=> 1,
             'closing_time'=> '17:00',
             'opening_time'=> '09:00', 
-            'latitude'=> '1.222222222',
-            'longitude'=> '2.333333333333',
+            'latitude'=> '34.'.$i.'4312',
+            'longitude'=> '-73.159848',
             'description'=> 'dummy description', 
             'photo'=>'default.png',
             'menu'=> 'default.png',//photo

@@ -4,16 +4,15 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\VisitedRestaurantRersource;
+use Illuminate\Support\Facades\Auth;
+
 class RestaurantResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+ 
+
     public function toArray($request)
     {
+        $auth_user = Auth::user();
         $user = $this->user;
         return [
             'id'=> $this->id,
@@ -23,12 +22,12 @@ class RestaurantResource extends JsonResource
             'country'=> $user->country,
             'verified'=> $user->varified_at?true:false,
             "closing_time" => $this->closing_time,
-            "opening_time" => $this->opening_time, 
-            "latitude" => $this->latitude,
-            "longitude" => $this->longitude,
+            "opening_time" => $this->opening_time,  
+            "distance" => $this->distance,  
+        
             "description" => $this->description,
             "photo" => env('APP_URL').'/'.$this->photo,
-            "menu" => $this->menu,
+            "menu" =>  env('APP_URL').'/'.$this->menu,
             "instagram_link" => $this->instagram_link,
             "facebook_link" => $this->facebook_link,
             "twitter_link" => $this->twitter_link,

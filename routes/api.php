@@ -5,21 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\EmployeeController; 
 use Illuminate\Support\Facades\Route; 
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider withinpe a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
- //signup  customer  
-
-
-
+  
     Route::post('/customer/register', [CustomerController::class,'store']);
     Route::post('/finance', [FinanceController::class,'store']);
     Route::post('/employee', [EmployeeController::class,'store']);
@@ -27,25 +13,14 @@ use Illuminate\Support\Facades\Route;
     Route::get('country',[App\Http\Controllers\CountryController::class,'index']);
 
 Route::post('/login', [AuthenticationController::class, 'login']);
-
-// Route::post('/products', 'ProductController@store');
-// Route::get('/products', 'ProductController@index');
-// Route::get('/prices', 'ProductController@prices');
-
-// Route::get('/menus', 'MenusController@index');
  
-
 
 Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/user', [AuthenticationController::class, 'user']); 
     Route::post('logout', [AuthenticationController::class, 'logout']);
 
-    
-
-// Route::post('requestToken', [AuthenticationController::class, 'requestToken']);
-// Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestTokenGoogle']);
-
+     
     //customer
     Route::get('/customer/{id}', [CustomerController::class,'show']); 
     Route::get('/customer',[CustomerController::class,'index']);

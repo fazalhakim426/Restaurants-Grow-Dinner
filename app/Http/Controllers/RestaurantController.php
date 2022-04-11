@@ -12,30 +12,47 @@ use App\User;
 use App\VisitedRestaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class RestaurantController extends Controller
 {
 
+//     function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+//         $theta = $lon1 - $lon2;
+//         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+//         $dist = acos($dist);
+//         $dist = rad2deg($dist);
+//         $miles = $dist * 60 * 1.1515;
+//         $unit = strtoupper($unit);
+      
+//         if ($unit == "K") {
+//             return ($miles * 1.609344);
+//         } else if ($unit == "N") {
+//             return ($miles * 0.8684);
+//         } else {
+//             return $miles;
+//         }
+//    } 
 
     public function index()
-    {
+    { 
         $options = json_decode(request()->options);
         $page = $options ? $options->page : 1; 
         $itemsPerPage = $options?$options->itemsPerPage:-1;
-        $sortBy = $options?$options->sortBy:'id';
+        $sortBy = $options?$options->sortBy:'distance';
         $sortDesc = $options?$options->sortDesc:'ASC';  
-        
         $major_query = $this->index_major_query();
+        $count = $major_query->count(); 
  
-        $count = $major_query->count();
-
             $restaurant = $major_query->when($itemsPerPage != -1,
-                function ($query) use ($itemsPerPage, $page) {
-                    return $query->offset($itemsPerPage * ($page - 1))
-                        ->take($itemsPerPage);
-                }
-            )->orderBy($sortBy, $sortDesc ? 'DESC' : 'ASC')->get();
+                    function ($query) use ($itemsPerPage, $page) {
+                        return $query->offset($itemsPerPage * ($page - 1))->take($itemsPerPage);
+                    }
+                )
+                ->orderBy($sortBy, $sortDesc)->get();
+
       
 
         return response()->json([
@@ -86,26 +103,40 @@ class RestaurantController extends Controller
     }
     public function index_major_query()
     { 
+        $auth_user = Auth::user();
+        $customer = $auth_user->userable;
+        if(request()->latitude && request()->longitude){ 
+            $customer->update([
+                "latitude"=> request()->latitude, 
+                "longitude"=> request()->longitude,
+            ]);
+        }  
+        $latitude = $customer->latitude;
+        $longitude = $customer->longitude; 
+
+        $mile = 6; 
+
         $q = request()->q;
         $country_id = request()->country_id;
         $category_id = request()->category_id; 
-        return Restaurant::when($category_id, function ($q) use ($category_id) {
+        return
+        Restaurant::select(DB::raw("id, ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( latitude ) ) ) ) AS distance"))
+        ->havingRaw("distance < '$mile'")->when($category_id, function ($q) use ($category_id) {
                 return $q->where('category_id', $category_id);
-             })
+             }) 
           ->when($country_id, function ($q) use ($country_id) {
             return $q->whereHas('user', function ($q) use ($country_id) {
                 return $q->where('country_id', $country_id);
             });
         })->whereHas('user', function ($query) use ($q) { 
-            return $query->where(function ($query2) use ($q) {
-                $query2->orWhere('first_name', 'LIKE', '%' . $q . '%')
-                    ->orWhere('email', 'LIKE', '%' .  $q . '%')
-                    ->orWhere('address', 'LIKE', '%' . $q . '%');
+            return $query->where(function ($query) use ($q) {
+                $query->orWhere('first_name', 'LIKE', '%' . $q . '%')
+                      ->orWhere('email', 'LIKE', '%' .  $q . '%')
+                      ->orWhere('address', 'LIKE', '%' . $q . '%');
             });
         })->when($q, function ($query) use ($q) {
-            return $query->orwhere(function ($query2) use ($q) {
-                $query2
-                    ->orWhere('description', 'LIKE', '%' . $q . '%');
+            return $query->orwhere(function ($query) use ($q) {
+                $query->orWhere('description', 'LIKE', '%' . $q . '%');
             });
         });;
     }
