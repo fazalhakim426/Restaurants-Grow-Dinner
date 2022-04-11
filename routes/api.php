@@ -1,6 +1,6 @@
 <?php
-
-use App\Http\Controllers\AuthenticationController;
+  
+use App\Http\Controllers\AuthenticationController; 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\EmployeeController; 
@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
  //signup  customer  
+
+
+
     Route::post('/customer/register', [CustomerController::class,'store']);
     Route::post('/finance', [FinanceController::class,'store']);
     Route::post('/employee', [EmployeeController::class,'store']);
@@ -40,8 +43,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     
 
-Route::post('requestToken', [AuthenticationController::class, 'requestToken']);
-Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestTokenGoogle']);
+// Route::post('requestToken', [AuthenticationController::class, 'requestToken']);
+// Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestTokenGoogle']);
 
     //customer
     Route::get('/customer/{id}', [CustomerController::class,'show']); 
@@ -67,6 +70,7 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
     Route::resource('restaurant',RestaurantController::class)->only([
         'index','show','store','update','destroy'
     ]);
+
     Route::get('/employee-restaurant',[App\Http\Controllers\RestaurantController::class,'employee_index'])->middleware('role:Employee'); 
     Route::post('/employee/restaurant',[App\Http\Controllers\RestaurantController::class,'employee_store'])->middleware('role:Employee');
     Route::post('/admin/restaurant',[App\Http\Controllers\RestaurantController::class,'admin_store'])->middleware('role:Admin');
@@ -95,7 +99,7 @@ Route::post('requestTokenGoogle', [AuthenticationController::class, 'requestToke
 
     Route::resource('department', DepartmentController::class)->only([
         'store','destroy'
-    ]);  
+    ]);
     Route::get('/city/{city}/departments',[App\Http\Controllers\DepartmentController::class,'index']); 
 
 //admin routes
@@ -103,28 +107,32 @@ Route::group(['middleware' => 'role:Admin'], function() {
 });
 //customer routes
 Route::group(['middleware' => 'role:Customer'], function() {
+}); 
 });
 
-});
-
-Route::group([
-    'namespace' => 'Auth',
-    
-    'middleware' => 'api',
-    'prefix' => 'password'
-], function () {
+// Route::group([
+//     'namespace' => 'Auth', 
+//     'middleware' => 'api',
+//     'prefix' => 'password'
+// ], function () {
  
-    Route::post('create', [ForgotPasswordController::class, 'create']);
-    Route::get('find/{token}', [ForgotPasswordController::class, 'find']);
-    Route::post('reset', [ForgotPasswordController::class, 'reset']);
-});
+//     Route::get('find/{token}', [ForgotPasswordTempController::class, 'find']);
+//     Route::post('reset', [ForgotPasswordTempController::class, 'reset']);
+//     Route::post('create', [ForgotPasswordTempController::class, 'create']);
+// });
 
-Route::get('/redirect', function () {
-    $query = http_build_query([
-        'client_id' => 'client-id',
-        'redirect_uri' => 'http://example.com/callback',
-        'response_type' => 'code',
-        'scope' => 'place-orders check-status',
-    ]);
-    return redirect('http://your-app.com/oauth/authorize?' . $query);
-});
+// Route::get('/redirect', function () {
+//     $query = http_build_query([
+//         'client_id' => 'client-id',
+//         'redirect_uri' => 'http://example.com/callback',
+//         'response_type' => 'code',
+//         'scope' => 'place-orders check-status',
+//     ]);
+//     return redirect('http://your-app.com/oauth/authorize?' . $query);
+// });
+
+
+Route::post('password/email',  [App\Http\Controllers\Auth\ForgotPasswordController::class,'index']);
+Route::post('password/code/check', [App\Http\Controllers\Auth\CodeCheckController::class,'index']);
+Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class,'index']);
+

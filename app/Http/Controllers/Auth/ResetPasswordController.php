@@ -3,28 +3,34 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendCodeResetPassword;
 use App\Providers\RouteServiceProvider;
+use App\ResetCodePassword;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
+   
+    public function index(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
 
-    use ResetsPasswords;
+        // Delete all old code that user send before.
+        ResetCodePassword::where('email', $request->email)->delete();
 
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+        // Generate random code
+        $data['code'] = mt_rand(100000, 999999);
+
+        // Create a new code
+        $codeData = ResetCodePassword::create($data);
+
+        // Send email to user
+        Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code));
+
+        return response(['message' => trans('passwords.sent')], 200);
+    }
 }
