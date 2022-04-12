@@ -85,7 +85,7 @@ Route::group(['middleware' => 'role:Customer'], function() {
     Route::resource('address',AddressController::class)->only([
     'index','store','update','destroy'
     ]);
-}); 
+});
 });
 
 // Route::group([

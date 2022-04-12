@@ -41,7 +41,7 @@ class AddressController extends Controller
     {        
         $auth_user = Auth::user();
         $customer = $auth_user->userable;
-        $address = $customer->addresses->where('id',$id);
+        $address = $customer->addresses->where('id',$id)->first();
         if($address && $address->update($request->all())){
             return response()->json([
                 "success" => true,
