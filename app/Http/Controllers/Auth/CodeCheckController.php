@@ -14,10 +14,17 @@ class CodeCheckController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'code' => 'required|string|exists:reset_code_passwords',
-            'password' => 'required|string|min:6|confirmed',
+            'code' => 'required|string|exists:reset_code_passwords', 
         ]);
-
+        if(!$request->password){
+             return response()->json([
+                 'success' => true,
+                 'message' => 'Code is valid!'
+             ]);
+        }
+         $request->validate([ 
+            'password' => 'string|min:6|confirmed',
+        ]);
         // find the code
         $passwordReset = ResetCodePassword::firstWhere('code', $request->code);
 
@@ -27,6 +34,8 @@ class CodeCheckController extends Controller
             return response(['message' => trans('passwords.code_is_expire')], 422);
         }
 
+     
+    
         // find user's email 
         $user = User::firstWhere('email', $passwordReset->email);
 
