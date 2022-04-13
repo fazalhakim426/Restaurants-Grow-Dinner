@@ -279,11 +279,11 @@ class CountrySeeder extends Seeder
             $city = City::create(['country_id'=>$country->id,'name'=> $value['name'].' City ']);
             
             Department::create([ 
-                'city_id'=>$city->id,'name'=>  $this->faker->company 
+                'city_id'=>$city->id,'name'=>  $this->faker->city 
             ]);
 
-            Category::create([ 
-                'name'=>  $this->faker->company 
+            Category::create([
+                'name'=>  $this->faker->word .' '.$key
             ]);
         }
     }

@@ -9,12 +9,11 @@ class Category extends Model
     public $timestamps = false;
 
     protected $fillable = [ 
-        "category_name",
+        "name", 
+        "active"
     ];
-    //
     public function resturants()
     {
         return $this->hasMany(Restaurant::class);
     }
-   
 }

@@ -3,7 +3,7 @@ use Database\Seeders\AdminSeeder;
 use Database\Seeders\CountrySeeder;
 use Database\Seeders\CustomerSeeder;
 use Database\Seeders\EmployeeSeeder; 
-use Database\Seeders\FinanceSeeder; 
+use Database\Seeders\FinanceSeeder;  
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
              AdminSeeder::class,
              FinanceSeeder::class,
              EmployeeSeeder::class,   
-             CustomerSeeder::class,
+             CustomerSeeder::class, 
         ]);
         
         // Department::factory()->count(5)->create(); 

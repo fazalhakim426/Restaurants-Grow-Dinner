@@ -6,6 +6,7 @@ use App\Address;
 use App\BookedTable;
 use App\Customer;
 use App\Restaurant;
+use App\Review;
 use App\Table;
 use App\User;
 use App\VisitedRestaurant;
@@ -42,6 +43,8 @@ class CustomerSeeder extends Seeder
              'longitude' => '34.333434334',
              'latitude' => '-73.444444444',
          ]);
+
+       
          DB::table('users')->insert([
              'first_name' => $this->faker->firstName,
              'last_name' => $this->faker->lastName,
@@ -71,14 +74,14 @@ class CustomerSeeder extends Seeder
             'latitude'=> '34.'.$i.'4312',
             'longitude'=> '-73.159848',
             'description'=> 'dummy description', 
-            'photo'=>'default.png',
-            'menu'=> 'default.png',//photo
+            'photo'=> 'upload/restaurant/photo/default.png',
+            'menu'=> 'upload/restaurant/menu/default.png',//photo
             'instagram_link'=> 'instagram.com',
             'facebook_link'=> 'facebook.com',
             'twitter_link'=> 'twitter.com',
             'website_link'=> 'website.link',
             'informational_tags'=> '30 minutes,3-5 person',
-            'active'=>false,
+            'active'=>true,
              ]); 
 
          $restaurant->user()->save(User::create([
@@ -122,6 +125,13 @@ class CustomerSeeder extends Seeder
                'time_slot' => '11:00 - 11:30',
           ]);
  
+
+          Review::create([ 
+            'stars'=>4,
+            'feedback'=>$this->faker->text,
+            'restaurant_id'=>$restaurant->id,
+            'customer_id' => $customer->id,
+          ]);
 
            }
     }

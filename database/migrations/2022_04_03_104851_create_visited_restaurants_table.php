@@ -15,7 +15,7 @@ class CreateVisitedRestaurantsTable extends Migration
     {
         Schema::create('visited_restaurants', function (Blueprint $table) {
             $table->id();  
-            $table->foreignId('employee_id')->constrained()->cascadeOnDelete(); 
+            $table->foreignId('employee_id')->constrained(); 
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->string('visited_at')->nullable();
             $table->string('feedback')->nullable(); 
