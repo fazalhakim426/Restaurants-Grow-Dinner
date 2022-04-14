@@ -79,11 +79,12 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //employee routes
     Route::group([
-        'middleware' => 'role:Employee'
+        'middleware' => 'role:Employee',
+        'prefix' => 'employee'
 
     ], function () {
         Route::post(
-            '/update/employee',
+            '/update',
             [
                 App\Http\Controllers\EmployeeController::class,
                 'update_employee'
@@ -93,7 +94,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::apiResource('employee', EmployeeController::class)->only([
             'update'
         ]);
-        Route::apiResource('employee-restaurant', Restaurant\EmployeeRestaurantController::class)
+        Route::apiResource('restaurant', Restaurant\EmployeeRestaurantController::class)
             ->only(['index', 'store', 'update', 'show', 'destroy']);
     });
     //finance routes 

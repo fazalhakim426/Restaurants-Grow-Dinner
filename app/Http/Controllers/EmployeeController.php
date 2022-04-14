@@ -47,7 +47,7 @@ class EmployeeController extends Controller
         ], 201);
     }
 
-    public function update_customer(EmployeeUpdateRequest $request){ 
+    public function update_employee(EmployeeUpdateRequest $request){ 
         return $this->update($request,Auth::user()->userable);
     } 
    
