@@ -60,8 +60,10 @@ class AdminRestaurantController extends Controller
             ->whereHas('category',function($query){ 
                 $query->where('active',isset(request()->active)?request()->active:1);
            })
-            ->where('active',isset(request()->active)?request()->active:1)
-            
+           ->whereHas('user',function($query){ 
+            $query->where('active',isset(request()->active)?request()->active:1);
+         
+           })
             ->when($country_id, function ($q) use ($country_id) {
                 return $q->whereHas('user', function ($q) use ($country_id) {
                     return $q->where('country_id', $country_id);

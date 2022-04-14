@@ -104,8 +104,10 @@ class CustomerRestaurantController extends Controller
         ->havingRaw("distance < '$mile'")
         ->whereHas('category',function($query){ 
             $query->where('active',isset(request()->active)?request()->active:1);
+       })->whereHas('user',function($query){ 
+           $query->where('active',isset(request()->active)?request()->active:1);
+        
        })
-        ->where('active',isset(request()->active)?request()->active:1)
         
         ->when($category_id, function ($q) use ($category_id) {
             return $q->where('category_id', $category_id);
