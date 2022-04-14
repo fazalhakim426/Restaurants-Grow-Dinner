@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             'show', 'index', 'destroy', 'update', 'store'
         ]);
 
-        Route::resource('admin-restaurant', Restaurant\AdminRestaurantController::class)
+        Route::resource('restaurant', Restaurant\AdminRestaurantController::class)
             ->only(['index', 'show', 'store', 'update', 'destroy']);
 
         //table 
@@ -110,14 +110,17 @@ Route::group(['middleware' => 'auth:api'], function () {
             ->only(['update']);
     });
     //customer routes
-    Route::group(['middleware' => 'role:Customer'], function () {
+    Route::group([
+        'middleware' => 'role:Customer',
+        'prefix' => 'customer',
+         ], function () {
 
         Route::resource('customer', CustomerController::class)->only([
             'update'
         ]);
 
         Route::post(
-            '/update/customer',
+            '/update',
             [
                 App\Http\Controllers\CustomerController::class,
                 'update_customer'
@@ -131,7 +134,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             'index', 'store', 'destroy'
         ]);
 
-        Route::apiResource('customer-restaurant', Restaurant\CustomerRestaurantController::class)
+        Route::apiResource('restaurant', Restaurant\CustomerRestaurantController::class)
             ->only(['index']);
 
         //booked table
