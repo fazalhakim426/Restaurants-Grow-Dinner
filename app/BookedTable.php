@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BookedTable extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     protected $fillable = [
         'customer_id',
         'table_id',
@@ -16,8 +15,12 @@ class BookedTable extends Model
         'time_slot',
     ];
 
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
+    }
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsToMany(Customer::class);
     }
 }

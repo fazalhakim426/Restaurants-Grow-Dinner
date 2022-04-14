@@ -38,6 +38,18 @@ class AuthenticationController extends Controller
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
+        if(!$user->active){
+
+            if (Auth::check()) {
+                Auth::user()->authAcessToken()->delete();
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Your accont is not active!',
+            ]);
+
+        }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me)
@@ -57,7 +69,7 @@ class AuthenticationController extends Controller
     public function logout(Request $request)
     {
         if (Auth::check()) {
-            Auth::user()->AauthAcessToken()->delete();
+            Auth::user()->authAcessToken()->delete();
         }
         return response()->json([
             'message' => 'Successfully logged out'

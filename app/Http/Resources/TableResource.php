@@ -17,9 +17,12 @@ class TableResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'min_person' => $this->min_person,
+            'max_person' => $this->max_person,
             'number' => $this->number,
             'description' => $this->description,
             'photo' => env('APP_URL').'/'.$this->photo, 
+            'resturant' => $this->restaurant,
 
         ];
     }

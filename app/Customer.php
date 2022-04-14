@@ -12,6 +12,7 @@ class Customer extends Model
     public function user(){
         return $this->morphOne(User::class,'userable');
     }
+
     public function addresses()
     {
         return $this->hasMany(Address::class);
@@ -21,11 +22,15 @@ class Customer extends Model
     {
         return $this->hasMany(Coupen::class);
     }
-
+    public function bookedTable()
+    {
+        return $this->hasMany(BookedTable::class);
+    }
     public function whishList()
     {
         return $this->hasMany(WhishList::class);
     }
+
     protected $fillable = [
         'dob','latitude','longitude'
     ];

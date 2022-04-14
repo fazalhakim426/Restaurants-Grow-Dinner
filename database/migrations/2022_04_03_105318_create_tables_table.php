@@ -18,6 +18,8 @@ class CreateTablesTable extends Migration
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('number');
+            $table->string('min_person')->nullable();
+            $table->string('max_person')->nullable();
             $table->string('description');
             $table->string('photo');  
         });

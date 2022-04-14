@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\BookedTable;
+use App\Http\Resources\BookedTableResource;
 use App\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,18 @@ use Illuminate\Support\Facades\Auth;
 class BookedTableController extends Controller
 {
      
+      public function index()
+      {
+          $auth_user = Auth::user();
+          $customer =  $auth_user->userable;
+          $booked_table = $customer->bookedTable; 
+          return response()->json([
+              'success' => true,
+              'message' => 'Booked Table',
+               'data' =>  BookedTableResource::collection($booked_table)
+          ]); 
+      }
+
     public function bookedSlots($table,$date)
     {  
         $bookedTables = $table->bookedTables()->where('date',$date)->get(); 
@@ -29,7 +42,7 @@ class BookedTableController extends Controller
 
 
 
-    public function index(Request $request)
+    public function get_free_slots(Request $request)
     {
         $data = $request->validate([
             'table_id'=>'required',
@@ -63,10 +76,8 @@ class BookedTableController extends Controller
             'date'=>'required|date|after:yesterday',
             'time_slot'=>'required',
         ]);
-
-        $auth_user = Auth::user();
-        $data['customer_id'] = $auth_user->userable_id;
         
+        $data['customer_id'] = Auth::user()->userable_id;
         $table = Table::find($request->table_id);
         if($table){ 
             
@@ -93,13 +104,12 @@ class BookedTableController extends Controller
             return response()->json([
                 'success' => true,
                 'message'=> 'Table Booked Successfully!',
-                'data' => $booked_table
+                'data' =>  new BookedTableResource($booked_table)
             ]);
         }else{
             return response()->json([
                 'success' => false,
-                'message'=> 'Table Booking Failed!',
-                'data' => $booked_table
+                'message'=> 'Table Booking Failed!', 
             ]);
         }
     }else{
@@ -126,7 +136,7 @@ class BookedTableController extends Controller
                   'message'=> 'Reservation not Found!'
               ]);
         }
-        if($bookedTable->time_slot = $data['time_slot'] && $bookedTable->date == $data['date']){
+        if($bookedTable->time_slot == $data['time_slot'] && $bookedTable->date == $data['date']){
             return response()->json([
                 'success' => false,
                 'message' => 'No Change Made!'
@@ -136,7 +146,7 @@ class BookedTableController extends Controller
         
         $auth_user = Auth::user();
         $data['customer_id'] = $auth_user->userable_id; 
-        $table = Table::find($request->table_id);
+        $table = Table::find($bookedTable->table_id);
         if(!$table){ 
             return response()->json([
                 'success' => false,

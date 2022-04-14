@@ -8,6 +8,8 @@ use App\Http\Requests\EmployeeUpdateRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\FinanceResource;
 use App\User;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
@@ -19,7 +21,7 @@ class EmployeeController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Employee List",
-            "data" =>  FinanceResource::collection($employee)
+            "data" =>  EmployeeResource::collection($employee)
         ]);
     }
 
@@ -45,6 +47,10 @@ class EmployeeController extends Controller
         ], 201);
     }
 
+    public function update_customer(EmployeeUpdateRequest $request){ 
+        return $this->update($request,Auth::user()->userable);
+    } 
+   
     public function update(EmployeeUpdateRequest $request, Employee $employee)
     { 
   
@@ -99,24 +105,22 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    // public function destroy($id)
+    // {
 
-        $employee = Employee::find($id);
-        if($employee){
-            $employee->user->delete();
-            $employee->delete();
-            return response()->json([
-                "success" => true,
-                "message" => "Employee deleted successfully."
-            ]);
-        }else{
-            return response()->json([
-                "success" => false,
-                "message" => "Employee not found."
-            ]);
-        }
-
-       
-    }
+    //     $employee = Employee::find($id);
+    //     if($employee){
+    //         $employee->user->delete();
+    //         $employee->delete();
+    //         return response()->json([
+    //             "success" => true,
+    //             "message" => "Employee deleted successfully."
+    //         ]);
+    //     }else{
+    //         return response()->json([
+    //             "success" => false,
+    //             "message" => "Employee not found."
+    //         ]);
+    //     } 
+    // }
 }

@@ -28,7 +28,6 @@ class CreateRestaurantsTable extends Migration
             $table->string('twitter_link')->nullable();
             $table->string('website_link')->nullable();
             $table->string('informational_tags')->nullable();
-            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

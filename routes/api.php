@@ -1,89 +1,128 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\FinanceController;
-use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/customer/register', [CustomerController::class, 'store']);
-Route::post('/finance', [FinanceController::class, 'store']);
-Route::post('/employee', [EmployeeController::class, 'store']);
+Route::post('/customer/register', [App\Http\Controllers\CustomerController::class, 'store']);
 
 Route::get('country', [App\Http\Controllers\CountryController::class, 'index']);
+Route::get('/country/{country}/city', [App\Http\Controllers\CityController::class, 'index']);
+Route::get('/city/{city}/departments', [App\Http\Controllers\DepartmentController::class, 'index']);
+
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 
+Route::apiResource('/setting', SettingController::class)->only([
+    'index'
+]); 
 
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/user', [AuthenticationController::class, 'user']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
 
-    Route::apiResource('/category',CategoryController::class);
-    Route::apiResource('/setting',SettingController::class);
-    //customer
-    Route::get('/customer/{id}', [CustomerController::class, 'show']);
-    Route::get('/customer', [CustomerController::class, 'index']);
-    Route::delete('/customer/{id}', [CustomerController::class, 'destroy']);
-    Route::put('/customer/{customer}', [CustomerController::class, 'update'])->middleware('role:Customer');;
-    //emplooyee
-    Route::get('/employee/{id}', [EmployeeController::class, 'show']);
-    Route::get('/employee', [EmployeeController::class, 'index']);
-    Route::delete('/employee/{id}', [EmployeeController::class, 'destroy']);
-    Route::put('/employee/{employee}', [EmployeeController::class, 'update'])->middleware('role:Employee');;
-    //finance
-    Route::get('/finance/{id}', [FinanceController::class, 'show']);
-    Route::get('/finance', [FinanceController::class, 'index']);
-    Route::delete('/finance/{id}', [FinanceController::class, 'destroy']);
-    Route::put('/finance/{finance}', [FinanceController::class, 'update'])->middleware('role:Finance');
-    //restaurant  
-    // Route::get('/restaurant/{id}',[App\Http\Controllers\RestaurantController::class,'show']);
-    // Route::resource('restaurat', RestaurantController::class)->only([
-    //     'index', 'store','update','destroy'
-    // ]);
-    //country  
-  
+    //admin routes
+    Route::group([
+        'middleware' => 'role:Admin',
+        'prefix' => 'admin'
+    ], function () {
 
-   
- 
+    Route::resource('setting', SettingController::class)->only([
+        'store','update','destroy'
+    ]);
 
-   
-    //table 
-    Route::get('/restaurant/{id}/table', [App\Http\Controllers\TableController::class, 'index']);
-    Route::post('/table', [App\Http\Controllers\TableController::class, 'store']);
-    Route::put('/table/{id}', [App\Http\Controllers\TableController::class, 'update']);
-    Route::delete('table/{id}', [App\Http\Controllers\TableController::class, 'destroy']);
+    Route::apiResource('/category', CategoryController::class);
+
 
     Route::resource('country', CountryController::class)->only([
-        'update', 'destroy'
-    ]);
-    Route::resource('city', CityController::class)->only([
-        'store', 'update', 'destroy'
+        'update', 'destroy','store'
     ]);
     Route::get('/country/{country}/city', [App\Http\Controllers\CityController::class, 'index']);
 
+    Route::resource('city', CityController::class)->only([
+        'store', 'update', 'destroy'
+    ]);
+  
+    Route::get('/city/{city}/departments', [App\Http\Controllers\DepartmentController::class, 'index']);
+    
     Route::resource('department', DepartmentController::class)->only([
         'store', 'destroy'
     ]);
-    Route::get('/city/{city}/departments', [App\Http\Controllers\DepartmentController::class, 'index']);
 
-    //admin routes
-    Route::group(['middleware' => 'role:Admin'], function () {
-        Route::resource('admin-restaurant', Restaurant\AdminRestaurantController::class)->only([
-           'index', 'show', 'store', 'update', 'destroy'
-     ]);
 
-    });
-    Route::group(['middleware' => 'role:Employee'],function(){
-        Route::apiResource('employee-restaurant', Restaurant\EmployeeRestaurantController::class)->only([
-            'index','store','update','show','destroy'
+
+
+        Route::apiResource('employee', EmployeeController::class)->only([
+            'show', 'index', 'destroy', 'update', 'store'
         ]);
-          
+
+
+
+        Route::resource('customer', CustomerController::class)->only([
+            'index', 'show', 'update'
+        ]);
+
+        Route::resource('finance', FinanceController::class)->only([
+            'show', 'index', 'destroy', 'update', 'store'
+        ]);
+
+        Route::resource('admin-restaurant', Restaurant\AdminRestaurantController::class)
+            ->only(['index', 'show', 'store', 'update', 'destroy']);
+
+        //table 
+        Route::get('/restaurant/{id}/table', [App\Http\Controllers\TableController::class, 'index']);
+        Route::resource('table', TableController::class)->only([
+            'store', 'update', 'destroy','index'
+        ]);
+    });
+
+
+    //employee routes
+    Route::group([
+        'middleware' => 'role:Employee'
+
+    ], function () {
+        Route::post(
+            '/update/employee',
+            [
+                App\Http\Controllers\EmployeeController::class,
+                'update_employee'
+            ]
+        );
+
+        Route::apiResource('employee', EmployeeController::class)->only([
+            'update'
+        ]);
+        Route::apiResource('employee-restaurant', Restaurant\EmployeeRestaurantController::class)
+            ->only(['index', 'store', 'update', 'show', 'destroy']);
+    });
+    //finance routes 
+    Route::group(['middleware' => 'role:Finance'], function () {
+        Route::post(
+            '/update/finance',
+            [
+                App\Http\Controllers\FinanceController::class,
+                'update_finance'
+            ]
+        );
+
+        Route::resource('finance', FinanceController::class)
+            ->only(['update']);
     });
     //customer routes
-
     Route::group(['middleware' => 'role:Customer'], function () {
+
+        Route::resource('customer', CustomerController::class)->only([
+            'update'
+        ]);
+
+        Route::post(
+            '/update/customer',
+            [
+                App\Http\Controllers\CustomerController::class,
+                'update_customer'
+            ]
+        );
 
         Route::resource('address', AddressController::class)->only([
             'index', 'store', 'update', 'destroy'
@@ -93,13 +132,13 @@ Route::group(['middleware' => 'auth:api'], function () {
         ]);
 
         Route::apiResource('customer-restaurant', Restaurant\CustomerRestaurantController::class)
-        ->only(['index']);
+            ->only(['index']);
 
         //booked table
-        Route::get('/booked-table/free-slots', [App\Http\Controllers\BookedTableController::class, 'index']);
-        Route::post('/booked-table', [App\Http\Controllers\BookedTableController::class, 'store']);
-        Route::put('/booked-table/{id}', [App\Http\Controllers\BookedTableController::class, 'update']);
-        Route::delete('/booked-table/{id}', [App\Http\Controllers\BookedTableController::class, 'destroy']);
+        Route::get('/booked-table/free-slots', [App\Http\Controllers\BookedTableController::class, 'get_free_slots']);
+        Route::resource('book-table', BookedTableController::class)->only([
+            'index', 'store', 'update', 'destroy'
+        ]);
     });
 });
 

@@ -9,7 +9,7 @@ class Table extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['restaurant_id','name','number','description','photo'];
+    protected $fillable = ['restaurant_id','name','number','description','photo','min_person','max_person'];
 
     public function restaurant()
     {

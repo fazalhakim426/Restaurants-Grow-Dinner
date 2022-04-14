@@ -15,17 +15,14 @@ class CustomerResource extends JsonResource
     public function toArray($request)
     {
         $user = $this->user; 
+       
         return [
             'id'=>$this->id,
-            'dob'=> $this->dob, 
+            'user'=> $user?new UserResource($user):null, 
+            'dob'=> $this->dob,  
             'longitude' => $this->longitude,
-            'latitude' => $this->latitude,
-            'first_name'=> $user->first_name,
-            'last_name'=> $user->last_name,   
-            'country' => new CountryResource($user->country),
-            'address'=> $user->address,  
-            'phone'=> $user->phone,  
-            'email'=> $user->email,  
+            'latitude' => $this->latitude, 
+
              'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,
             
         ];

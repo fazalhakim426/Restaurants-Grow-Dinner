@@ -59,7 +59,7 @@ class TableController extends Controller
        if($request->restaurant_id){
            return response()->json([
                'success' => false,
-               'message' => 'Can not Change Restaurant for Table',
+               'message' => "Restaurant can't be change.",
            ]);
        }
         if($request->photo){

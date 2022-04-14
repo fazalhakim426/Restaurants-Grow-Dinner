@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Http\Resources\CustomerResource;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
@@ -39,6 +40,11 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function update_customer(Request $request){ 
+         return $this->update($request,Auth::user()->userable);
+    }
+    
+
     public function update(Request $request, Customer $customer)
     { 
         $customer->update($request->all()); 
@@ -55,7 +61,7 @@ class CustomerController extends Controller
           $customer->refresh();  
         return response()->json([
             "success" => true,
-            "message" => "Student updated successfully.",
+            "message" => "Updated successfully.",
             "data" =>new CustomerResource($customer)
         ]);
  
@@ -85,23 +91,24 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    { 
-        $customer = Customer::find($id);
-        if($customer){
-            $customer->user->delete();
-            $customer->delete();
-            return response()->json([
-                "success" => true,
-                "message" => "Customer deleted successfully."
-            ]);
-        }else{
-            return response()->json([
-                "success" => false,
-                "message" => "Customer not found."
-            ]);
-        }
+    // public function destroy($id)
+    // { 
+    //     $customer = Customer::find($id);
+    //     $user = $customer->user;
+    //     if($customer){
+    //         $customer->delete();
+    //         $user->delete();
+    //         return response()->json([
+    //             "success" => true,
+    //             "message" => "Customer deleted successfully."
+    //         ]);
+    //     }else{
+    //         return response()->json([
+    //             "success" => false,
+    //             "message" => "Customer not found."
+    //         ]);
+    //     }
 
        
-    }
+    // }
 }

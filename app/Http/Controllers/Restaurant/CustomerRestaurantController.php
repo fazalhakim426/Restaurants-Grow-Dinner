@@ -47,6 +47,42 @@ class CustomerRestaurantController extends Controller
     }
 
    
+    public function popular_restaurant()
+    { 
+        $options = json_decode(request()->options);
+        $page = $options ? $options->page : 1; 
+        $itemsPerPage = $options?$options->itemsPerPage:-1;
+        $sortBy = $options?$options->sortBy:'distance';
+        $sortDesc = $options?($options->sortDesc?'DESC':'ASC'):'ASC';  
+        
+        $distanceSetting = Setting::where('key','distance')->first(); 
+        $distance = $distanceSetting->value?$distanceSetting->value:6; 
+        $mile = request()->distance?request()->distance:$distance; 
+ 
+
+        $major_query = $this->customer_major_query($mile);
+        $count = $major_query->count();  
+         
+            $restaurant = $major_query
+            ->when($itemsPerPage != -1,
+                    function ($query) use ($itemsPerPage, $page) {
+                        return $query->offset($itemsPerPage * ($page - 1))->take($itemsPerPage);
+                    }
+                )
+                ->orderBy($sortBy, $sortDesc) 
+                ->get();
+
+
+        return response()->json([ 
+            "success" => true,
+            'distance' => 'In '.$mile.' mile',
+            "total" => $count,
+            "message" => "Restaurant List",
+            "data" =>  RestaurantResource::collection($restaurant)
+        ]);
+    }
+
+   
     public function customer_major_query($mile)
     { 
 
@@ -57,7 +93,7 @@ class CustomerRestaurantController extends Controller
                 "latitude"=> request()->latitude, 
                 "longitude"=> request()->longitude,
             ]);
-        }  
+        }
         $latitude = $customer->latitude;
         $longitude = $customer->longitude;  
         $q = request()->q;
