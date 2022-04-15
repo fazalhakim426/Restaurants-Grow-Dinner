@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReviewResource extends JsonResource
+class CouponResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,15 +14,6 @@ class ReviewResource extends JsonResource
      */
     public function toArray($request)
     {
-
-
-        return
-        [
-            'created_at' => $this->created_at->diffForHumans(),
-            'stars' => $this->stars,
-            'feedback' => $this->feedback,
-            'restaurant_id' => $this->restaurant_id,
-            'customer_id' => $this->customer_id,
-        ];
+        return parent::toArray($request);
     }
 }

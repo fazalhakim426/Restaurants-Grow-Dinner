@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class Restaurant extends Model
 {
     use HasFactory;
-    // protected $appends = ['distance'];
+    protected $appends = ['rating'];
     protected $fillable = [  'category_id',
                             'closing_time',
                             'opening_time',
@@ -28,10 +28,31 @@ class Restaurant extends Model
     { 
         return $this->belongsTo(Category::class);
     } 
+    
+    public function bookedTables()
+    {
+        return $this->hasManyThrough(
+            BookedTable::class,
+            Table::class,
+            'restaurant_id', // Foreign key on the environments table...
+            'table_id', // Foreign key on the deployments table...
+            'id', // Local key on the projects table...
+            'id' // Local key on the environments table...
+        );
+    }
+    public function getRatingAttribute()
+    {
+        return $this->reviews()->avg('stars');
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
     }
+    // public function getReviewsCountAttribute()
+    // {
+    //     return $this->reviews()->count();
+    // }
     public function user(){
         return $this->morphOne(User::class,'userable');
     }

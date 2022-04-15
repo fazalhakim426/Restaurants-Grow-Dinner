@@ -32,18 +32,9 @@ class RestaurantResource extends JsonResource
             "website_link" => $this->website_link,
             "informational_tags" => $this->informational_tags,
             "created_at" => $this->created_at,  
-            'category' =>  $this->category, 
-            'review' =>[
-                'rating' => $this->reviews()->avg('stars'),
-                'total' =>$this->reviews()->count(),
-                '5' => $this->reviews()->where('stars',5)->count(),
-                '4' => $this->reviews()->where('stars',4)->count(),
-                '3' => $this->reviews()->where('stars',3)->count(),
-                '2' => $this->reviews()->where('stars',2)->count(),
-                '1' => $this->reviews()->where('stars',1)->count(),
-               'reviews' => ReviewResource::collection($this->reviews), 
-            ],
-            'visited_restaurant'=> new VisitedRestaurantRersource($this->visited_restaurant),
+            'category' =>  $this->category,  
+            'review_details' =>new ReviewDetailsResource($this),
+            'visited_restaurant'=> new VisitedRestaurantRersource($this->whenLoaded('visited_restaurant')),
         ];
     }
 }

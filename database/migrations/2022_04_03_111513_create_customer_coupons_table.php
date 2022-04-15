@@ -16,7 +16,7 @@ class CreateCustomerCouponsTable extends Migration
         Schema::create('customer_coupons', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('customer_id')->constrained();
-            $table->foreignId('coupen_id')->constrained(); 
+            $table->foreignId('coupon_id')->constrained(); 
         });
     }
 

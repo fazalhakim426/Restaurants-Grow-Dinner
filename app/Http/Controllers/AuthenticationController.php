@@ -29,17 +29,15 @@ class AuthenticationController extends Controller
             'email' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean'
-        ]);
-
-        
+        ]); 
         $credentials = request(['email', 'password']); 
         if (!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
-        if(!$user->active){
-
+        $user= User::with('userable')->where('id',$user->id)->first();
+        if(!$user->active){ 
             if (Auth::check()) {
                 Auth::user()->authAcessToken()->delete();
             }

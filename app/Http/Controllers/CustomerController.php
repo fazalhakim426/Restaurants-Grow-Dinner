@@ -14,7 +14,7 @@ class CustomerController extends Controller
 {  
     public function index()
     {
-        $customer = Customer::all();     
+        $customer = Customer::with('user')->get();     
         return response()->json([
             "success" => true,
             "message" => "Customer List",

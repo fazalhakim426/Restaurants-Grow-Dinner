@@ -13,16 +13,13 @@ class CustomerResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
-    {
-        $user = $this->user; 
-       
+    { 
         return [
             'id'=>$this->id,
-            'user'=> $user?new UserResource($user):null, 
+            'user'=> new UserResource($this->whenLoaded('user')), 
             'dob'=> $this->dob,  
             'longitude' => $this->longitude,
-            'latitude' => $this->latitude, 
-
+            'latitude' => $this->latitude,  
              'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,
             
         ];

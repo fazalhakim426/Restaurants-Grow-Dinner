@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         'prefix' => 'admin'
     ], function () {
 
+        Route::apiResource('coupon',CoupenController::class);
+
     Route::resource('setting', SettingController::class)->only([
         'store','update','destroy'
     ]);

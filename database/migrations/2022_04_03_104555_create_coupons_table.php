@@ -13,7 +13,7 @@ class CreateCouponsTable extends Migration
      */
     public function up()
     {
-        Schema::create('coupens', function (Blueprint $table) {
+        Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->string('promo_code');
             $table->string('start_at');
@@ -31,6 +31,6 @@ class CreateCouponsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coupens');
+        Schema::dropIfExists('coupons');
     }
 }

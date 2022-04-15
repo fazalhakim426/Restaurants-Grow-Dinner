@@ -9,19 +9,24 @@ use App\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use function PHPSTORM_META\type;
+
 class CustomerRestaurantController extends Controller
 {
     public function index()
     { 
-        $options = json_decode(request()->options);
+        $options = json_decode(request()->options); 
+  
         $page = $options ? $options->page : 1; 
         $itemsPerPage = $options?$options->itemsPerPage:-1;
         $sortBy = $options?$options->sortBy:'distance';
-        $sortDesc = $options?($options->sortDesc?'DESC':'ASC'):'ASC';  
-        
+        $sortDesc = $options?($options->sortDesc?'DESC':'ASC'):'ASC'; 
+ 
+            // dd(json_decode(request()->options));
+
         $distanceSetting = Setting::where('key','distance')->first(); 
         $distance = $distanceSetting->value?$distanceSetting->value:6; 
-        $mile = request()->distance?request()->distance:$distance; 
+        $mile = request()->distance? request()->distance:$distance; 
  
 
         $major_query = $this->customer_major_query($mile);
@@ -31,56 +36,28 @@ class CustomerRestaurantController extends Controller
             ->when($itemsPerPage != -1,
                     function ($query) use ($itemsPerPage, $page) {
                         return $query->offset($itemsPerPage * ($page - 1))->take($itemsPerPage);
-                    }
-                )
-                ->orderBy($sortBy, $sortDesc) 
-                ->get();
-
+                    })->when($sortBy=='popular',function($q){ 
+                   return $q->orderBy('reviews_count', 'DESC') 
+                            ->orderBy('booked_tables_count', 'DESC');
+                })->when($sortBy=='distance',function($q) use($sortBy,$sortDesc,$mile){
+                     return  $q->orderBy($sortBy, $sortDesc);
+                })->get(); 
+//   $restaurant = $restaurant->sortBy(function($review){
+//             return $review->booked_tables_count+$review->review_count+$review->rating;
+//         }); 
 
         return response()->json([ 
             "success" => true,
             'distance' => 'In '.$mile.' mile',
             "total" => $count,
-            "message" => "Restaurant List",
-            "data" =>  RestaurantResource::collection($restaurant)
+            "message" => ($sortBy=='popular'?'Popular':'Nearby') ." Restaurant List",
+            "data" =>   RestaurantResource::collection($restaurant),
         ]);
     }
+  
 
    
-    public function popular_restaurant()
-    { 
-        $options = json_decode(request()->options);
-        $page = $options ? $options->page : 1; 
-        $itemsPerPage = $options?$options->itemsPerPage:-1;
-        $sortBy = $options?$options->sortBy:'distance';
-        $sortDesc = $options?($options->sortDesc?'DESC':'ASC'):'ASC';  
-        
-        $distanceSetting = Setting::where('key','distance')->first(); 
-        $distance = $distanceSetting->value?$distanceSetting->value:6; 
-        $mile = request()->distance?request()->distance:$distance; 
  
-
-        $major_query = $this->customer_major_query($mile);
-        $count = $major_query->count();  
-         
-            $restaurant = $major_query
-            ->when($itemsPerPage != -1,
-                    function ($query) use ($itemsPerPage, $page) {
-                        return $query->offset($itemsPerPage * ($page - 1))->take($itemsPerPage);
-                    }
-                )
-                ->orderBy($sortBy, $sortDesc) 
-                ->get();
-
-
-        return response()->json([ 
-            "success" => true,
-            'distance' => 'In '.$mile.' mile',
-            "total" => $count,
-            "message" => "Restaurant List",
-            "data" =>  RestaurantResource::collection($restaurant)
-        ]);
-    }
 
    
     public function customer_major_query($mile)
@@ -100,15 +77,16 @@ class CustomerRestaurantController extends Controller
         $country_id = request()->country_id;
         $category_id = request()->category_id; 
         return
-        Restaurant::select(DB::raw("*, ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( latitude ) ) ) ) AS distance"))
+        Restaurant::
+        select(DB::raw("*, ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( latitude ) ) ) ) AS distance"))
+        ->withCount('reviews') 
+        ->withCount('bookedTables') 
         ->havingRaw("distance < '$mile'")
         ->whereHas('category',function($query){ 
             $query->where('active',isset(request()->active)?request()->active:1);
        })->whereHas('user',function($query){ 
-           $query->where('active',isset(request()->active)?request()->active:1);
-        
-       })
-        
+           $query->where('active',isset(request()->active)?request()->active:1); 
+       }) 
         ->when($category_id, function ($q) use ($category_id) {
             return $q->where('category_id', $category_id);
         }) 

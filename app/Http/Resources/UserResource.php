@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,
-            'userable' => $this->userable,
+            'userable' => $this->whenLoaded('userable'),
             'userable_type' => $this->userable_type,  
             'userable_id' => $this->userable_id,  
         ];
