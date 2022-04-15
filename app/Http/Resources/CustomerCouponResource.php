@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CouponResource extends JsonResource
+class CustomerCouponResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,8 @@ class CouponResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'promo_code' => $this->promo_code,
-            'start_at' => $this->start_at,
-            'end_at' => $this->end_at,
-            'is_fixed'=> $this->is_fixed,
-            'amount' => $this->amount,
-            'active' => $this->active,
-            'expired' => $this->expired,
+            'id'=>$this->id,
+            'coupon_resource'=> new CouponResource($this->coupon),
         ];
     }
 }

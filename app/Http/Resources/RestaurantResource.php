@@ -18,6 +18,7 @@ class RestaurantResource extends JsonResource
             'first_name'=> $user->first_name,
             'email'=> $user->email,
             'phone'=> $user->phone,  
+            'address'=> $user->address,  
             'country'=> $user->country, 
             'verified'=> $user->varified_at?true:false,
             "closing_time" => $this->closing_time,

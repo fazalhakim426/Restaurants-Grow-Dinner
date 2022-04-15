@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Customer;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest; 
 use App\Http\Resources\CustomerResource;
 use App\User;
@@ -10,8 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class CustomerController extends Controller
-{  
+class CustomerController extends Controller{  
     public function index()
     {
         $customer = Customer::with('user')->get();     
@@ -38,19 +38,18 @@ class CustomerController extends Controller
             "message" => "Customer created successfully.",
             "data" => new CustomerResource($customer), 
         ]);
-    }
+    } 
 
     public function update_customer(Request $request){ 
          return $this->update($request,Auth::user()->userable);
     }
     
-
     public function update(Request $request, Customer $customer)
     { 
         $customer->update($request->all()); 
         
         $user = $customer->user;
-        $request->validate([ 
+        $request->validate([
             'email' =>'email|unique:users,email,'.$user->id,  
             'phone' =>'min:11|max:14|unique:users,phone,'.$user->id,  
         ]);

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Address;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Http\Resources\AddressResource;
 use Illuminate\Http\Request;

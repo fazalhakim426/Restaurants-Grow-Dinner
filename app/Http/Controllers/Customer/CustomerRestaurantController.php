@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Restaurant;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RestaurantResource;
 use App\Restaurant;
 use App\Setting; 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
-use function PHPSTORM_META\type;
+use Illuminate\Support\Facades\DB; 
 
 class CustomerRestaurantController extends Controller
 {

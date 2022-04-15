@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\BookedTable;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\BookedTableResource;
 use App\Table;
 use Illuminate\Http\Request;

@@ -7,7 +7,7 @@ use App\Http\Requests\CouponRequest;
 use App\Http\Resources\CouponResource;
 use Illuminate\Http\Request;
 
-class CoupenController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.

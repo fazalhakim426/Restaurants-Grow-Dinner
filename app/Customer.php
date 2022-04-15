@@ -18,10 +18,18 @@ class Customer extends Model
         return $this->hasMany(Address::class);
     }
     
-    public function coupons()
+    public function customer_coupons()
     {
-        return $this->hasMany(Coupen::class);
+        return $this->hasMany(CustomerCoupon::class);
     }
+    // public function coupons()
+    // {
+    //     return $this->hasManyThrough(
+    //         CustomerCoupon::class,
+    //         Coupon::class
+    //     );
+    // }
+ 
     public function bookedTable()
     {
         return $this->hasMany(BookedTable::class);

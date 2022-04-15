@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ReviewRequest;
 use App\Http\Resources\ReviewResource;
-use App\Review;
-use Illuminate\Http\Request;
+use App\Review; 
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller{
@@ -57,8 +57,7 @@ class ReviewController extends Controller{
             }
         }
         public function destroy($id)
-        {
-            
+        { 
             $auth_user = Auth::user();
             $customer = $auth_user->userable;
             $review = $customer->Reviewes()->where('id',$id)->first();  
@@ -73,10 +72,7 @@ class ReviewController extends Controller{
                     "success" => false,
                     "message" => "Review not found!."
                 ]);
-            }
-    
-           
+            } 
         }
      
     }
-    
