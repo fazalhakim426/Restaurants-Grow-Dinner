@@ -5,8 +5,8 @@
 export default {
   data() {
     return {
-      email: "admin@themesbrand.com",
-      password: "123456789",
+      email: "admin@test.com",
+      password: "password",
       tryingToLogIn: false,
       isAuthError: false,
     };

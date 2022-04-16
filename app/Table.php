@@ -30,8 +30,9 @@ class Table extends Model
         $to = strtotime($to);
         $slots= array(); 
 
-        while($from<$to){
-           array_push($slots,date('H:i A',$from).' - '. date('H:i A',$from+$interval));
+        while($from<$to){ 
+
+           array_push($slots,date('h:i A',$from).' - '. date('h:i A',$from+$interval));
            $from = $from+$interval; 
         }
         return $slots;
