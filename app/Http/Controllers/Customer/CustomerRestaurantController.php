@@ -78,6 +78,7 @@ class CustomerRestaurantController extends Controller
         Restaurant::
         select(DB::raw("*, ( 3959 * acos( cos( radians('$latitude') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('$longitude') ) + sin( radians('$latitude') ) * sin( radians( latitude ) ) ) ) AS distance"))
         ->withCount('reviews') 
+        ->with('reviews') 
         ->withCount('bookedTables') 
         ->havingRaw("distance < '$mile'")
         ->whereHas('category',function($query){ 

@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Auth;
 class CustomerCouponController extends Controller
 {
     public function index()
-    {
-        if(isset(request()->active))
-        $coupens = Auth::user()->userable->customer_coupons()->where('active',true)->get();
+    { 
+        if(request()->past)
+        $coupens = Auth::user()->userable->customer_coupons()->whereHas('coupon',function($q){
+            $q->where('end_at','<',date('Y-m-d'))
+            ->orWhere('start_at','>',date('Y-m-d'));
+        })->get();
         else
         $coupens = Auth::user()->userable->customer_coupons()->whereHas('coupon',function($q){
-            $q->where('active',false);
+            $q->where('start_at','<',date('Y-m-d'))
+            ->where('end_at','>',date('Y-m-d'));
         })->get();
 
  
@@ -57,6 +61,28 @@ class CustomerCouponController extends Controller
         }
 
      }
+     public function show($code)
+     { 
+        $coupon = Coupon::where('promo_code',$code)->first();
+        
+       if(!$coupon)
+        return response()->json([
+                    'success' => false,
+                    'message' => 'Code is invalid!'
+                ]);
+        if($coupon->active)
+         return response()->json([
+             'success' => true,
+             'message' => 'Active Coupon',
+              'data' => new CouponResource($coupon)
+         ]);
+         else 
+             return response()->json([
+                 'success' => false,
+                 'message' => 'Coupon is not active!'
+             ]);
+         
+     }
      public function destroy($id)
      {
          $customer_coupon = CustomerCoupon::find($id);
@@ -64,7 +90,13 @@ class CustomerCouponController extends Controller
             $customer_coupon->delete();
             return response()->json([
                 'success' => true,
-                'message' => 'Deleted Successfully!'
+                'message' => 'Coupon Removed successfully!'
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false,
+                'message' => 'Coupon not Exists!'
             ]);
         }
      }

@@ -22,22 +22,18 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerCoupon::class);
     }
-    // public function coupons()
-    // {
-    //     return $this->hasManyThrough(
-    //         CustomerCoupon::class,
-    //         Coupon::class
-    //     );
-    // }
+     
  
     public function bookedTable()
     {
         return $this->hasMany(BookedTable::class);
     }
-    public function whishList()
+  
+    public function whishLists()
     {
-        return $this->hasMany(WhishList::class);
+        return $this->belongsToMany(Restaurant::class,'whish_lists');
     }
+
 
     protected $fillable = [
         'dob','latitude','longitude'

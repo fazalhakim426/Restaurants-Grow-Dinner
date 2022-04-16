@@ -31,7 +31,7 @@ class Table extends Model
         $slots= array(); 
 
         while($from<$to){
-           array_push($slots,date('H:i',$from).' - '. date('H:i',$from+$interval));
+           array_push($slots,date('H:i A',$from).' - '. date('H:i A',$from+$interval));
            $from = $from+$interval; 
         }
         return $slots;

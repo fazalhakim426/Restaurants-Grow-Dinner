@@ -14,7 +14,7 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 
 Route::apiResource('/setting', SettingController::class)->only([
     'index'
-]); 
+]);
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -27,26 +27,26 @@ Route::group(['middleware' => 'auth:api'], function () {
         'prefix' => 'admin'
     ], function () {
 
-        Route::apiResource('coupon',CouponController::class);
+        Route::apiResource('coupon', CouponController::class);
 
         Route::resource('setting', SettingController::class)->only([
-            'store','update','destroy'
+            'store', 'update', 'destroy'
         ]);
 
-      Route::apiResource('/category', CategoryController::class);
+        Route::apiResource('/category', CategoryController::class);
 
 
         Route::resource('country', CountryController::class)->only([
-            'update', 'destroy','store'
+            'update', 'destroy', 'store'
         ]);
         Route::get('/country/{country}/city', [App\Http\Controllers\CityController::class, 'index']);
 
         Route::resource('city', CityController::class)->only([
             'store', 'update', 'destroy'
         ]);
-    
+
         Route::get('/city/{city}/departments', [App\Http\Controllers\DepartmentController::class, 'index']);
-        
+
         Route::resource('department', DepartmentController::class)->only([
             'store', 'destroy'
         ]);
@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         //table 
         Route::get('/restaurant/{id}/table', [App\Http\Controllers\TableController::class, 'index']);
         Route::resource('table', TableController::class)->only([
-            'store', 'update', 'destroy','index'
+            'store', 'update', 'destroy', 'index'
         ]);
     });
 
@@ -85,19 +85,19 @@ Route::group(['middleware' => 'auth:api'], function () {
         'prefix' => 'employee'
 
     ], function () {
-            Route::post(
-                '/update',
-                [
-                    App\Http\Controllers\EmployeeController::class,
-                    'update_employee'
-                ]
-            );
+        Route::post(
+            '/update',
+            [
+                App\Http\Controllers\EmployeeController::class,
+                'update_employee'
+            ]
+        );
 
-            Route::apiResource('employee', EmployeeController::class)->only([
-                'update'
-            ]);
-            Route::apiResource('restaurant', Restaurant\EmployeeRestaurantController::class)
-                ->only(['index', 'store', 'update', 'show', 'destroy']);
+        Route::apiResource('employee', EmployeeController::class)->only([
+            'update'
+        ]);
+        Route::apiResource('restaurant', Restaurant\EmployeeRestaurantController::class)
+            ->only(['index', 'store', 'update', 'show', 'destroy']);
     });
     //finance routes 
     Route::group(['middleware' => 'role:Finance'], function () {
@@ -116,11 +116,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group([
         'middleware' => 'role:Customer',
         'prefix' => 'customer',
-         ], function () {
+    ], function () {
 
         Route::resource('coupon', Customer\CustomerCouponController::class)->only([
-              'index','store','destroy'
+            'index', 'store', 'destroy', 'show'
         ]);
+
+        Route::resource('whishlist', Customer\WhishListController::class)->only([
+            'index','show'
+        ]);
+
         Route::resource('customer', Customer\CustomerController::class)->only([
             'update'
         ]);

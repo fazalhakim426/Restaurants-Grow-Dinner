@@ -14,6 +14,7 @@ class RestaurantResource extends JsonResource
         $user = $this->user;   
         return [
             'id'=> $this->id,
+            'liked' => $this->liked,
             'active'=> $this->user->active,
             'first_name'=> $user->first_name,
             'email'=> $user->email,
@@ -21,9 +22,9 @@ class RestaurantResource extends JsonResource
             'address'=> $user->address,  
             'country'=> $user->country, 
             'verified'=> $user->varified_at?true:false,
-            "closing_time" => $this->closing_time,
-            "opening_time" => $this->opening_time, 
-            "distance" => $this->distance?$this->distance:null,
+            "opening_time" => date('h:i A', strtotime( $this->opening_time)), 
+            "closing_time" => date('h:i A', strtotime($this->closing_time)),
+            "distance" => $this->distance?$this->distance:$this->customer_distance,
             "description" => $this->description,
             "photo" => env('APP_URL').'/'.$this->photo,
             "menu" =>  env('APP_URL').'/'.$this->menu,

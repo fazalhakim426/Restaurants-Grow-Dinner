@@ -39,6 +39,7 @@ class BookedTableController extends Controller
 
         return array_diff($table->allTimeSlots,$this->bookedSlots($table,$date));
     }
+    
 
 
 
