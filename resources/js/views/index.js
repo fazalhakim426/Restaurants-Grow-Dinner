@@ -12,3 +12,5 @@ Vue.component("reset-password", require("./account/reset-password").default);
 
 Vue.component("pages-404", require("./utility/404").default);
 Vue.component("pages-500", require("./utility/500").default);
+
+Vue.component("customers", require("./ecommerce/customers").default);

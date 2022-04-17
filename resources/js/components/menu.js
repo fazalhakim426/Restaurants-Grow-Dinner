@@ -50,9 +50,9 @@ export const menuItems = [
     },
     {
         id: 8,
-        label: "menuitems.calendar.text",
+        label: "menuitems.customer.text",
         icon: "bx-calendar",
-        link: "/r"
+        link: "/customers"
     },
     {
         id: 9,

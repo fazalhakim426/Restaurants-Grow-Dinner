@@ -26,9 +26,44 @@ class CustomerSeeder extends Seeder
     public function run()
     {
 
+
+$locations = [
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.27241878747298937'],
+    ['latitude' => ' 51.60584203446792' , 'longitude' => '-0.273620417029903'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.2695005442633421'],
+    ['latitude' => ' 51.6150098579756' , 'longitude' => '-0.29868297635981483'],
+    ['latitude' => ' 51.613464250058975' , 'longitude' => '-0.29851131499454137'],
+    ['latitude' => ' 51.604456039586815' , 'longitude' => '-0.3406541801691535'], 
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.27241878747298937'],
+    ['latitude' => ' 51.60584203446792' , 'longitude' => '-0.273620417029903'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.2695005442633421'],
+    ['latitude' => ' 51.6150098579756' , 'longitude' => '-0.29868297635981483'],
+    ['latitude' => ' 51.613464250058975' , 'longitude' => '-0.29851131499454137'],
+    ['latitude' => ' 51.604456039586815' , 'longitude' => '-0.3406541801691535'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.27241878747298937'],
+    ['latitude' => ' 51.60584203446792' , 'longitude' => '-0.273620417029903'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.2695005442633421'],
+    ['latitude' => ' 51.6150098579756' , 'longitude' => '-0.29868297635981483'],
+    ['latitude' => ' 51.613464250058975' , 'longitude' => '-0.29851131499454137'],
+    ['latitude' => ' 51.604456039586815' , 'longitude' => '-0.3406541801691535'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.27241878747298937'],
+    ['latitude' => ' 51.60584203446792' , 'longitude' => '-0.273620417029903'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.2695005442633421'],
+    ['latitude' => ' 51.6150098579756' , 'longitude' => '-0.29868297635981483'],
+    ['latitude' => ' 51.613464250058975' , 'longitude' => '-0.29851131499454137'],
+    ['latitude' => ' 51.604456039586815' , 'longitude' => '-0.3406541801691535'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.27241878747298937'],
+    ['latitude' => ' 51.60584203446792' , 'longitude' => '-0.273620417029903'],
+    ['latitude' => ' 51.6056821141409' , 'longitude' => '-0.2695005442633421'],
+    ['latitude' => ' 51.6150098579756' , 'longitude' => '-0.29868297635981483'],
+    ['latitude' => ' 51.613464250058975' , 'longitude' => '-0.29851131499454137'],
+    ['latitude' => ' 51.604456039586815' , 'longitude' => '-0.3406541801691535'], 
+]; 
+
+
         $this->faker = Faker::create();
         $i = 0;
-        while ($i < 30) {
+        while ($i < 29) {
             $i++;
 
             $customer = Customer::create([
@@ -65,14 +100,13 @@ class CustomerSeeder extends Seeder
 
 
 
-
-            $i++;
+ 
             $restaurant = Restaurant::create([
                 'category_id' => 1,
                 'closing_time' => '17:00',
                 'opening_time' => '09:00',
-                'latitude' => '34.' . $i . '4312',
-                'longitude' => '-73.159848',
+                'latitude' => $locations[$i]['latitude'],
+                'longitude' =>$locations[$i]['longitude'],
                 'description' => 'dummy description',
                 'photo' => 'upload/restaurant/photo/default.png',
                 'menu' => 'upload/restaurant/menu/default.png', //photo

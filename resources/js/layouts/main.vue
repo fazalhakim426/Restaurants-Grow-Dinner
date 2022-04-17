@@ -14,6 +14,7 @@ export default {
   },
   methods: {},
   mounted() {
+    
     // document.querySelector("html").setAttribute('dir', 'rtl');
   }
 };

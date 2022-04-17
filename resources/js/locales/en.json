@@ -121,6 +121,9 @@
     "apps": {
       "text": "Apps"
     },
+  "customer":{
+      "text" : "Customer"
+  },
     "calendar": {
       "text": "Calendar"
     },
