@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         //table 
         Route::get('/restaurant/{id}/table', [App\Http\Controllers\TableController::class, 'index']);
         Route::resource('table', TableController::class)->only([
-            'store', 'update', 'destroy', 'index'
+            'store', 'update', 'destroy', 
         ]);
     });
 
@@ -147,7 +147,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::apiResource('restaurant', Customer\CustomerRestaurantController::class)
             ->only(['index']);
-
+        Route::get('/restaurant/{id}/table', [App\Http\Controllers\TableController::class, 'index']);
+      
         //booked table
         Route::get('/booked-table/free-slots', [App\Http\Controllers\Customer\BookedTableController::class, 'get_free_slots']);
         Route::resource('book-table', Customer\BookedTableController::class)->only([
