@@ -15,8 +15,8 @@ class Role
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next,$role)
-    {
-        $user = $request->user();  
+    { 
+        $user = $request->user();   
         if($user->userable_type ==  "App\\".$role){ 
               return $next($request);
         }

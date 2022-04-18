@@ -63,12 +63,19 @@ class CustomerRestaurantController extends Controller
 
         $auth_user = Auth::user();
         $customer = $auth_user->userable;
+        
         if(request()->latitude && request()->longitude){ 
             $customer->update([
                 "latitude"=> request()->latitude, 
                 "longitude"=> request()->longitude,
             ]);
+            if(request()->address){
+               $customer->userable->update([
+                   'address'=> request()->address
+               ]);
+            }
         }
+        
         $latitude = $customer->latitude;
         $longitude = $customer->longitude;  
         $q = request()->q;

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 @php
     if(isset($id) && $component == "templates") {
@@ -13,8 +12,8 @@
     }
 @endphp
 @section('title')
-   {{ $title }} | {{ config('app.name', 'Skote') }}
+   {{ $title }} | {{ config('app.name', 'Restaurants') }}
 @endsection
 @section('content')
-<dynamic-component component="{{ $component }}" id="{{ $id ?? "" }}" />
+<dynamic-component component="{{ $component }}" access_token="{{ $access_token }}" id="{{ $id ?? "" }}" />
 @endsection

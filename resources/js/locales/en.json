@@ -121,9 +121,47 @@
     "apps": {
       "text": "Apps"
     },
-  "customer":{
-      "text" : "Customer"
-  },
+    "customers":{
+        "text" : "Customers"
+    },
+    "employees":{
+        "text" : "Employee"
+    },
+    "restaurant":{
+        "text" : "Restaurants",
+        "list": {
+          "products": "Products",
+          "restaurantdetail": "Restaurant Detail",
+          "orders": "Orders",
+          "customers": "Customers",
+          "cart": "Cart",
+          "checkout": "Checkout",
+          "shops": "Shops",
+          "addrestaurant": "Add Restaurant"
+        }
+    },
+    "sales":{
+        "text" : "Sales"
+    },
+    "finances":{
+        "text" : "Finances"
+    },
+    "countries":{
+        "text" : "Countries"
+    },
+    "cities":{
+        "text" : "cities"
+    },
+    "departements":{
+        "text" : "Departements"
+    },
+    "categories":{
+        "text" : "Categories"
+    },
+    "coupons":{
+        "text" : "Coupons"
+    }, 
+
     "calendar": {
       "text": "Calendar"
     },
@@ -134,6 +172,30 @@
     "filemanager": {
       "text": "File Manager",
       "badge": "New"
+    },
+    "all_visited_restaurants":{
+      "text" : "All Visited Restaurants"
+    },
+    "my_visited_restaurants":{
+      "text" : "My Visited Restaurants"
+    },
+    "my_booking_and_meetings":{
+      "text" : "My Booking and Meetings"
+    },
+    "all_booking_and_meetings":{
+      "text" : "All Booking and Meetings"
+    },
+    "products":{
+      "text" : "Products"
+    },
+    "payments_and_invoices":{
+      "text" : "Payment and Invoices"
+    },  
+    "salary":{
+      "text" : "Salary"
+    }, 
+    "accounting":{
+      "text" : "Accountings"
     },
     "ecommerce": {
       "text": "Ecommerce",

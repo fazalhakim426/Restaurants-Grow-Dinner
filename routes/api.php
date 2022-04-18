@@ -9,6 +9,7 @@ Route::get('country', [App\Http\Controllers\CountryController::class, 'index']);
 Route::get('/country/{country}/city', [App\Http\Controllers\CityController::class, 'index']);
 Route::get('/city/{city}/departments', [App\Http\Controllers\DepartmentController::class, 'index']);
 
+Route::apiResource('/category', CategoryController::class)->only(['index']);
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 

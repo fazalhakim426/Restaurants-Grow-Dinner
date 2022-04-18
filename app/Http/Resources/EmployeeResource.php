@@ -22,8 +22,7 @@ class EmployeeResource extends JsonResource
             'department'=> $this->department->name,
             'bank_account'=> $this->bank_account,
             'documents'=> env('APP_URL').'/'. $this->documents, 
-             'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,
-            
+            'verified' => $this->email_verified_at || $this->phone_verified_at?true:false,  
         ];
     }
 }

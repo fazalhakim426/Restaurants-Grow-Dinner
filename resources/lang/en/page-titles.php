@@ -1,15 +1,8 @@
 <?php
 
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Page Titles
-    |--------------------------------------------------------------------------
-    |
-     */
-
+return [ 
     'home' => 'Dashboard',
+    'employee_home' => 'Dashboard',
     'login' => 'Login',
     'register' => 'Register',
     'reset' => 'Reset Password',

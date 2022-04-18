@@ -1,10 +1,16 @@
 <template>
-    <component :is="component_name" :id="id" />
+<div> 
+    <component :is="component_name"  :access_token='access_token' :id="id" />
+</div>
 </template>
 <script>
 export default {
     props: {
         component: {
+            type: String,
+            required: true
+        },
+        access_token: {
             type: String,
             required: true
         },

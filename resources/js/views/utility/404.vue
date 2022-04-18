@@ -14,7 +14,7 @@ export default {
             </h1>
             <h4 class="text-uppercase">Sorry, page not found</h4>
             <div class="mt-5 text-center">
-              <a class="btn btn-primary" href="/">Back to Dashboard</a>
+              <a class="btn btn-primary" href="/admin">Back to Dashboard</a>
             </div>
           </div>
         </div>

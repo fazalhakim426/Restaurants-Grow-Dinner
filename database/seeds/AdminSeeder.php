@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Admin;
+use App\Finance;
 use App\Setting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,8 @@ class AdminSeeder extends Seeder
             'password' => Hash::make('password'),
             'created_at' => now(),
         ]);
+
+    
 
         Setting::create([
             'key' => 'distance', 
