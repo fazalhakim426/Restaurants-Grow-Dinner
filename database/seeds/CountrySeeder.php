@@ -283,7 +283,8 @@ class CountrySeeder extends Seeder
             ]);
 
             Category::create([
-                'name'=>  $this->faker->word .' '.$key
+                'name' =>  $this->faker->word .' '.$key,
+                'icon' =>  'default.png'
             ]);
         }
     }

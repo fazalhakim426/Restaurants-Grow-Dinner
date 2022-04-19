@@ -229,13 +229,13 @@ export default {
                                 <div v-if="item.discount" class="avatar-sm product-ribbon">
                                     <span class="avatar-title rounded-circle bg-primary">-{{ item.discount }}%</span>
                                 </div>
-                                <a :href="`/restaurant/restaurant-detail/`">
+                                <a :href="`/admin/restaurant-detail`">
                                     <img :src="`${item.product}`" alt class="img-fluid mx-auto d-block" />
                                 </a>
                             </div>
                             <div class="mt-4 text-center">
                                 <h5 class="mb-3 text-truncate">
-                                    <a class="text-dark" :href="`/restaurant/restaurant-detail/${item.id}`">{{ item.name }}</a>
+                                    <a class="text-dark" :href="`/admin/restaurant-detail${item.id}`">{{ item.name }}</a>
                                 </h5>
                                 <p class="text-muted">
                                     <i class="bx bx-star text-warning"></i>

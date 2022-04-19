@@ -12,12 +12,10 @@ Vue.component(
     require("./admin/restaurant/restaurant-detail").default
 );
 Vue.component("restaurant-orders", require("./admin/restaurant/orders").default);
-Vue.component("restaurant-customers", require("./admin/restaurant/customers").default);
-Vue.component("restaurant-cart", require("./admin/restaurant/cart").default);
-Vue.component("restaurant-checkout", require("./admin/restaurant/checkout").default);
-Vue.component("restaurant-shops", require("./admin/restaurant/shops").default);
-Vue.component(
-    "add-restaurant",
+Vue.component("restaurant-customers", require("./admin/restaurant/customers").default); 
+Vue.component("countries", require("./admin/countries/countries").default); 
+Vue.component("categories", require("./admin/categories/categories").default); 
+Vue.component("add-restaurant",
     require("./admin/restaurant/add-restaurant").default
 );
 

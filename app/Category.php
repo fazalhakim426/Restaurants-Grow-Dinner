@@ -10,8 +10,10 @@ class Category extends Model
 
     protected $fillable = [ 
         "name", 
-        "active"
+        "active",
+        'icon',
     ];
+    
     public function resturants()
     {
         return $this->hasMany(Restaurant::class);
