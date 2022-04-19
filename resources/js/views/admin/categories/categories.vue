@@ -12,8 +12,13 @@ export default {
   components: { Layout, PageHeader, BEditableTable},
   data() {
     return {
+
+      category:{
+        name:"",
+        icon: "",
+      },
       tableData: tableData,
-      title: "Advanced Table",
+      title: "Categories",
       items: [
         {
           text: "Tables",
@@ -32,27 +37,12 @@ export default {
       filterOn: [],
       sortBy: "age",
       sortDesc: false,
-      fields: [
-        { key: "name", sortable: true },
-        { key: "position", sortable: true },
-        { key: "office", sortable: true },
-        { key: "age", sortable: true },
-        { key: "date", sortable: true },
-        { key: "salary", sortable: true },
-      ],
-      editableTablefields: [
-        { key: "name", label: "Name", type: "text", editable: true},
-        { key: "department", label: "Department", type: "select", options: ['Accounting', 'Development', 'HR', 'Marketing'], editable: true },
-        { key: "age", label: "Age", type: "number", editable: true },
-        { key: "dateOfBirth", label: "Date Of Birth", type: "date", editable: true },
-        { key: "isActive", label: "Is Active", type: "checkbox", editable: true },
-      ],
-       editableDataItems: [
-          { age: 40, name: 'Dickerson', department: 'Development', dateOfBirth: '1984-05-20', isActive: true },
-          { age: 21, name: 'Larsen', department: 'Marketing', dateOfBirth: '1984-05-20', isActive: false },
-          { age: 89, name: 'Geneva', department: 'HR', dateOfBirth: '1984-05-20', isActive: false },
-          { age: 38, name: 'Jami', department: 'Accounting', dateOfBirth: '1984-05-20', isActive: true }
-        ]
+      fields: [  
+        { key: "icon", label: "Image", type: "image" },
+        { key: "name", label: "Name", type: "text" },   
+        { key: "active", label: "Active", type: "boolean"},   
+        { key: "action" },   
+      ], 
     };
   },
   computed: {
@@ -87,11 +77,61 @@ export default {
   <Layout>
     <PageHeader :title="title" :items="items" />
 
-    <div class="row">
-      <div class="col-12">
+
+  <div class="row">
+      <div class="col-lg-7 col-sm-12 col-md-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Data Table</h4>
+            <h4 class="card-title mb-4">Add Category</h4>
+            <form class="repeater" enctype="multipart/form-data">
+              <div class="row"> 
+                  <div class="mb-2 col-lg-5 col-md-5">
+                    <label for="name">Name</label>
+                    <input
+                      id="name"
+                      v-model="category.name"
+                      type="text"
+                      name="untyped-input"
+                      class="form-control"
+                    />
+                  </div>
+  
+                  <div class="mb-2 col-lg-5 col-md-5">
+                    <label for="icon">Icon</label>
+                    <input id="icon" type="file" class="form-control-file" />
+                  </div>
+ 
+                  <div class="mb-2 col-lg-2 col-md-2 align-self-center">
+                     <div class="d-grid">
+                    <input
+                      type="button"
+                      class="btn btn-primary btn-block"
+                      value="Save"  
+                    />
+                     </div>
+                  </div>
+                </div>  
+            </form>
+          </div>
+          <!-- end card-body -->
+        </div>
+        <!-- end card -->
+      </div>
+      <!-- end col -->
+    </div>
+    <!-- end row -->
+
+
+
+
+
+
+
+    <div class="row">
+      <div class="col-lg-9 col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Categories</h4>
             <div class="row mt-4">
               <div class="col-sm-12 col-md-6">
                 <div id="tickets-table_length" class="dataTables_length">
@@ -140,7 +180,27 @@ export default {
                 :filter="filter"
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
-              ></b-table>
+              >
+              <template #cell(icon)="row">
+                <img :src="row.item.icon" alt="Header Avatar" class="rounded-circle header-profile-user">
+              </template>
+                <template #cell(action)="row">  
+                                      <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
+                        <template v-slot:button-content>
+                          <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                        </template>
+
+                        <b-dropdown-item>
+                          <i class="fas fa-pencil-alt text-success me-1"></i> Edit 
+                        </b-dropdown-item>
+
+                        <b-dropdown-item>
+                          <i class="fas fa-trash-alt text-danger me-1"></i> Delete
+                        </b-dropdown-item>
+                      </b-dropdown>
+                </template>
+      
+      </b-table>
             </div>
             <div class="row">
               <div class="col">
@@ -161,19 +221,6 @@ export default {
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Editable Table</h4>
-              <p class="card-title-desc">
-                Editable table example.
-              </p>
-            <b-editable-table :items="editableDataItems" :fields="editableTablefields" @input-change="handleInput"></b-editable-table>
-          </div>
-        </div>
-      </div>
-    </div>
+ 
   </Layout>
 </template>

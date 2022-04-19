@@ -45,17 +45,17 @@ export const menuItems = [
 
 
 
-    {
-        id: 10,
-        label: "menuitems.sales.text",
-        icon: "bx-caret-right",
-        link: "/sales"
-    },
+    // {
+    //     id: 10,
+    //     label: "menuitems.sales.text",
+    //     icon: "bx-caret-right",
+    //     link: "/sales"
+    // },
     {
         id: 11,
         label: "menuitems.finances.text",
         icon: "bx-caret-right",
-        link: "/finances"
+        link: "/admin/finances"
     },
     {
         id: 12,

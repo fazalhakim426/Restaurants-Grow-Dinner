@@ -25,6 +25,8 @@ class RestaurantResource extends JsonResource
             "opening_time" => date('h:i A', strtotime( $this->opening_time)), 
             "closing_time" => date('h:i A', strtotime($this->closing_time)),
             "distance" => $this->distance?$this->distance:$this->customer_distance,
+            "latitude" => $this->latitude,
+            "longitude" => $this->longitude,
             "description" => $this->description,
             "photo" => env('APP_URL').'/'.$this->photo,
             "menu" =>  env('APP_URL').'/'.$this->menu,
