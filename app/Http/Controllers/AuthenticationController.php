@@ -14,30 +14,30 @@ use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Auth\AuthenticationException;
- 
+
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticationController extends Controller
 {
 
-      
 
-  
+
+
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string',
             'password' => 'required|string',
             'remember_me' => 'boolean'
-        ]); 
-        $credentials = request(['email', 'password']); 
+        ]);
+        $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
-        $user= User::with('userable')->where('id',$user->id)->first();
-        if(!$user->active){ 
+        $user = User::with('userable')->where('id', $user->id)->first();
+        if (!$user->active) {
             if (Auth::check()) {
                 Auth::user()->authAcessToken()->delete();
             }
@@ -46,7 +46,6 @@ class AuthenticationController extends Controller
                 'success' => false,
                 'message' => 'Your accont is not active!',
             ]);
-
         }
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
@@ -55,15 +54,14 @@ class AuthenticationController extends Controller
         $token->save();
         return response()->json([
             'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer', 
-            'user' => new UserResource($user), 
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
+            'token_type'   => 'Bearer',
+            'user'         => new UserResource($user),
+            'expires_at'   => Carbon::parse($tokenResult->token->expires_at)            
+                                            ->toDateTimeString()
         ]);
-    }   
+    }
 
-  
+
     public function logout(Request $request)
     {
         if (Auth::check()) {
@@ -91,13 +89,10 @@ class AuthenticationController extends Controller
             return response()->json([
                 'message' => "We can't find a user with that e-mail address."
             ], 404);
-        $passwordReset = PasswordReset::updateOrCreate(
-            ['email' => $user->email],
-            [
+        $passwordReset = PasswordReset::updateOrCreate([
                 'email' => $user->email,
                 'token' =>  Str::random(60)
-            ]
-        );
+            ]);
         if ($user && $passwordReset)
             $user->notify(
                 new PasswordResetRequest($passwordReset->token)

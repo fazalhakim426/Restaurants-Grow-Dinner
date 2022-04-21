@@ -24,13 +24,13 @@ class FinanceRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required','unique:users', 'string', 'email'], 
-            'phone' => ['required','unique:users', 'string','min:11','max:14'],
-            'address' => 'required',  
-            'country_id' => 'required',
-            'password' => 'required',  
+            'first_name'    => 'required',
+            'last_name'     => 'required',
+            'email'         => ['required','unique:users', 'string', 'email'], 
+            'phone'         => ['required','unique:users', 'string','min:11','max:14'],
+            'address'       => 'required',  
+            'country_id'    => 'required',
+            'password'      => 'required',  
         ];
     }
 }

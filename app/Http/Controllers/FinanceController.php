@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Finance; 
+use App\Finance;
 use App\Http\Requests\FinanceRequest;
 use App\Http\Requests\FinanceUpdateRequest;
 use App\Http\Resources\FinanceResource;
 use App\User;
-use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Hash; 
 class FinanceController extends Controller
 {
     //
@@ -20,65 +19,64 @@ class FinanceController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Finance List",
-            "data" =>  FinanceResource::collection($finance)
+            "data"    =>  FinanceResource::collection($finance)
         ]);
     }
 
     public function store(FinanceRequest $request)
     {
         $data = $request->all();
-  
+
         $finance = Finance::create($data);
-        $data['userable_type']='App\Finance';
+        $data['userable_type'] = 'App\Finance';
         $data['userable_id'] = $finance->id;
 
-         $finance->user()->save(User::create($data));
+        $finance->user()->save(User::create($data));
 
         return response()->json([
             "success" => true,
             "message" => "Finance created successfully.",
-            "data" => new FinanceResource($finance), 
+            "data"    => new FinanceResource($finance),
         ], 201);
     }
 
     public function update(FinanceUpdateRequest $request, Finance $finance)
-    { 
-        $finance->update($request->all()); 
+    {
+        $finance->update($request->all());
         $user = $finance->user;
-        $request->validate([ 
-            'email' =>'email|unique:users,email,'.$user->id,  
-            'phone' =>'min:11|max:14|unique:users,phone,'.$user->id,  
+        $request->validate([
+            'email' => 'email|unique:users,email,' . $user->id,
+            'phone' => 'min:11|max:14|unique:users,phone,' . $user->id,
         ]);
-        
+
         $user->update($request->all());
-        if($request->password){ 
+        if ($request->password) {
             $user->update(['password' => Hash::make($request->password)]);
         }
 
-        $finance->refresh();  
+        $finance->refresh();
         return response()->json([
             "success" => true,
             "message" => "Updated successfully.",
-            "data" =>new FinanceResource($finance)
+            "data"    => new FinanceResource($finance)
         ]);
- 
     }
 
     public function show($id)
     {
-     
+
         $finance = Finance::find($id);
-             
+
         if (is_null($finance)) {
             return response()->json([
                 "success" => false,
                 "message" => "Finance not Found!"
-            ],401);
+            ], 401);
         }
         return response()->json([
             "success" => true,
             "message" => "Finance retrieved successfully.",
-            "data" => new FinanceResource($finance)
+            "data"    => new FinanceResource($finance)
         ]);
     }
 
@@ -92,20 +90,18 @@ class FinanceController extends Controller
     {
 
         $finance = Finance::find($id);
-        if($finance){
+        if ($finance) {
             $finance->user->delete();
             $finance->delete();
             return response()->json([
                 "success" => true,
                 "message" => "Finance deleted successfully."
             ]);
-        }else{
+        } else {
             return response()->json([
                 "success" => false,
                 "message" => "Finance not found."
             ]);
         }
-
-       
     }
 }

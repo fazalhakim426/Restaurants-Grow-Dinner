@@ -15,10 +15,10 @@ class DepartmentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'name'=> $this->name,
-            'city'=> $this->city->name,
-            'country'=> $this->city->country->name,
+            'id'        => $this->id,
+            'name'      => $this->name,
+            'city'      => $this->city->name,
+            'country'   => $this->city->country->name,
 
         ];
     }

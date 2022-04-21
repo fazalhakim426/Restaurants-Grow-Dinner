@@ -19,13 +19,9 @@ export default {
       },
       tableData: tableData,
       title: "Countries",
-      items: [
+      items: [ 
         {
-          text: "Tables",
-          href: "/",
-        },
-        {
-          text: "Advanced",
+          text: "Countries",
           active: true,
         },
       ],
@@ -40,6 +36,7 @@ export default {
       fields: [  
         { key: "code", label: "code", type: "text" },
         { key: "name", label: "Name", type: "text" },    
+        { key: "cities", label: "Cities", type: "text" },    
         { key: "action" },   
       ], 
     };
@@ -186,14 +183,20 @@ export default {
                 @filtered="onFiltered"
               >
             
+                <template #cell(cities)="row">
+                    <a class="side-nav-link-ref"  
+                          :href="'/admin/country-cities?country_id='+row.item.id">  Cities  
+                    </a>  
+                </template>
                 <template #cell(action)="row">  
-                                      <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
+
+                      <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
                         <template v-slot:button-content>
                           <i class="mdi mdi-dots-horizontal font-size-18"></i>
-                        </template>
+                        </template> 
 
                         <b-dropdown-item>
-                          <i class="fas fa-pencil-alt text-success me-1"></i> Edit 
+                           <i class="fas fa-pencil-alt text-success me-1"></i> Edit 
                         </b-dropdown-item>
 
                         <b-dropdown-item>

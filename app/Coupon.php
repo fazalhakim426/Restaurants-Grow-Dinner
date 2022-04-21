@@ -5,12 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Coupon extends Model
+class Coupon extends Model  
 {
     use HasFactory;
     public $appends = ['expired','active'];
 
-    protected $fillable = ['promo_code','start_at','end_at','amount','is_fixed'];
+    protected $fillable = ['promo_code','start_at','end_at','amount','min_amount','is_fixed'];
 
     public function getExpiredAttribute()
     {

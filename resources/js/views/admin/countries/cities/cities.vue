@@ -1,5 +1,5 @@
 <script>
-import BEditableTable from 'bootstrap-vue-editable-table';
+import BEditableTable from "bootstrap-vue-editable-table";
 
 import Layout from "../../../../layouts/admin/main";
 import PageHeader from "../../../../components/page-header";
@@ -9,23 +9,22 @@ import { tableData } from "./dataAdvancedtable";
  * Advanced table component
  */
 export default {
-  components: { Layout, PageHeader, BEditableTable},
+  components: { Layout, PageHeader, BEditableTable },
   data() {
     return {
-
-      city:{
-        city:"",
+      city: {
+        city: "",
         country: "",
       },
       tableData: tableData,
-      title: "Countries",
+      title: "Cities",
       items: [
         {
-          text: "Tables",
-          href: "/",
+          text: "Countries",
+          href: "/admin/countries",
         },
         {
-          text: "Advanced",
+          text: "Cities",
           active: true,
         },
       ],
@@ -37,11 +36,12 @@ export default {
       filterOn: [],
       sortBy: "age",
       sortDesc: false,
-      fields: [  
+      fields: [
         { key: "country", label: "Country", type: "text" },
-        { key: "city", label: "City", type: "text" },    
-        { key: "action" },   
-      ], 
+        { key: "city", label: "City", type: "text" },
+        { key: "departements", label: "Departements", type: "text" },
+        { key: "action" },
+      ],
     };
   },
   computed: {
@@ -67,7 +67,7 @@ export default {
     },
     handleInput(value, data) {
       this.editableDataItems[data.index][data.field.key] = value;
-    }
+    },
   },
 };
 </script>
@@ -76,45 +76,44 @@ export default {
   <Layout>
     <PageHeader :title="title" :items="items" />
 
-
-  <div class="row">
+    <div class="row">
       <div class="col-lg-7 col-sm-12 col-md-12">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title mb-4">Add City</h4>
             <form class="repeater" enctype="multipart/form-data">
-              <div class="row"> 
-                  <div class="mb-5 col-lg-5">
-                    <label for="city">city</label>
-                    <input
-                      id="city"
-                      v-model="city.city"
-                      type="text"
-                      name="untyped-input"
-                      class="form-control"
-                    />
-                  </div>
-                  <div class="mb-5 col-lg-5">
-                    <label for="country">Country</label>
-                    <input
-                      id="country"
-                      v-model="city.country"
-                      type="text"
-                      name="untyped-input"
-                      class="form-control"
-                    />
-                  </div> 
- 
-                  <div class="mb-2 col-lg-2 align-self-center">
-                     <div class="d-grid">
+              <div class="row">
+                <div class="mb-5 col-lg-5">
+                  <label for="city">city</label>
+                  <input
+                    id="city"
+                    v-model="city.city"
+                    type="text"
+                    name="untyped-input"
+                    class="form-control"
+                  />
+                </div>
+                <div class="mb-5 col-lg-5">
+                  <label for="country">Country</label>
+                  <input
+                    id="country"
+                    v-model="city.country"
+                    type="text"
+                    name="untyped-input"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="mb-2 col-lg-2 align-self-center">
+                  <div class="d-grid">
                     <input
                       type="button"
                       class="btn btn-primary btn-block"
-                      value="Save"  
+                      value="Save"
                     />
-                     </div>
                   </div>
-                </div>  
+                </div>
+              </div>
             </form>
           </div>
           <!-- end card-body -->
@@ -124,12 +123,6 @@ export default {
       <!-- end col -->
     </div>
     <!-- end row -->
-
-
-
-
-
-
 
     <div class="row">
       <div class="col-lg-7 col-sm-12 col-md-12">
@@ -185,24 +178,37 @@ export default {
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
               >
-            
-                <template #cell(action)="row">  
-                                      <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
-                        <template v-slot:button-content>
-                          <i class="mdi mdi-dots-horizontal font-size-18"></i>
-                        </template>
-
-                        <b-dropdown-item>
-                          <i class="fas fa-pencil-alt text-success me-1"></i> Edit 
-                        </b-dropdown-item>
-
-                        <b-dropdown-item>
-                          <i class="fas fa-trash-alt text-danger me-1"></i> Delete
-                        </b-dropdown-item>
-                      </b-dropdown>
+                <template #cell(departements)="row">
+                  <a
+                    class="side-nav-link-ref"
+                    :href="'/admin/country-city-departments?city_id=' + row.item.id"
+                  >
+                    Departments
+                  </a>
                 </template>
-      
-      </b-table>
+
+                <template #cell(action)="row">
+                  <b-dropdown
+                    class="card-drop"
+                    variant="white"
+                    right
+                    toggle-class="p-0"
+                    menu-class="dropdown-menu-end"
+                  >
+                    <template v-slot:button-content>
+                      <i class="mdi mdi-dots-horizontal font-size-18"></i>
+                    </template>
+
+                    <b-dropdown-item>
+                      <i class="fas fa-pencil-alt text-success me-1"></i> Edit
+                    </b-dropdown-item>
+
+                    <b-dropdown-item>
+                      <i class="fas fa-trash-alt text-danger me-1"></i> Delete
+                    </b-dropdown-item>
+                  </b-dropdown>
+                </template>
+              </b-table>
             </div>
             <div class="row">
               <div class="col">
@@ -223,6 +229,5 @@ export default {
         </div>
       </div>
     </div>
- 
   </Layout>
 </template>

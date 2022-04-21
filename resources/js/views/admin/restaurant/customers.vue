@@ -14,11 +14,7 @@ export default {
     return {
       customersData: customersData,
       title: "Customers",
-      items: [
-        {
-          text: "Ecommerce",
-          href: "/"
-        },
+      items: [ 
         {
           text: "Customers",
           active: true
@@ -92,149 +88,8 @@ export default {
                     <i class="bx bx-search-alt search-icon"></i>
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-8">
-                <div class="text-sm-end">
-                  <button
-                    type="button"
-                    class="btn btn-success btn-rounded mb-2 me-2"
-                     @click="showModal = true"
-                  >
-                    <i class="mdi mdi-plus me-1"></i> New Customers
-                  </button>
-                    <b-modal
-                    v-model="showModal"
-                    title="Add New Customer"
-                    title-class="text-black font-18"
-                    body-class="p-3"
-                    hide-footer
-                  >
-                    <form @submit.prevent="handleSubmit">
-                      <div class="row">
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="name">Event Name</label>
-                            <input
-                              id="name"
-                              v-model="customers.username"
-                              type="text"
-                              class="form-control"
-                              placeholder="Insert username"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.customers.username.$error,
-                              }"
-                            />
-                            <div
-                              v-if="
-                                submitted && !$v.customers.username.required
-                              "
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="phone">Phone</label>
-                            <input
-                              id="phone"
-                              v-model="customers.phone"
-                              type="text"
-                              class="form-control"
-                              placeholder="Insert phone"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.customers.phone.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.customers.phone.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="email">Email</label>
-                            <input
-                              id="email"
-                              v-model="customers.email"
-                              type="email"
-                              class="form-control"
-                              placeholder="Insert email"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.customers.email.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.customers.email.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="address">Address</label>
-                            <input
-                              id="address"
-                              v-model="customers.address"
-                              type="text"
-                              class="form-control"
-                              placeholder="Insert address"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.customers.address.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.customers.address.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="balance">Balance</label>
-                            <input
-                              id="balance"
-                              v-model="customers.balance"
-                              type="text"
-                              class="form-control"
-                              placeholder="Insert balance"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.customers.balance.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.customers.balance.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="text-end pt-5 mt-3">
-                        <b-button variant="light" @click="showModal = false">Close</b-button>
-                        <b-button type="submit" variant="success" class="ms-1"
-                          >Create event</b-button
-                        >
-                      </div>
-                    </form>
-                  </b-modal>
-                </div>
-              </div>
+              </div>  
+            
               <!-- end col-->
             </div>
             <div class="table-responsive">
@@ -244,10 +99,7 @@ export default {
                     <th>#</th>
                     <th>Username</th>
                     <th>Phone / Email</th>
-                    <th>Address</th>
-                    <th>Rating</th>
-                    <th>Wallet Balance</th>
-                    <th>Joining Date</th>
+                    <th>Address</th> 
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -273,26 +125,16 @@ export default {
                     </td>
 
                     <td>{{customers.address}}</td>
-                    <td>
-                      <span class="badge bg-success font-size-12">
-                        <i class="mdi mdi-star me-1"></i>
-                        {{customers.rating}}
-                      </span>
-                    </td>
-                    <td>{{customers.balance}}</td>
-                    <td>{{customers.date}}</td>
+                  
                     <td>
                       <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
                         <template v-slot:button-content>
                           <i class="mdi mdi-dots-horizontal font-size-18"></i>
                         </template>
+ 
 
                         <b-dropdown-item>
-                          <i class="fas fa-pencil-alt text-success me-1"></i> Edit
-                        </b-dropdown-item>
-
-                        <b-dropdown-item>
-                          <i class="fas fa-trash-alt text-danger me-1"></i> Delete
+                          <i class="fas fa-times text-danger me-1"></i> Block
                         </b-dropdown-item>
                       </b-dropdown>
                     </td>

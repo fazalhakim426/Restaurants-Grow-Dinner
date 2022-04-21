@@ -17,9 +17,11 @@ class VisitedRestaurantRersource extends JsonResource
     {
         return [
             'visited_at' => $this->visited_at,
-             'type' =>  strtotime(Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())) < strtotime($this->visited_at)?'Meeting':'Visited', 
-            'feedback'=> $this->feedback,
-            'employee' => new EmployeeResource($this->employee),
+            'type'       => strtotime(Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now())) < strtotime($this->visited_at)?'Meeting':'Visited', 
+            'feedback'   => $this->feedback,
+            'attandance' => $this->attandance,
+            'intrested'  => $this->intrested,
+            'employee'   => new EmployeeResource($this->employee),
         ];
     }
 }

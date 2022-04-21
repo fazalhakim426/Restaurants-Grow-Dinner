@@ -6,64 +6,59 @@ use App\City;
 use App\Country;
 use App\Http\Requests\CityRequest;
 use App\Http\Requests\CityUpdateRequest;
-use App\Http\Resources\CityResource; 
+use App\Http\Resources\CityResource;
+
 class CityController extends Controller
 {
     public function index(Country $country)
-    { 
+    {
         return response()->json([
             'success' => true,
-            'message' => $country->name.' Cities List',
-            'data' => CityResource::collection($country->cities),
+            'message' => $country->name . ' Cities List',
+            'data'    => CityResource::collection($country->cities),
         ]);
-    }
+    } 
+    public function store(CityRequest $request)
+    {
+        $data = $request->all();
+        $country =  City::create($data);
 
-    public function store(CityRequest $request){
-        $data = $request->all(); 
-         $country =  City::create($data);
-       
-         return response()->json([
+        return response()->json([
             "success" => true,
             "message" => "City created successfully.",
-            "data" => $country, 
+            "data"    => $country,
         ]);
-    }
-
- 
-    public function update(CityUpdateRequest $request ,$id)
+    } 
+    public function update(CityUpdateRequest $request, $id)
     {
         $city = City::find($id);
-        if($city && $city->update($request->all())){
+        if ($city && $city->update($request->all())) {
             return response()->json([
                 "success" => true,
                 "message" => "City updated successfully.",
-                "data" => $city, 
+                "data"    => $city,
             ], 201);
-        }
-        else{
+        } else {
             return response()->json([
                 "success" => false,
-                "message" => "City Not Found.", 
+                "message" => "City Not Found.",
             ], 404);
         }
     }
     public function destroy($id)
     {
         $city = City::find($id);
-        if($city){ 
+        if ($city) {
             $city->delete();
             return response()->json([
                 "success" => true,
                 "message" => "City deleted successfully."
             ]);
-        }else{
+        } else {
             return response()->json([
                 "success" => false,
                 "message" => "City Not Found."
             ]);
         }
-
-       
     }
- 
 }

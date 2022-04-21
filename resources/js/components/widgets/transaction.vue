@@ -24,41 +24,20 @@ export default {
     <table class="table table-centered table-nowrap align-middle">
       <thead class="table-light">
         <tr>
-          <th style="width: 20px">
-            <div class="form-check font-size-16 align-middle">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="transactionCheck01"
-              />
-              <label class="form-check-label" for="transactionCheck01"></label>
-            </div>
-          </th>
+        
           <th class="align-middle">Order ID</th>
-          <th class="align-middle">Billing Name</th>
+          <th class="align-middle">Customer Name</th>
           <th class="align-middle">Date</th>
-          <th class="align-middle">Total</th>
-          <th class="align-middle">Payment Status</th>
+          <th class="align-middle">Time</th>
+          <th class="align-middle">Phone Number</th>
+          <!-- <th class="align-middle">Payment Status</th>
           <th class="align-middle">Payment Method</th>
-          <th class="align-middle">View Details</th>
+          <th class="align-middle">View Details</th> -->
         </tr>
       </thead>
       <tbody>
         <tr v-for="data in transactions" :key="data.id">
-          <td>
-            <div class="form-check font-size-16">
-              <input
-                :id="`customCheck${data.index}`"
-                type="checkbox"
-                class="form-check-input"
-              />
-              <label
-                class="form-check-label"
-                :for="`customCheck${data.index}`"
-                >&nbsp;</label
-              >
-            </div>
-          </td>
+          
           <td>
             <a href="javascript: void(0);" class="text-body fw-bold">{{
               data.id
@@ -66,31 +45,10 @@ export default {
           </td>
           <td>{{ data.name }}</td>
           <td>{{ data.date }}</td>
-          <td>{{ data.total }}</td>
-          <td>
-            <span
-              class="badge badge-pill badge-soft-success font-size-11"
-              :class="{
-                'badge-soft-danger': `${data.status}` === 'Chargeback',
-                'badge-soft-warning': `${data.status}` === 'Refund',
-              }"
-              >{{ data.status }}</span
-            >
-          </td>
-          <td>
-            <i :class="`fab ${data.payment[0]} mr-1`"></i>
-            {{ data.payment[1] }}
-          </td>
-          <td>
-            <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-primary btn-sm btn-rounded"
-              @click="showModal = true"
-            >
-              View Details
-            </button>
-          </td>
+          <td>{{ data.time_slot }}</td>
+          <td>{{ data.phone_number }}</td>
+           
+     
         </tr>
       </tbody>
     </table>

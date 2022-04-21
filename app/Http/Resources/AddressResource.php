@@ -15,11 +15,11 @@ class AddressResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
+            'id'        => $this->id,
+            'title'     => $this->title,
             'longitude' => $this->longitude,
-            'latitude' => $this->latitude,
-            'address' => $this->address, 
+            'latitude'  => $this->latitude,
+            'address'   => $this->address, 
         ];
     }
 }

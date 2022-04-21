@@ -1,5 +1,11 @@
 export const menuItems = [ 
-   
+    {
+        id: 1,
+        label: "menuitems.dashboards.text",
+        icon: "bx-home-circle",
+      
+        link: "/"
+    },
  
     {
         id: 12,

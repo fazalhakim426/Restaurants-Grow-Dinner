@@ -25,10 +25,7 @@ class RestaurantUpdateRequest extends FormRequest
     { 
         return [   
             'photo' => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
-            'menu' => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
- 
-    
-
+            'menu'  => 'mimes:pdf,jpg,png,xlx,csv|max:2048',  
         ];
     }
 }

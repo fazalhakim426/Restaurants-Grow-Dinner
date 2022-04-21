@@ -18,11 +18,11 @@ class ReviewResource extends JsonResource
 
         return
         [
-            'created_at' => $this->created_at->diffForHumans(),
-            'stars' => $this->stars,
-            'feedback' => $this->feedback,
+            'created_at'    => $this->created_at->diffForHumans(),
+            'stars'         => $this->stars,
+            'feedback'      => $this->feedback,
             'restaurant_id' => $this->restaurant_id,
-            'customer_id' => $this->customer_id,
+            'customer_id'   => $this->customer_id,
         ];
     }
 }

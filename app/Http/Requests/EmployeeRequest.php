@@ -25,16 +25,16 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'first_name' => 'required',
-            'last_name' => 'required',  
-            'email' => ['required','unique:users', 'string', 'email'],
-            'phone' => ['required','unique:users', 'string','min:11','max:14'],
-            'address' => 'required', 
+            'last_name'  => 'required',  
+            'email'      => ['required','unique:users', 'string', 'email'],
+            'phone'      => ['required','unique:users', 'string','min:11','max:14'],
+            'address'    => 'required', 
             'country_id' => 'required',
-            'password' => 'required', 
-            'salary' => 'required' ,
-            'social_nr' => 'required',
-            'bank_account' => 'required' ,
-            'documents' => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
+            'password'   => 'required', 
+            'salary'     => 'required' ,
+            'social_nr'     => 'required',
+            'bank_account'  => 'required' ,
+            'documents'     => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
             'department_id' => 'required',
         ];
     }

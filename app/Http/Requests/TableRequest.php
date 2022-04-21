@@ -24,11 +24,11 @@ class TableRequest extends FormRequest
     public function rules()
     {
         return [
-           'name'=>'required',
-           'number'=>'required|numeric',
+           'name'       =>'required',
+           'number'     =>'required|numeric',
            'description'=>'required|max:100',
-           'photo' => 'required|mimes:pdf,jpg,png|max:2048', 
-           'name'=>'required',
+           'photo'      => 'required|mimes:pdf,jpg,png|max:2048', 
+           'name'       =>'required',
         ];
     }
 }

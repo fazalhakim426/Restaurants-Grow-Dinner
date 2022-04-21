@@ -25,10 +25,11 @@ class CouponRequest extends FormRequest
     {
         return [
             'promo_code' => 'required',
-            'start_at' => 'required|date',
-            'end_at' => 'required|date',
-            'is_fixed' => 'required',
-            'amount' => 'required',
+            'start_at'   => 'required|date',
+            'end_at'     => 'required|date',
+            'is_fixed'   => 'required',
+            'amount'     => 'required',
+            'min_amount' => 'required',
         ];
     }
 }

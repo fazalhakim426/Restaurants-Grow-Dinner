@@ -1,16 +1,12 @@
 <script>
-import Layout from "../../layouts/admin/main";
-import Profile from "../../components/widgets/profile";
-import Earning from "../../components/widgets/earning";
-import Stat from "../../components/widgets/stat";
-import Transaction from "../../components/widgets/transaction";
-import Emailsent from "../../components/widgets/emailsent";
+import Layout from "../../layouts/admin/main"; 
+import Stat from "../../components/widgets/stat";  
 
 /**
  * Dashboard Component
  */
 export default {
-  components: { Layout, Profile, Stat, Transaction, Earning, Emailsent },
+  components: { Layout,Stat },
   data() {
     return {
       title: "Dashboard",
@@ -18,18 +14,28 @@ export default {
       statData: [
         {
           icon: "bx bx-copy-alt",
-          title: "Orders",
-          value: "1,235"
+          title: "Today Sale",
+          value: "$235"
         },
         {
-          icon: "bx bx-archive-in",
-          title: "Revenue",
-          value: "$35, 723"
+          icon: "bx bx-store",
+          title: "Total Restaurants",
+          value: "35"
         },
         {
-          icon: "bx bx-purchase-tag-alt",
-          title: "Average Price",
-          value: "$16.2"
+          icon: "bx bx-user",
+          title: "Total Customers",
+          value: "16,333"
+        },
+        {
+          icon: "bx bx-user",
+          title: "Total Employee",
+          value: "83"
+        },
+        {
+          icon: "bx bx-store",
+          title: "Visited Restaurant",
+          value: "333"
         }
       ],
       transactions: [
@@ -100,21 +106,15 @@ export default {
 
 <template>
   <Layout>
-    <!-- start page title -->
-    <div class="row">
-      <div class="col-12">
-        <div class="page-title-box d-flex align-items-center justify-content-between">
-          <h4 class="mb-0 font-size-18">Dashboard</h4>
-
-          <div class="page-title-right">
-            <ol class="breadcrumb m-0">
-              <li class="breadcrumb-item active">Welcome Admin</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end page title -->
  
+    <!-- end page title -->
+    <div class="row">
+    
+          <div v-for="stat of statData" :key="stat.icon" class="col-md-4">
+            <Stat :icon="stat.icon" :title="stat.title" :value="stat.value" />
+          </div> 
+  
+    </div>
+    <!-- end row --> 
   </Layout>
 </template>

@@ -14,8 +14,8 @@ export default {
       title: 'Orders',
       items: [
         {
-          text: 'Ecommerce',
-          href: '/',
+          text: 'Restaurants',
+          href: '/admin/restaurant',
         },
         {
           text: 'Orders',
@@ -27,7 +27,8 @@ export default {
           id: '#SK2540',
           name: 'Neal Matthews',
           date: '07 Oct, 2019',
-          total: '$400',
+         time_slot:'10:00 pm - 10:30 pm',
+         phone_number :'33343434400',
           status: 'Paid',
           payment: ['fab fa-cc-mastercard', 'Mastercard'],
           index: 1,
@@ -36,7 +37,8 @@ export default {
           id: '#SK2541',
           name: 'Jamal Burnett',
           date: '07 Oct, 2019',
-          total: '$380',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434380',
           status: 'Chargeback',
           payment: ['fab fa-cc-visa', 'Visa'],
           index: 2,
@@ -45,7 +47,8 @@ export default {
           id: '#SK2542',
           name: 'Juan Mitchell',
           date: '06 Oct, 2019',
-          total: '$384',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434384',
           status: 'Paid',
           payment: ['fab fa-cc-paypal', 'Paypal'],
           index: 3,
@@ -54,7 +57,8 @@ export default {
           id: '#SK2543',
           name: 'Barry Dick',
           date: '05 Oct, 2019',
-          total: '$412',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434412',
           status: 'Paid',
           payment: ['fab fa-cc-mastercard', 'Mastercard'],
           index: 4,
@@ -63,7 +67,8 @@ export default {
           id: '#SK2544',
           name: 'Ronald Taylor',
           date: '04 Oct, 2019',
-          total: '$404',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434404',
           status: 'Refund',
           payment: ['fab fa-cc-visa', 'Visa'],
           index: 5,
@@ -72,7 +77,8 @@ export default {
           id: '#SK2545',
           name: 'Jacob Hunter',
           date: '04 Oct, 2019',
-          total: '$392',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434392',
           status: 'Paid',
           payment: ['fab fa-cc-paypal', 'Paypal'],
           index: 6,
@@ -81,7 +87,8 @@ export default {
           id: '#SK2546',
           name: 'William Cruz',
           date: '03 Oct, 2019',
-          total: '$374',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434374',
           status: 'Paid',
           payment: ['fas fa-money-bill-alt', 'COD'],
           index: 7,
@@ -90,7 +97,8 @@ export default {
           id: '#SK2547',
           name: 'Dustin Moser',
           date: '02 Oct, 2019',
-          total: '$350',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434350',
           status: 'Paid',
           payment: ['fab fa-cc-mastercard', 'Mastercard'],
           index: 8,
@@ -99,7 +107,8 @@ export default {
           id: '#SK2548',
           name: 'Clark Benson',
           date: '01 Oct, 2019',
-          total: '$345',
+         time_slot:'10:00 pm - 10:30 pm' ,
+phone_number :'33343434345',
           status: 'Refund',
           payment: ['fab fa-cc-visa', 'Visa'],
           index: 9,
@@ -126,13 +135,7 @@ export default {
                   </div>
                 </div>
               </div>
-              <div class="col-sm-8">
-                <div class="text-sm-end">
-                  <button type="button" class="btn btn-success btn-rounded mb-2 me-2">
-                    <i class="mdi mdi-plus me-1"></i> Add New Order
-                  </button>
-                </div>
-              </div>
+            
               <!-- end col-->
             </div>
             <!-- Table data -->

@@ -15,12 +15,11 @@ class BookedTableResource extends JsonResource
     public function toArray($request)
     { 
         return [ 
-            'id' => $this->id,
-            'time_slot' =>$this->time_slot,   
-            'date' =>$this->date,
-            'created_at' =>$this->created_at->diffForHumans(),
-            'updated_at' =>$this->updated_at->diffForHumans(),
-            'table' => new TableResource($this->table),
-        ];
-    }
-}
+            'id'         => $this->id,
+            'time_slot'  => $this->time_slot,   
+            'date'       => $this->date,
+            'created_at' => $this->created_at->diffForHumans(),
+            'updated_at' => $this->updated_at->diffForHumans(),
+            'table'      => new TableResource($this->table),
+        ]; 
+       }}

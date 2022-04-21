@@ -25,12 +25,12 @@ class EmployeeRestaurantRequest extends FormRequest
     {
         return [
             'first_name' => 'required', 
-            'email' => ['unique:users', 'string', 'email'],
-            'address' => 'required',  
-            'phone' => ['required','unique:users', 'string','min:11','max:14'], 
-            'photo' => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
-            'menu' => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
-            'feedback'=> 'required', 
+            'email'      => ['unique:users', 'string', 'email'],
+            'address'    => 'required',  
+            'phone'      => ['required','unique:users', 'string','min:11','max:14'], 
+            'photo'      => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
+            'menu'       => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
+            'feedback'   => 'required', 
             'visited_at' => 'required|date_format:Y-m-d H:i:s', 
         ];
     }

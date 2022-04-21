@@ -15,8 +15,8 @@ class CustomerCouponResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'coupon_resource'=> new CouponResource($this->coupon),
+            'id'              => $this->id,
+            'coupon_resource' => new CouponResource($this->coupon),
         ];
     }
 }

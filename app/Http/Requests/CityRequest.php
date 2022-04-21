@@ -24,8 +24,8 @@ class CityRequest extends FormRequest
     public function rules()
     {
         return [
-            'country_id'=>'required|exists:countries,id',
-            'name' => 'required',
+            'country_id'    => 'required|exists:countries,id',
+            'name'          => 'required',
         ];
     }
 }

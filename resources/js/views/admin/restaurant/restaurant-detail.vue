@@ -10,23 +10,32 @@ import { clothsData } from "./data-products";
 export default {
   components: { Layout, PageHeader },
   props: {
-      id: {
-          type: String,
-          required: false,
-      }
+    id: {
+      type: String,
+      required: false,
+    },
   },
   data() {
     return {
+      showModal: false,
+      submitted: false,
+      table: {
+        name: "",
+        number: "",
+        min_number: "",
+        max_number: "", 
+      },
+
       productDetail: null,
       clothsData: clothsData,
-      title: "Product Detail",
+      title: "Restaurant Detail",
       items: [
         {
-          text: "Ecommerce",
-          href: "/",
+          text: "Restaurants",
+          href: "/admin/restaurant",
         },
         {
-          text: "Product Detail",
+          text: "Restaurant Detail",
           active: true,
         },
       ],
@@ -53,6 +62,19 @@ export default {
 <template>
   <Layout>
     <PageHeader :title="title" :items="items" />
+    <div >
+              <div class="text-sm-end">
+                <a href="/admin/restaurant-orders?restaurant_id=2">
+                <button
+                  type="button"
+                  class="btn btn-success btn-rounded mb-2 me-2"
+                
+                >
+                  <i class="mdi mdi-plus me-1"></i> View Orders
+                </button>
+                </a>
+              </div>
+    </div>
     <div class="row">
       <div class="col-lg-12">
         <div class="card">
@@ -60,7 +82,11 @@ export default {
             <div class="row">
               <div class="col-xl-6">
                 <div class="product-detai-imgs">
-                  <b-tabs pills vertical nav-wrapper-class="col-md-2 col-sm-3 col-4">
+                  <b-tabs
+                    pills
+                    vertical
+                    nav-wrapper-class="col-md-2 col-sm-3 col-4"
+                  >
                     <b-tab>
                       <template v-slot:title>
                         <img
@@ -131,7 +157,7 @@ export default {
 
               <div class="col-xl-6">
                 <div class="mt-3">
-                  <h4 class="mt-1 mb-3">{{productDetail[0].name}}</h4>
+                  <h4 class="mt-1 mb-3">{{ productDetail[0].name }}</h4>
 
                   <p class="text-muted float-left me-3">
                     <span class="bx bx-star text-warning"></span>
@@ -142,51 +168,78 @@ export default {
                   </p>
                   <p class="text-muted mb-4">( 152 Customers Review )</p>
 
-                  <h6 class="text-success text-uppercase">{{productDetail[0].discount}} Off</h6>
                   <h5 class="mb-4">
-                    Price :
-                    <span class="text-muted me-2">
-                      <del>${{productDetail[0].oldprice}} USD</del>
-                    </span>
-                    <b>${{productDetail[0].newprice}} USD</b>
+                    number Number :
+                    <strong> 045345345532</strong>
                   </h5>
-                  <p
-                    class="text-muted mb-4"
-                  >To achieve this, it would be necessary to have uniform grammar pronunciation and more common words If several languages coalesce</p>
+                  <p class="text-muted mb-4">
+                    Description To achieve this, it would be necessary to have
+                    uniform grammar pronunciation and more common words If
+                    several languages coalesce
+                  </p>
                   <div class="row mb-3">
                     <div class="col-md-6">
-                      <div v-for="(item, index) in productDetail[0].feature" :key="index">
+                      <div>
                         <p class="text-muted">
-                          <i class="bx bx-unlink font-size-16 align-middle text-primary me-1"></i>
-                          {{item}}
+                          <i
+                            class="
+                              bx
+                              bxl-facebook-circle
+                              font-size-16
+                              align-middle
+                              text-primary
+                              me-1
+                            "
+                          ></i>
+                          <a href="facebook.com">Facebook</a>
+                        </p>
+                      </div>
+                      <div>
+                        <p class="text-muted">
+                          <i
+                            class="
+                              bx
+                              bxl-instagram
+                              font-size-16
+                              align-middle
+                              text-primary
+                              me-1
+                            "
+                          ></i>
+                          <a href="instragram.com">instagram</a>
                         </p>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div>
                         <p class="text-muted">
-                          <i class="bx bx-user-voice font-size-16 align-middle text-primary me-1"></i> Bass
+                          <i
+                            class="
+                              bx
+                              bxl-wikipedia
+                              font-size-16
+                              align-middle
+                              text-primary
+                              me-1
+                            "
+                          ></i>
+                          <a href="website.com"> website</a>
                         </p>
                         <p class="text-muted">
-                          <i class="bx bx-cog font-size-16 align-middle text-primary me-1"></i> Warranty : 1 Year
+                          <i
+                            class="
+                              bx
+                              bxl-twitter
+                              font-size-16
+                              align-middle
+                              text-primary
+                              me-1
+                            "
+                          ></i>
+                          <a href="twitter.com"> twitter</a>
                         </p>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="product-color">
-                    <h5 class="font-size-15">Color :</h5>
-                    <a
-                      href="javascript: void(0);"
-                      class="active"
-                      v-for="(item, index) in productDetail[0].colorVariant"
-                      :key="index"
-                    >
-                      <div class="product-color-item border rounded">
-                        <img :src="item.value" alt class="avatar-md" />
-                      </div>
-                      <p>{{item.key}}</p>
-                    </a>
                   </div>
                 </div>
               </div>
@@ -194,14 +247,14 @@ export default {
             <!-- end row -->
 
             <div class="mt-5">
-              <h5 class="mb-3">Specifications :</h5>
+              <h5 class="mb-3">Details :</h5>
 
               <div class="table-responsive">
                 <table class="table mb-0 table-bordered">
                   <tbody>
-                    <tr v-for="(i, index) in productDetail[0].specification" :key="index">
-                      <th scope="row" style="width: 400px;">{{i.key}}</th>
-                      <td>{{i.value}}</td>
+                    <tr>
+                      <th scope="row" style="width: 400px">Orders</th>
+                      <td>343</td>
                     </tr>
                   </tbody>
                 </table>
@@ -220,9 +273,10 @@ export default {
                 />
                 <div class="media-body">
                   <h5 class="mt-0 font-size-15">Brian</h5>
-                  <p
-                    class="text-muted"
-                  >If several languages coalesce, the grammar of the resulting language.</p>
+                  <p class="text-muted">
+                    If several languages coalesce, the grammar of the resulting
+                    language.
+                  </p>
                   <ul class="list-inline float-sm-end">
                     <li class="list-inline-item">
                       <a href="javascript: void(0);">
@@ -236,7 +290,8 @@ export default {
                     </li>
                   </ul>
                   <div class="text-muted">
-                    <i class="far fa-calendar-alt text-primary me-1"></i> 5 hrs ago
+                    <i class="far fa-calendar-alt text-primary me-1"></i> 5 hrs
+                    ago
                   </div>
                 </div>
               </div>
@@ -248,9 +303,10 @@ export default {
                 />
                 <div class="media-body">
                   <h5 class="mt-0 font-size-15">Denver</h5>
-                  <p
-                    class="text-muted"
-                  >To an English person, it will seem like simplified English, as a skeptical Cambridge</p>
+                  <p class="text-muted">
+                    To an English person, it will seem like simplified English,
+                    as a skeptical Cambridge
+                  </p>
                   <ul class="list-inline float-sm-end">
                     <li class="list-inline-item">
                       <a href="javascript: void(0);">
@@ -264,7 +320,8 @@ export default {
                     </li>
                   </ul>
                   <div class="text-muted">
-                    <i class="far fa-calendar-alt text-primary me-1"></i> 07 Oct, 2019
+                    <i class="far fa-calendar-alt text-primary me-1"></i> 07
+                    Oct, 2019
                   </div>
                   <div class="media mt-4">
                     <img
@@ -274,9 +331,10 @@ export default {
                     />
                     <div class="media-body">
                       <h5 class="mt-0 font-size-15">Henry</h5>
-                      <p
-                        class="text-muted"
-                      >Their separate existence is a myth. For science, music, sport, etc.</p>
+                      <p class="text-muted">
+                        Their separate existence is a myth. For science, music,
+                        sport, etc.
+                      </p>
                       <ul class="list-inline float-sm-end">
                         <li class="list-inline-item">
                           <a href="javascript: void(0);">
@@ -290,7 +348,8 @@ export default {
                         </li>
                       </ul>
                       <div class="text-muted">
-                        <i class="far fa-calendar-alt text-primary me-1"></i> 08 Oct, 2019
+                        <i class="far fa-calendar-alt text-primary me-1"></i> 08
+                        Oct, 2019
                       </div>
                     </div>
                   </div>
@@ -300,14 +359,22 @@ export default {
               <div class="media mt-3 border-bottom">
                 <div class="avatar-xs me-3">
                   <span
-                    class="avatar-title bg-soft bg-primary text-primary rounded-circle font-size-16"
-                  >N</span>
+                    class="
+                      avatar-title
+                      bg-soft bg-primary
+                      text-primary
+                      rounded-circle
+                      font-size-16
+                    "
+                    >N</span
+                  >
                 </div>
                 <div class="media-body">
                   <h5 class="mt-0 font-size-15">Neal</h5>
-                  <p
-                    class="text-muted"
-                  >Everyone realizes why a new common language would be desirable.</p>
+                  <p class="text-muted">
+                    Everyone realizes why a new common language would be
+                    desirable.
+                  </p>
                   <ul class="list-inline float-sm-end">
                     <li class="list-inline-item">
                       <a href="javascript: void(0);">
@@ -321,7 +388,8 @@ export default {
                     </li>
                   </ul>
                   <div class="text-muted">
-                    <i class="far fa-calendar-alt text-primary me-1"></i> 05 Oct, 2019
+                    <i class="far fa-calendar-alt text-primary me-1"></i> 05
+                    Oct, 2019
                   </div>
                 </div>
               </div>
@@ -336,7 +404,141 @@ export default {
     <div class="row mt-3">
       <div class="col-lg-12">
         <div>
-          <h5 class="mb-3">Recent product :</h5>
+          <div class="row">
+            <div class="col-sm-4">
+              <h5 class="mb-3">Tables :</h5>
+            </div>
+
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button
+                  type="button"
+                  class="btn btn-success btn-rounded mb-2 me-2"
+                  @click="showModal = true"
+                >
+                  <i class="mdi mdi-plus me-1"></i> New Table
+                </button>
+                <b-modal
+                  v-model="showModal"
+                  title="Add New Table"
+                  title-class="text-black font-18"
+                  body-class="p-3"
+                  hide-footer
+                >
+                  <form @submit.prevent="handleSubmit">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <label for="name">Name</label>
+                          <input
+                            id="name"
+                            v-model="table.name"
+                            type="text"
+                            class="form-control"
+                            placeholder="Insert username"
+                            :class="{
+                              'is-invalid': submitted && $v.table.name.$error,
+                            }"
+                          />
+                          <div
+                            v-if="submitted && !$v.table.name.required"
+                            class="invalid-feedback"
+                          >
+                            This value is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <label for="number">number</label>
+                          <input
+                            id="number"
+                            v-model="table.number"
+                            type="text"
+                            class="form-control"
+                            placeholder="Insert number"
+                            :class="{
+                              'is-invalid': submitted && $v.table.number.$error,
+                            }"
+                          />
+                          <div
+                            v-if="submitted && !$v.table.number.required"
+                            class="invalid-feedback"
+                          >
+                            This value is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <label for="min_number">min number</label>
+                          <input
+                            id="min_number"
+                            v-model="table.min_number"
+                            type="min_number"
+                            class="form-control"
+                            placeholder="Insert min number"
+                            :class="{
+                              'is-invalid':
+                                submitted && $v.table.min_number.$error,
+                            }"
+                          />
+                          <div
+                            v-if="submitted && !$v.table.min_number.required"
+                            class="invalid-feedback"
+                          >
+                            This value is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <label for="max_number">max number</label>
+                          <input
+                            id="max_number"
+                            v-model="table.max_number"
+                            type="text"
+                            class="form-control"
+                            placeholder="Insert max number"
+                            :class="{
+                              'is-invalid':
+                                submitted && $v.table.max_number.$error,
+                            }"
+                          />
+                          <div
+                            v-if="submitted && !$v.table.max_number.required"
+                            class="invalid-feedback"
+                          >
+                            This value is required.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <label for="description">Table Description</label>
+                        <textarea
+                          id="description"
+                          class="form-control"
+                          rows="5"
+                        ></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label for="image">Table image</label>
+                        <input id="image" class="form-control" type="file" />
+                      </div>
+                    </div>
+                    <div class="text-end pt-5 mt-3">
+                      <b-button variant="light" @click="showModal = false"
+                        >Close</b-button
+                      >
+                      <b-button type="submit" variant="success" class="ms-1"
+                        >Add Employee</b-button
+                      >
+                    </div>
+                  </form>
+                </b-modal>
+              </div>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col-xl-4 col-sm-6">
@@ -345,7 +547,7 @@ export default {
                   <div class="row align-items-center">
                     <div class="col-md-4">
                       <img
-                        src="/images/product/img-7.png"
+                        src="/images/crypto/blog/img-3.jpg"
                         alt
                         class="img-fluid mx-auto d-block"
                       />
@@ -353,20 +555,15 @@ export default {
                     <div class="col-md-8">
                       <div class="text-center text-md-left">
                         <h5 class="mb-3 text-truncate">
-                          <a href="javascript: void(0);" class="text-dark">Wirless Headphone</a>
+                          <a href="javascript: void(0);" class="text-dark"
+                            >Table Name</a
+                          >
                         </h5>
-                        <p class="text-muted">
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star"></i>
-                        </p>
+                        <p class="text-muted">Table Number # 5</p>
                         <h5 class="my-0">
-                          <span class="text-muted me-2">
-                            <del>$240</del>
+                          <span class="me-2">
+                            <b> 2 - 4 Person</b>
                           </span>
-                          <b>$225</b>
                         </h5>
                       </div>
                     </div>
@@ -374,13 +571,14 @@ export default {
                 </div>
               </div>
             </div>
+
             <div class="col-xl-4 col-sm-6">
               <div class="card">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-md-4">
                       <img
-                        src="/images/product/img-4.png"
+                        src="/images/crypto/blog/img-2.jpg"
                         alt
                         class="img-fluid mx-auto d-block"
                       />
@@ -388,20 +586,15 @@ export default {
                     <div class="col-md-8">
                       <div class="text-center text-md-left">
                         <h5 class="mb-3 text-truncate">
-                          <a href="javascript: void(0);" class="text-dark">Phone patterned cases</a>
+                          <a href="javascript: void(0);" class="text-dark"
+                            >Table Name</a
+                          >
                         </h5>
-                        <p class="text-muted">
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star"></i>
-                        </p>
+                        <p class="text-muted">Table Number # 5</p>
                         <h5 class="my-0">
-                          <span class="text-muted me-2">
-                            <del>$150</del>
+                          <span class="me-2">
+                            <b> 5 - 7 Person</b>
                           </span>
-                          <b>$145</b>
                         </h5>
                       </div>
                     </div>
@@ -409,13 +602,14 @@ export default {
                 </div>
               </div>
             </div>
+
             <div class="col-xl-4 col-sm-6">
               <div class="card">
                 <div class="card-body">
                   <div class="row align-items-center">
                     <div class="col-md-4">
                       <img
-                        src="/images/product/img-6.png"
+                        src="/images/crypto/blog/img-1.jpg"
                         alt
                         class="img-fluid mx-auto d-block"
                       />
@@ -423,23 +617,15 @@ export default {
                     <div class="col-md-8">
                       <div class="text-center text-md-left">
                         <h5 class="mb-3 text-truncate">
-                          <a
-                            href="javascript: void(0);"
-                            class="text-dark"
-                          >Phone Dark Patterned cases</a>
+                          <a href="javascript: void(0);" class="text-dark"
+                            >Table Name</a
+                          >
                         </h5>
-                        <p class="text-muted">
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star text-warning"></i>
-                          <i class="bx bx-star"></i>
-                        </p>
+                        <p class="text-muted">Table Number # 5</p>
                         <h5 class="my-0">
-                          <span class="text-muted me-2">
-                            <del>$138</del>
+                          <span class="me-2">
+                            <b> 3 - 5 Person</b>
                           </span>
-                          <b>$135</b>
                         </h5>
                       </div>
                     </div>

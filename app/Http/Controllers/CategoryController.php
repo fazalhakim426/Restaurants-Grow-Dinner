@@ -15,28 +15,27 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Category List',
-            'data' => CategoryResource::collection( Category::when(isset(request()->active), function ($q) {
-                return $q->where('active', request()->active);
-            })->get()),
+            'data'    => CategoryResource::collection(
+                    Category::when(isset(request()->active), function ($q) {
+                        return $q->where('active', request()->active);
+                    })->get()
+                ),
         ]);
     }
 
     public function store(CategoryRequest $request)
     {
-
         $data = $request->all();
-
         if ($request->icon) {
             $fileName = time() . '.' . $request->icon->extension();
             $request->icon->move(public_path('uploads/restaurant/tables'), $fileName);
             $data['icon'] = 'uploads/category/icon/' . $fileName;
         }
-
         $category =  Category::create($data);
         return response()->json([
             "success" => true,
             "message" => "Category Created successfully.",
-            "data" => new CategoryResource($category),
+            "data"    => new CategoryResource($category),
         ]);
     }
 
@@ -57,7 +56,7 @@ class CategoryController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "Category updated successfully.",
-                "data" => new CategoryResource($category),
+                "data"    => new CategoryResource($category),
             ], 201);
         } else {
             return response()->json([

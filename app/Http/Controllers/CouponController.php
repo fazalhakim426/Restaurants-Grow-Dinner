@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Coupon;
 use App\Http\Requests\CouponRequest;
-use App\Http\Resources\CouponResource;
-use Illuminate\Http\Request;
-
+use App\Http\Resources\CouponResource; 
 class CouponController extends Controller
 {
     /**
@@ -18,7 +16,7 @@ class CouponController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => CouponResource::collection(Coupon::all())
+            'data'    => CouponResource::collection(Coupon::all())
         ]);
     }
 
@@ -31,12 +29,12 @@ class CouponController extends Controller
     public function store(CouponRequest $request)
     {
         $data = $request->all();
-       $coupon =  Coupon::create($data);
-       return response()->json([
-           'success' => true,
-           'message' => 'Coupon created',
-           'data' => new CouponResource($coupon),
-       ]);
+        $coupon =  Coupon::create($data);
+        return response()->json([
+            'success' => true,
+            'message' => 'Coupon created',
+            'data'    => new CouponResource($coupon),
+        ]);
     }
 
     /**
@@ -57,10 +55,10 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CouponRequest $request,Coupon $coupon)
+    public function update(CouponRequest $request, Coupon $coupon)
     {
         $coupon = $coupon->update($request->all());
-        if($coupon){
+        if ($coupon) {
             return response()->json([
                 'success' => true,
                 'message' => 'Coupon Updated Successfully!'
@@ -76,14 +74,14 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
-        if($coupon->delete())
-        return response()->json([
-            'success' => true,
-            'message' => 'Deleted successfully.'
-        ]);
+        if ($coupon->delete())
+            return response()->json([
+                'success' => true,
+                'message' => 'Deleted successfully.'
+            ]);
         else
             return response()->json([
-                'success' => true,  
+                'success' => true,
                 'message' => 'Coupon Not Found.'
             ]);
     }

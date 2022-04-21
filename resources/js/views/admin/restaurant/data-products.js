@@ -3,9 +3,11 @@ const clothsData = [
         id: 1,
         product: "/images/product/img-1.png",
         discount: 10,
-        name: "Half sleeve T-shirt",
+        name: "Qurban",
         oldprice: 450,
-        newprice: 405,
+       phone: 3403443234, 
+       orders:5,
+       newprice:405, 
         feature: [
             "Fit Type: Regular Fit",
             "highest quality fabric",
@@ -42,10 +44,10 @@ const clothsData = [
     {
         id: 2,
         product: "/images/product/img-2.png",
-        name: "Light blue T-shirt",
+        name: "Paradise",
         discount: 20,
         oldprice: 225,
-        newprice: 175,
+       phone: 3403443234, orders:5,newprice:175,
         feature: [
             "Fit Type: Regular Fit",
             "highest quality fabric",
@@ -87,9 +89,9 @@ const clothsData = [
         id: 3,
         product: "/images/product/img-3.png",
         discount: 14,
-        name: "Black Color T-shirt",
+        name: "start two",
         oldprice: 177,
-        newprice: 152,
+       phone: 3403443234, orders:5,newprice:152,
         feature: [
             "Fit Type: Regular Fit",
             "highest quality fabric",
@@ -126,10 +128,11 @@ const clothsData = [
     {
         id: 4,
         product: "/images/product/img-4.png",
-        name: "Hoodie (Blue)",
+        
+        name: "Star one",
         discount: 5,
         oldprice: 150,
-        newprice: 145,
+       phone: 3403443234, orders:5,newprice:145,
         feature: [
             "Fit Type: Regular Fit",
             "highest quality fabric",
@@ -167,9 +170,9 @@ const clothsData = [
         id: 5,
         product: "/images/product/img-5.png",
         discount: 14,
-        name: "Half sleeve T-Shirt",
+        name: "Fast Restaurant",
         oldprice: 177,
-        newprice: 152,
+       phone: 3403443234, orders:5,newprice:152,
         feature: [
             "Fit Type: Regular Fit",
             "highest quality fabric",
@@ -207,9 +210,9 @@ const clothsData = [
         id: 6,
         product: "/images/product/img-6.png",
         discount: 22,
-        name: "Green color T-shirt",
+        name: "Green Hotel",
         oldprice: 240,
-        newprice: 225,
+       phone: 3403443234, orders:5,newprice:225,
         feature: [
             "Fit Type: Regular Fit",
             "highest quality fabric",

@@ -17,13 +17,10 @@ export default {
     data() {
         return {
             clothsData: clothsData,
-            title: "Product",
-            items: [{
-                    text: "Ecommerce",
-                    href: "/",
-                },
+            title: "Restaurant",
+            items: [ 
                 {
-                    text: "Products",
+                    text: "Restaurant",
                     active: true,
                 },
             ],
@@ -106,94 +103,11 @@ export default {
     <PageHeader :title="title" :items="items" />
 
     <div class="row">
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title mb-4">Filter</h4>
-
-                    <div>
-                        <h5 class="font-size-14 mb-3">Clothes</h5>
-                        <ul class="list-unstyled product-list">
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="mdi mdi-chevron-right me-1"></i> T-shirts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="mdi mdi-chevron-right me-1"></i> Shirts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="mdi mdi-chevron-right me-1"></i> Jeans
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="mdi mdi-chevron-right me-1"></i> Jackets
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mt-4 pt-3">
-                        <div class="form-check" v-for="(price, index) in prices" :key="index">
-                            <input class="form-check-input" type="checkbox" :value="index" :id="'price' + index" v-model="selected.prices" />
-                            <label class="form-check-label" :for="'price' + index">
-                                {{ price.name }}{{ price.products_count }}
-                            </label>
-                        </div>
-                        <h5 class="font-size-14 mb-3">Price</h5>
-                        <vue-slide-bar v-model="sliderPrice" :min="0" :max="1000" @dragEnd="valuechange" />
-                    </div>
-
-                    <div class="mt-4 pt-3">
-                        <h5 class="font-size-14 mb-3">Discount</h5>
-
-                        <b-form-checkbox id="productdiscountCheck1" class="mt-2 form-check" value="accepted" unchecked-value="not_accepted" @change="discountLessFilter($event, 10)">Less than 10%</b-form-checkbox>
-
-                        <b-form-checkbox id="productdiscountCheck2" class="mt-2 form-check" value="accepted" unchecked-value="not_accepted" @change="discountMoreFilter($event, 10)">10% or more</b-form-checkbox>
-
-                        <b-form-checkbox id="productdiscountCheck3" class="mt-2 form-check" value="accepted" unchecked-value="not_accepted" @change="discountMoreFilter($event, 20)">20% or more</b-form-checkbox>
-
-                        <b-form-checkbox id="productdiscountCheck4" class="mt-2 form-check" value="accepted" unchecked-value="not_accepted" @change="discountMoreFilter($event, 30)">30% or more</b-form-checkbox>
-
-                        <b-form-checkbox id="productdiscountCheck5" class="mt-2 form-check" value="accepted" unchecked-value="not_accepted" @change="discountMoreFilter($event, 40)">40% or more</b-form-checkbox>
-
-                        <b-form-checkbox id="productdiscountCheck6" class="mt-2 form-check" value="accepted" unchecked-value="not_accepted" @change="discountMoreFilter($event, 50)">50% or more</b-form-checkbox>
-                    </div>
-
-                    <div class="mt-4 pt-3">
-                        <h5 class="font-size-14 mb-3">Customer Rating</h5>
-                        <div>
-                            <b-form-checkbox id="checkbox-1"  class="form-check" name="checkbox-1" value="accepted" unchecked-value="not_accepted">
-                                4
-                                <i class="bx bx-star text-warning"></i> & Above
-                            </b-form-checkbox>
-
-                            <b-form-checkbox id="checkbox-2" class="mt-2 form-check" name="checkbox-2" value="accepted" unchecked-value="not_accepted">
-                                3
-                                <i class="bx bx-star text-warning"></i> & Above
-                            </b-form-checkbox>
-
-                            <b-form-checkbox id="checkbox-3" class="mt-2 form-check" name="checkbox-3" value="accepted" unchecked-value="not_accepted">
-                                2
-                                <i class="bx bx-star text-warning"></i> & Above
-                            </b-form-checkbox>
-                            <b-form-checkbox id="checkbox-4" class="mt-2 form-check" name="checkbox-4" value="accepted" unchecked-value="not_accepted">
-                                1
-                                <i class="bx bx-star text-warning"></i>
-                            </b-form-checkbox>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-9">
+       
+        <div class="col-lg-12">
             <div class="row mb-3">
                 <div class="col-xl-4 col-sm-6">
-                    <div class="mt-2">
-                        <h5>Clothes</h5>
+                    <div class="mt-2"> 
                     </div>
                 </div>
                 <div class="col-lg-8 col-sm-6">
@@ -226,8 +140,11 @@ export default {
                     <div class="card">
                         <div class="card-body">
                             <div class="product-img position-relative">
-                                <div v-if="item.discount" class="avatar-sm product-ribbon">
-                                    <span class="avatar-title rounded-circle bg-primary">-{{ item.discount }}%</span>
+                                <div  class="avatar-sm product-ribbon">
+                                       <a href="/admin/restaurant-orders?restaurant_id=2">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                     Orders
+                                        </span></a>
                                 </div>
                                 <a :href="`/admin/restaurant-detail`">
                                     <img :src="`${item.product}`" alt class="img-fluid mx-auto d-block" />
@@ -245,7 +162,7 @@ export default {
                                     <i class="bx bx-star text-warning"></i>
                                 </p>
                                 <h5 class="my-0">
-                                    <b>${{ item.newprice }}</b>
+                                    <b># {{ item.phone }}</b>
                                 </h5>
                             </div>
                         </div>

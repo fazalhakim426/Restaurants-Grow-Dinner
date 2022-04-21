@@ -27,14 +27,10 @@ export default {
     },
     data() {
         return {
-            title: "Add Product",
-            items: [
+            title: "Add Restaurant",
+            items: [ 
                 {
-                    text: "Ecommerce",
-                    href: "/"
-                },
-                {
-                    text: "Add Product",
+                    text: "Add Restaurant",
                     active: true
                 }
             ],
@@ -48,10 +44,12 @@ export default {
                 }
             },
             formData: new FormData(),
-            product: {
+            restaurant: {
                 name: "",
-                manufacture_name: "",
-                manufacture_brand: "",
+                latidue: "",
+                longitude:"",
+                opening_time: "", 
+                closing_time: "",
                 price: null
             },
             image: "",
@@ -82,8 +80,8 @@ export default {
             submitted: false,
             formData: {
                 name: null,
-                manufacture_name: null,
-                manufacture_brand: null,
+                opening_time: null,
+                closing_time: null,
                 price: null,
                 image: null
             },
@@ -95,14 +93,20 @@ export default {
         };
     },
     validations: {
-        product: {
+        restaurant: {
             name: {
                 required
             },
-            manufacture_name: {
+            opening_time: {
                 required
             },
-            manufacture_brand: {
+            closing_time: {
+                required
+            },
+            latidue: {
+                required
+            },
+            longitude: {
                 required
             },
             price: {
@@ -156,7 +160,7 @@ export default {
                     });
             }
         },
-        productAdd() {
+        restaurantAdd() {
             this.submitted = true;
             // stop here if form is invalid
             this.$v.$touch();
@@ -165,19 +169,19 @@ export default {
                 return;
             } else {
                 let formData = new FormData();
-                formData.append("name", this.product.name);
+                formData.append("name", this.restaurant.name);
                 formData.append(
-                    "manufacture_name",
-                    this.product.manufacture_name
+                    "opening_time",
+                    this.restaurant.opening_time
                 );
                 formData.append(
-                    "manufacture_brand",
-                    this.product.manufacture_brand
+                    "closing_time",
+                    this.restaurant.closing_time
                 );
-                formData.append("price", this.product.price);
+                formData.append("price", this.restaurant.price);
                 formData.append("image", this.file, this.image);
 
-                //** Add product in api using post method *//
+                //** Add Restaurant in api using post method *//
                 axios
                     .post(`http://localhost:8000/api/products`, formData)
                     .then(res => {
@@ -197,9 +201,126 @@ export default {
         <PageHeader :title="title" :items="items" />
         <div class="row">
             <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Account Creations</h4>
+                        <p class="card-title-desc">
+                            Login Informations
+                        </p>
+
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                        <div class="mb-3">
+                                        <label for="restaurantname"
+                                            >name</label
+                                        >
+                                        <input
+                                            id="restaurantname"
+                                            v-model="restaurant.name"
+                                            name="name"
+                                            type="text"
+                                            class="form-control"
+                                            :class="{
+                                                'is-invalid':
+                                                    submitted &&
+                                                    $v.restaurant.name.$error
+                                            }"
+                                        />
+                                        <div
+                                            v-if="
+                                                submitted &&
+                                                    !$v.restaurant.name.required
+                                            "
+                                            class="invalid-feedback"
+                                        >
+                                            name is required.
+                                        </div>
+                                    </div>
+ 
+
+
+
+                                    <div class="mb-3">
+                                        <label for="metatitle"
+                                            >Email</label
+                                        >
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="text"
+                                            class="form-control"
+                                        />
+                                         <div
+                                            v-if="
+                                                submitted &&
+                                                    !$v.restaurant.email.required
+                                            "
+                                            class="invalid-feedback"
+                                        >
+                                            Email is required.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password"
+                                            >Password</label
+                                        >
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            class="form-control"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                     <div class="mb-3">
+                                        <label class="control-label"
+                                            >Country</label
+                                        >
+                                        <multiselect
+                                            v-model="value"
+                                            :options="options"
+                                        ></multiselect>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="address"
+                                            >Phone</label
+                                        >
+                                        <input
+                                            id="phone"
+                                            class="form-control" 
+                                        /> 
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="address"
+                                            >Address</label
+                                        >
+                                        <textarea
+                                            id="address"
+                                            class="form-control"
+                                            rows="2"
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <button type="submit" class="btn btn-primary mr-1">
+                                Save Changes
+                            </button>
+                            <button type="submit" class="btn btn-secondary">
+                                Cancel
+                            </button> -->
+                        </form>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Basic Information</h4>
+                        <h4 class="card-title">Restaurant Basic Information</h4>
                         <p class="card-title-desc">
                             Fill all information below
                         </p>
@@ -215,78 +336,109 @@ export default {
                             </div>
                         </div>
                        
-                        <form @submit.prevent="productAdd">
+                        <form @submit.prevent="restaurantAdd">
                             <div class="row">
+                                
                                 <div class="col-sm-6">
+                               
+
                                     <div class="mb-3">
-                                        <label for="productname"
-                                            >Product Name</label
+                                        <label for="restaurantname"
+                                            >Latitude</label
                                         >
                                         <input
-                                            id="productname"
-                                            v-model="product.name"
+                                            id="restaurantname"
+                                            v-model="restaurant.latitude"
                                             name="name"
                                             type="text"
                                             class="form-control"
                                             :class="{
                                                 'is-invalid':
                                                     submitted &&
-                                                    $v.product.name.$error
+                                                    $v.restaurant.latitude.$error
                                             }"
                                         />
                                         <div
                                             v-if="
                                                 submitted &&
-                                                    !$v.product.name.required
+                                                    !$v.restaurant.latitude.required
                                             "
                                             class="invalid-feedback"
                                         >
-                                            Product name is required.
+                                            Latitude is required.
                                         </div>
                                     </div>
+
+
                                     <div class="mb-3">
-                                        <label for="manufacturername"
-                                            >Manufacturer Name</label
+                                        <label for="restaurantname"
+                                            >longitude</label
                                         >
                                         <input
-                                            id="manufacturername"
-                                            v-model="product.manufacture_name"
-                                            name="manufacture_name"
+                                            id="restaurantname"
+                                            v-model="restaurant.longitude"
+                                            name="name"
                                             type="text"
                                             class="form-control"
                                             :class="{
                                                 'is-invalid':
                                                     submitted &&
-                                                    $v.product.manufacture_name
+                                                    $v.restaurant.longitude.$error
+                                            }"
+                                        />
+                                        <div
+                                            v-if="
+                                                submitted &&
+                                                    !$v.restaurant.longitude.required
+                                            "
+                                            class="invalid-feedback"
+                                        >
+                                            longitude is required.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="opening_time"
+                                            >Opening Time</label
+                                        >
+                                        <input
+                                            id="opening_time"
+                                            v-model="restaurant.opening_time"
+                                            name="opening time"
+                                            type="date"
+                                            class="form-control"
+                                            :class="{
+                                                'is-invalid':
+                                                    submitted &&
+                                                    $v.restaurant.opening_time
                                                         .$error
                                             }"
                                         />
                                         <div
                                             v-if="
                                                 submitted &&
-                                                    !$v.product.manufacture_name
+                                                    !$v.restaurant.opening_time
                                                         .required
                                             "
                                             class="invalid-feedback"
                                         >
-                                            Product manufacture_name is
+                                            Restaurant opening time is
                                             required.
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="manufacturerbrand"
-                                            >Manufacturer Brand</label
+                                    <div class="mb-3"> 
+                                        <label for="closing_time"
+                                            >closing time</label
                                         >
                                         <input
-                                            id="manufacturerbrand"
-                                            v-model="product.manufacture_brand"
-                                            name="manufacture_brand"
-                                            type="text"
+                                            id="closing_time"
+                                            v-model="restaurant.closing_time"
+                                            name="closing_time"
+                                            type="date"
                                             class="form-control"
                                             :class="{
                                                 'is-invalid':
                                                     submitted &&
-                                                    $v.product.manufacture_brand
+                                                    $v.restaurant.closing_time
                                                         .$error
                                             }"
                                         />
@@ -294,42 +446,20 @@ export default {
                                             v-if="
                                                 submitted &&
                                                     !$v.product
-                                                        .manufacture_brand
+                                                        .closing_time
                                                         .required
                                             "
                                             class="invalid-feedback"
                                         >
-                                            Product manufacture_brand is
+                                            Restaurant
+                                             closing time is
                                             required.
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="price">Price</label>
-                                        <input
-                                            id="price"
-                                            name="price"
-                                            v-model="product.price"
-                                            :class="{
-                                                'is-invalid':
-                                                    submitted &&
-                                                    $v.product.price.$error
-                                            }"
-                                            type="text"
-                                            class="form-control"
-                                        />
-                                        <div
-                                            v-if="
-                                                submitted &&
-                                                    !$v.product.price.required
-                                            "
-                                            class="invalid-feedback"
-                                        >
-                                            Product price is required.
-                                        </div>
-                                    </div>
+                                    
                                     <label>Product Images</label>
                                     <vue-dropzone
-                                        id="dropzone"
+                                        id="image"
                                         ref="myVueDropzone"
                                         :use-custom-slot="true"
                                         :options="dropzoneOptions"
@@ -360,7 +490,7 @@ export default {
                                     </div>
                                     <div class="mb-3">
                                         <label class="control-label"
-                                            >Features</label
+                                            >Tags</label
                                         >
                                         <multiselect
                                             v-model="value1"
@@ -369,18 +499,42 @@ export default {
                                         ></multiselect>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="productdesc"
-                                            >Product Description</label
+                                        <label for="description"
+                                            >Restaurant Description</label
                                         >
                                         <textarea
-                                            id="productdesc"
+                                            id="description"
                                             class="form-control"
                                             rows="5"
                                         ></textarea>
                                     </div>
+
+
+                                                
+                                    <label>Menu Images</label>
+                                    <vue-dropzone
+                                        id="menu"
+                                        ref="myVueDropzone"
+                                        :use-custom-slot="true"
+                                        :options="dropzoneOptions"
+                                    >
+                                        <div class="dropzone-custom-content">
+                                            <div class="mb-1">
+                                                <i
+                                                    class="display-4 text-muted bx bxs-cloud-upload"
+                                                ></i>
+                                            </div>
+                                            <h4>
+                                                Drop files here or click to
+                                                upload.
+                                            </h4>
+                                        </div>
+                                    </vue-dropzone>
+
+
                                 </div>
                             </div>
-                            <div class="mt-2">
+                            <!-- <div class="mt-2">
                                 <button
                                     type="submit"
                                     class="btn btn-primary me-1"
@@ -390,56 +544,72 @@ export default {
                                 <button type="submit" class="btn btn-secondary">
                                     Cancel
                                 </button>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Meta Data</h4>
+                        <h4 class="card-title">Social Connect</h4>
                         <p class="card-title-desc">
-                            Fill all information below
+                            Past social links below
                         </p>
 
                         <form>
                             <div class="row">
                                 <div class="col-sm-6">
+                                   <div class="mb-3">
+                                        <label for="metatitle"
+                                            >Instagram link</label
+                                        >
+                                        <input
+                                            id="instagram_link"
+                                            name="instagram_link"
+                                            type="text"
+                                            class="form-control"
+                                        />
+                                    </div>
+
                                     <div class="mb-3">
                                         <label for="metatitle"
-                                            >Meta title</label
+                                            >Facebook link</label
                                         >
                                         <input
-                                            id="metatitle"
-                                            name="productname"
+                                            id="facebook_link"
+                                            name="facebook_link"
                                             type="text"
                                             class="form-control"
                                         />
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="metakeywords"
-                                            >Meta Keywords</label
-                                        >
-                                        <input
-                                            id="metakeywords"
-                                            name="manufacturername"
-                                            type="text"
-                                            class="form-control"
-                                        />
-                                    </div>
+                                 
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <div class="mb-3">
-                                        <label for="metadescription"
-                                            >Meta Description</label
+                                     <div class="mb-3">
+                                        <label for="metatitle"
+                                            >Twitter link</label
                                         >
-                                        <textarea
-                                            id="metadescription"
+                                        <input
+                                            id="twitter_link"
+                                            name="twitter_link"
+                                            type="text"
                                             class="form-control"
-                                            rows="5"
-                                        ></textarea>
+                                        />
                                     </div>
+
+                                   <div class="mb-3">
+                                        <label for="metatitle"
+                                            >Website link</label
+                                        >
+                                        <input
+                                            id="website_link"
+                                            name="website_link"
+                                            type="text"
+                                            class="form-control"
+                                        />
+                                    </div>
+
                                 </div>
                             </div>
 

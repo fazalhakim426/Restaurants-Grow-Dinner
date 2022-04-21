@@ -15,13 +15,14 @@ class CouponResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'id'         => $this->id,
             'promo_code' => $this->promo_code,
-            'start_at' => $this->start_at,
-            'end_at' => $this->end_at,
-            'is_fixed'=> $this->is_fixed,
-            'amount' => $this->amount,
-            'active' => $this->active, 
+            'start_at'   => $this->start_at,
+            'end_at'     => $this->end_at,
+            'is_fixed'   => $this->is_fixed,
+            'amount'     => $this->amount,
+            'min_amount' => $this->min_amount,
+            'active'     => $this->active, 
         ];
     }
 }

@@ -11,22 +11,25 @@ import { tableData } from "./dataAdvancedtable";
 export default {
   components: { Layout, PageHeader, BEditableTable},
   data() {
-    return {
-
+    return { 
       departement:{
         name:"",
         city:"",
         country: "",
       },
       tableData: tableData,
-      title: "Countries",
+      title: "Departements",
       items: [
         {
-          text: "Tables",
-          href: "/",
+          text: "Countries",
+          href: "/admin/countries",
         },
         {
-          text: "Advanced",
+          text: "City",
+          href: "/admin/country-cities?city_id=3",
+        },
+        {
+          text: "Departements",
           active: true,
         },
       ],
@@ -87,7 +90,7 @@ export default {
             <form class="repeater" enctype="multipart/form-data">
               <div class="row"> 
                   <div class="mb-5 col-lg-5">
-                    <label for="departement">departement</label>
+                    <label for="departement">Departement</label>
                     <input
                       id="departement"
                       v-model="departement.name"
@@ -184,7 +187,7 @@ export default {
               >
             
                 <template #cell(action)="row">  
-                                      <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
+                        <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
                         <template v-slot:button-content>
                           <i class="mdi mdi-dots-horizontal font-size-18"></i>
                         </template>

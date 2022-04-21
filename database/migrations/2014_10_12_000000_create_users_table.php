@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('country_id')->nullable()->constrained();  
             $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable()->unique();
+            
             $table->timestamp('email_verified_at')->nullable(); 
             $table->timestamp('phone_verified_at')->nullable(); 
             $table->string('password')->nullable();

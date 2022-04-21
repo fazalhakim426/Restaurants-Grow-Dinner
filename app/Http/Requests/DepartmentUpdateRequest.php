@@ -24,8 +24,8 @@ class DepartmentUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'city_id'=>'exists:city,id',
-            'name'=> 'required|unique:departments',
+            'city_id'   => 'exists:city,id',
+            'name'      => 'required|unique:departments',
         ];
     }
 }

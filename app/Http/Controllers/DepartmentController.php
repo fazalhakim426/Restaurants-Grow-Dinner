@@ -1,73 +1,63 @@
 <?php
-
-namespace App\Http\Controllers;
-
-use App\City;
-use App\Country;
-use App\Department;
-use App\Http\Requests\CityRequest;
-use App\Http\Requests\CityUpdateRequest;
+namespace App\Http\Controllers; 
+use App\City; 
+use App\Department; 
 use App\Http\Requests\DepartmentRequest;
-use App\Http\Requests\DepartmentUpdateRequest;
-use App\Http\Resources\CityResource;
-use App\Http\Resources\DepartmentResource;
-
+use App\Http\Requests\DepartmentUpdateRequest; 
+use App\Http\Resources\DepartmentResource; 
 class DepartmentController extends Controller
 {
     public function index(City $city)
-    { 
+    {
         return response()->json([
             'success' => true,
-            'message' => $city->name.' dapartments List',
-            'data' => DepartmentResource::collection($city->departments),
+            'message' => $city->name . ' dapartments List',
+            'data'    => DepartmentResource::collection($city->departments),
         ]);
     }
 
-    public function store(DepartmentRequest $request){
-        $data = $request->all(); 
-         $country =  Department::create($data);
-       
-         return response()->json([
+    public function store(DepartmentRequest $request)
+    {
+        $data = $request->all();
+        $country =  Department::create($data);
+
+        return response()->json([
             "success" => true,
             "message" => "Department created successfully.",
-            "data" => new DepartmentResource($country), 
+            "data" => new DepartmentResource($country),
         ], 201);
-    } 
+    }
 
-    public function update(DepartmentUpdateRequest $request ,$id)
+    public function update(DepartmentUpdateRequest $request, $id)
     {
         $department = Department::find($id);
-        if($department && $department->update($request->all())){
+        if ($department && $department->update($request->all())) {
             return response()->json([
                 "success" => true,
                 "message" => "Department updated successfully.",
-                "data" => new DepartmentResource($department),
+                "data"    => new DepartmentResource($department),
             ], 201);
-        }
-        else{
+        } else {
             return response()->json([
                 "success" => false,
-                "message" => "Department Not Found.", 
+                "message" => "Department Not Found.",
             ], 404);
         }
     }
     public function destroy($id)
     {
         $city = Department::find($id);
-        if($city){ 
+        if ($city) {
             $city->delete();
             return response()->json([
                 "success" => true,
                 "message" => "Department deleted successfully."
             ]);
-        }else{
+        } else {
             return response()->json([
                 "success" => false,
                 "message" => "Department Not Found."
             ]);
         }
-
-       
     }
- 
 }

@@ -3,10 +3,10 @@ import Layout from "../../../layouts/admin/main";
 import PageHeader from "../../../components/page-header";
 import { required } from "vuelidate/lib/validators";
 
-import { emplyeesData } from "./data-employees";
+import { financesData } from "./data-finance";
 
 /**
- * Employees component
+ * Finance component
  */
 export default {
   props: {
@@ -18,36 +18,31 @@ export default {
   components: { Layout, PageHeader },
   data() {
     return {
-      emplyeesData: emplyeesData,
-      title: "Employees",
+      financesData: financesData,
+      title: "Finance",
       items: [ 
         {
-          text: "Employees",
+          text: "Finance",
           active: true
         }
       ],
       showModal: false,
       submitted: false,
-      employees: {
+      finance: {
         username: "",
         phone: "",
         email: "",
-        address: "",
-        salary: "",
+        address: "", 
       },
     };
   },
   validations: {
-    employees: {
+    finance: {
       username: { required },
       phone: { required },
       email: { required },
       address: { required }, 
-      password: { required },
-      salary: { required },
-      social_nr: { required },
-      bank_number: { required },
-      documents: { required },
+      password: { required },   
 
     },
   },
@@ -65,17 +60,15 @@ export default {
         return;
       } else {
         const currentDate = new Date();
-        this.emplyeesData.push({
-          username: this.employees.username,
-          phone: this.employees.phone,
-          email: this.employees.email,
-          address: this.employees.address,
-          salary: this.employees.salary,
-          social_nr: "4.3",
+        this.financesData.push({
+          username: this.finance.username,
+          phone: this.finance.phone,
+          email: this.finance.email,
+          address: this.finance.address, 
           date: currentDate,
         });
         this.showModal = false;
-        this.employees = {};
+        this.finance = {};
       }
       this.submitted = false;
     },
@@ -107,11 +100,11 @@ export default {
                     class="btn btn-success btn-rounded mb-2 me-2"
                      @click="showModal = true"
                   >
-                    <i class="mdi mdi-plus me-1"></i> New Employee
+                    <i class="mdi mdi-plus me-1"></i> New Finance
                   </button>
                     <b-modal
                     v-model="showModal"
-                    title="Add New Employee"
+                    title="Add New Finance"
                     title-class="text-black font-18"
                     body-class="p-3" 
                     hide-footer >
@@ -122,18 +115,18 @@ export default {
                             <label for="name">Name</label>
                             <input
                               id="name"
-                              v-model="employees.username"
+                              v-model="finance.username"
                               type="text"
                               class="form-control"
                               placeholder="Insert username"
                               :class="{
                                 'is-invalid':
-                                  submitted && $v.employees.username.$error,
+                                  submitted && $v.finance.username.$error,
                               }"
                             />
                             <div
                               v-if="
-                                submitted && !$v.employees.username.required
+                                submitted && !$v.finance.username.required
                               "
                               class="invalid-feedback"
                             >
@@ -146,17 +139,17 @@ export default {
                             <label for="phone">Phone</label>
                             <input
                               id="phone"
-                              v-model="employees.phone"
+                              v-model="finance.phone"
                               type="text"
                               class="form-control"
                               placeholder="Insert phone"
                               :class="{
                                 'is-invalid':
-                                  submitted && $v.employees.phone.$error,
+                                  submitted && $v.finance.phone.$error,
                               }"
                             />
                             <div
-                              v-if="submitted && !$v.employees.phone.required"
+                              v-if="submitted && !$v.finance.phone.required"
                               class="invalid-feedback"
                             >
                               This value is required.
@@ -168,17 +161,17 @@ export default {
                             <label for="email">Email</label>
                             <input
                               id="email"
-                              v-model="employees.email"
+                              v-model="finance.email"
                               type="email"
                               class="form-control"
                               placeholder="Insert email"
                               :class="{
                                 'is-invalid':
-                                  submitted && $v.employees.email.$error,
+                                  submitted && $v.finance.email.$error,
                               }"
                             />
                             <div
-                              v-if="submitted && !$v.employees.email.required"
+                              v-if="submitted && !$v.finance.email.required"
                               class="invalid-feedback"
                             >
                               This value is required.
@@ -190,17 +183,17 @@ export default {
                             <label for="address">Address</label>
                             <input
                               id="address"
-                              v-model="employees.address"
+                              v-model="finance.address"
                               type="text"
                               class="form-control"
                               placeholder="Insert address"
                               :class="{
                                 'is-invalid':
-                                  submitted && $v.employees.address.$error,
+                                  submitted && $v.finance.address.$error,
                               }"
                             />
                             <div
-                              v-if="submitted && !$v.employees.address.required"
+                              v-if="submitted && !$v.finance.address.required"
                               class="invalid-feedback"
                             >
                               This value is required.
@@ -213,129 +206,31 @@ export default {
                             <label for="password">password</label>
                             <input
                               id="password"
-                              v-model="employees.password"
+                              v-model="finance.password"
                               type="password"
                               class="form-control"
                               placeholder="Insert password"
                               :class="{
                                 'is-invalid':
-                                  submitted && $v.employees.password.$error,
+                                  submitted && $v.finance.password.$error,
                               }"
                             />
                             <div
-                              v-if="submitted && !$v.employees.password.required"
+                              v-if="submitted && !$v.finance.password.required"
                               class="invalid-feedback"
                             >
                               This value is required.
                             </div>
                           </div>
                         </div>
-
-                        <hr>
-                        <!-- salary -->
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="salary">salary</label>
-                            <input
-                              id="salary"
-                              v-model="employees.salary"
-                              type="number"
-                              class="form-control"
-                              placeholder="Insert salary"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.employees.salary.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.employees.salary.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-                        <!-- social nr -->
-                        
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="social_nr">Social NR</label>
-                            <input
-                              id="social_nr"
-                              v-model="employees.social_nr"
-                              type="social_nr"
-                              class="form-control"
-                              placeholder="Insert social_nr"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.employees.social_nr.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.employees.social_nr.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-
-                        
-                        <!-- bankd numbers -->
-                        
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="bank_number">Bank Number</label>
-                            <input
-                              id="bank_number"
-                              v-model="employees.bank_number"
-                              type="bank_number"
-                              class="form-control"
-                              placeholder="Insert bank_number"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.employees.bank_number.$error,
-                              }"
-                            />
-                            <div
-                              v-if="submitted && !$v.employees.bank_number.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- documents -->
-                        
-                        <div class="col-12">
-                          <div class="mb-3">
-                            <label for="documents">documents</label>
-                            <input
-                              id="documents"
-                              v-model="employees.documents"
-                              type="text"
-                              class="form-control"
-                              placeholder="Insert documents"
-                              :class="{
-                                'is-invalid':
-                                  submitted && $v.employees.documents.$error,
-                              }"
-                            />
-                            <div v-if="submitted && !$v.employees.documents.required"
-                              class="invalid-feedback"
-                            >
-                              This value is required.
-                            </div>
-                          </div>
-                        </div>  
+  
                         <!-- departement -->
                         <!-- country and city -->
                       </div> 
                       <div class="text-end pt-5 mt-3">
                         <b-button variant="light" @click="showModal = false">Close</b-button>
                         <b-button type="submit" variant="success" class="ms-1"
-                          >Add Employee</b-button>
+                          >Add Finance</b-button>
                       </div>
                     </form>
                   </b-modal>
@@ -350,41 +245,33 @@ export default {
                     <th>#</th>
                     <th>Username</th>
                     <th>Phone / Email</th>
-                    <th>Address</th>
-                    <th>Social NR</th>
-                    <th>Salary</th> 
+                    <th>Address</th>   
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="employees in emplyeesData" :key="employees.id">
+                  <tr v-for="finance in financesData" :key="finance.id">
                     <td>
                      <div class="form-check font-size-16">
                         <input
-                          :id="`customCheck${employees.id}`"
+                          :id="`customCheck${finance.id}`"
                           type="checkbox"
                           class="form-check-input"
                         />
                         <label
                           class="form-check-label"
-                          :for="`customCheck${employees.id}`"
+                          :for="`customCheck${finance.id}`"
                         >&nbsp;</label>
                       </div>
                     </td>
-                    <td>{{employees.username}}</td>
+                    <td>{{finance.username}}</td>
                     <td>
-                      <p class="mb-1">{{employees.phone}}</p>
-                      <p class="mb-0">{{employees.email}}</p>
+                      <p class="mb-1">{{finance.phone}}</p>
+                      <p class="mb-0">{{finance.email}}</p>
                     </td>
 
-                    <td>{{employees.address}}</td>
-                    <td>
-                      <span class="badge bg-success font-size-12">
-                        <i class="mdi mdi-star me-1"></i>
-                        {{employees.social_nr}}
-                      </span>
-                    </td>
-                    <td>{{employees.salary}}</td> 
+                    <td>{{finance.address}}</td>
+                  
                     <td>
                       <b-dropdown class="card-drop" variant="white" right toggle-class="p-0" menu-class="dropdown-menu-end">
                         <template v-slot:button-content>

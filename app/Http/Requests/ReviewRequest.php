@@ -24,9 +24,9 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'restaurant_id'=>'required|exists:restaurants,id',
-            'stars' => 'integer|min:1|max:5',
-            'feedback' => 'required'
+            'restaurant_id' => 'required|exists:restaurants,id',
+            'stars'         => 'integer|min:1|max:5',
+            'feedback'      => 'required'
         ];
     }
 }

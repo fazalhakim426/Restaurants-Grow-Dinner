@@ -20,6 +20,7 @@ class CreateCouponsTable extends Migration
             $table->string('end_at');
             $table->boolean('is_fixed');
             $table->double('amount'); 
+            $table->double('min_amount'); 
             $table->timestamps();
         });
     }

@@ -9,8 +9,7 @@ use App\Http\Resources\RestaurantResource;
 use App\Restaurant;
 use App\Setting;
 use App\User;
-use App\VisitedRestaurant;
-use Illuminate\Http\Request;
+use App\VisitedRestaurant; 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -44,9 +43,7 @@ class EmployeeRestaurantController extends Controller
                     ->take($itemsPerPage);
             }
         )->orderBy($sortBy, $sortDesc ? 'DESC' : 'ASC')->get();
-
-
-
+        
         return response()->json([
             "success" => true,
             "total" => $count,

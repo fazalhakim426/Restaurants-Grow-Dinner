@@ -24,7 +24,7 @@ class FinanceUpdateRequest extends FormRequest
     public function rules()
     {
         return [ 
-            'email' =>'email|unique:users,email,'.$this->user()->id,  
+            'email' => 'email|unique:users,email,'.$this->user()->id,  
         ];
     }
 }

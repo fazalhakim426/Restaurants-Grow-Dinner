@@ -7,6 +7,8 @@ Vue.component("admin_home", require("./admin/admin_home").default);
 Vue.component("employees", require("./admin/employee/employees").default);
 Vue.component("finances", require("./admin/finances/finances").default);
 
+Vue.component("visited-restaurant", require("./employee/restaurant/restaurant").default);
+
 Vue.component("restaurant", require("./admin/restaurant/restaurant").default);
 Vue.component(
     "restaurant-detail",
@@ -16,8 +18,10 @@ Vue.component("restaurant-orders", require("./admin/restaurant/orders").default)
 Vue.component("restaurant-customers", require("./admin/restaurant/customers").default); 
 Vue.component("countries", require("./admin/countries/countries").default); 
 Vue.component("country-cities", require("./admin/countries/cities/cities").default); 
-Vue.component("country-city-departements", require("./admin/countries/cities/departements/departements").default); 
+Vue.component("country-city-departments", require("./admin/countries/cities/departements/departements").default); 
 Vue.component("categories", require("./admin/categories/categories").default); 
+Vue.component("coupons", require("./admin/coupons/coupons").default); 
+
 Vue.component("add-restaurant",
     require("./admin/restaurant/add-restaurant").default
 );

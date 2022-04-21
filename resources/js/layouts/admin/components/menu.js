@@ -1,5 +1,12 @@
 export const menuItems = [ 
     {
+        id: 1,
+        label: "menuitems.dashboards.text",
+        icon: "bx-home-circle",
+      
+        link: "/"
+    },
+    {
         id: 8,
         label: "menuitems.employees.text",
         icon: "bx-user",
@@ -85,6 +92,6 @@ export const menuItems = [
         id: 16,
         label: "menuitems.coupons.text",
         icon: "bx-caret-right",
-        link: "/coupons"
+        link: "/admin/coupons"
     },  
 ];

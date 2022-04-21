@@ -265,7 +265,7 @@ export default {
                               v-model="employees.social_nr"
                               type="social_nr"
                               class="form-control"
-                              placeholder="Insert social_nr"
+                              placeholder="Insert social  nr"
                               :class="{
                                 'is-invalid':
                                   submitted && $v.employees.social_nr.$error,
@@ -291,7 +291,7 @@ export default {
                               v-model="employees.bank_number"
                               type="bank_number"
                               class="form-control"
-                              placeholder="Insert bank_number"
+                              placeholder="Insert bank number"
                               :class="{
                                 'is-invalid':
                                   submitted && $v.employees.bank_number.$error,

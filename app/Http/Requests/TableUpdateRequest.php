@@ -24,10 +24,10 @@ class TableUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'number'=>'numeric',
-            'description'=>'max:100',
-            'photo' => 'mimes:pdf,jpg,png|max:2048',  
+            'name'          => 'required',
+            'number'        => 'numeric',
+            'description'   => 'max:100',
+            'photo'         => 'mimes:pdf,jpg,png|max:2048',  
          ];
     }
 }
