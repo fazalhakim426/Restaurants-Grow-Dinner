@@ -10,7 +10,7 @@ export const menuItems = [
         id: 8,
         label: "menuitems.all_visited_restaurants.text",
         icon: "bx-caret-right",
-        link: "/admin/employees"
+        link: "/employee/all-visited-restaurants"
     },
     {
         id: 9,
@@ -22,12 +22,12 @@ export const menuItems = [
         id: 10,
         label: "menuitems.my_visited_restaurants.text",
         icon: "bx-caret-right",
-        link: "/sales"
+        link: "/employee/my-visited-restaurants"
     },
     {
         id: 11,
         label: "menuitems.my_booking_and_meetings.text",
         icon: "bx-caret-right",
-        link: "/finances"
+        link: "/employee/my-booking-meetings"
     }, 
 ];

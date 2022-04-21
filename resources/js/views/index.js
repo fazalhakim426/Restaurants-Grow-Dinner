@@ -7,7 +7,9 @@ Vue.component("admin_home", require("./admin/admin_home").default);
 Vue.component("employees", require("./admin/employee/employees").default);
 Vue.component("finances", require("./admin/finances/finances").default);
 
-Vue.component("visited-restaurant", require("./employee/restaurant/restaurant").default);
+Vue.component("my-visited-restaurants", require("./employee/visited-restaurant/my-visited-restaurant").default);
+
+Vue.component("my-booking-meetings", require("./employee/booking-meetings/my-booking-meetings").default);
 
 Vue.component("restaurant", require("./admin/restaurant/restaurant").default);
 Vue.component(
