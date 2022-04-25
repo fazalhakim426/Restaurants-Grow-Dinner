@@ -48,14 +48,19 @@ export default {
           
       country_id:1,
       category_id:1,
+      password:null,
+      twitter_link: null,
+      facebook_link: null,
+      instagram_link: null,
+      website_link: null,
         email : "" , 
         address:"",
         phone: "" ,
         first_name: "" ,
         latitude: "" ,
         longitude: "" ,
-        opening_time: "" ,
-        closing_time: "" ,
+        opening_time: null ,
+        closing_time: null ,
       },
       image: "",
       file: "",
@@ -358,7 +363,7 @@ export default {
                       id="opening_time"
                       v-model="restaurant.opening_time"
                       name="opening time"
-                      type="date"
+                      type="time"
                       class="form-control"
                       :class="{
                         'is-invalid': errors && errors.opening_time,
@@ -377,7 +382,7 @@ export default {
                       id="closing_time"
                       v-model="restaurant.closing_time"
                       name="closing_time"
-                      type="date"
+                      type="time"
                       class="form-control"
                       :class="{
                         'is-invalid': errors && errors.closing_time,
@@ -394,8 +399,7 @@ export default {
                   <label>Restaurant Photo</label>
                   <vue-dropzone
                     id="image"
-                    ref="myVueDropzone"
-                    required="required"
+                    ref="myVueDropzone" 
                     :use-custom-slot="true"
                     :options="dropzoneOptions"
                     :class="{
@@ -475,6 +479,7 @@ export default {
                   <div class="mb-3">
                     <label for="metatitle">Instagram link</label>
                     <input
+                     v-model="restaurant.instagram_link"
                       id="instagram_link"
                       name="instagram_link"
                       type="text"
@@ -485,6 +490,7 @@ export default {
                   <div class="mb-3">
                     <label for="metatitle">Facebook link</label>
                     <input
+                    v-model="restaurant.facebook_link"
                       id="facebook_link"
                       name="facebook_link"
                       type="text"
@@ -497,6 +503,7 @@ export default {
                   <div class="mb-3">
                     <label for="metatitle">Twitter link</label>
                     <input
+                    v-model="restaurant.twitter_link"
                       id="twitter_link"
                       name="twitter_link"
                       type="text"
@@ -507,6 +514,7 @@ export default {
                   <div class="mb-3">
                     <label for="metatitle">Website link</label>
                     <input
+                    v-model="restaurant.website_link"
                       id="website_link"
                       name="website_link"
                       type="text"

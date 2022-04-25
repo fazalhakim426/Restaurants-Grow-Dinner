@@ -22,8 +22,6 @@ class TableResource extends JsonResource
             'number'      => $this->number,
             'description' => $this->description,
             'photo'       => env('APP_URL').'/'.$this->photo, 
-            'resturant'   => $this->restaurant,
-
         ];
     }
 }

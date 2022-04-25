@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TableRequest;
 use App\Http\Requests\TableUpdateRequest;
+use App\Http\Resources\RestaurantResource;
 use App\Http\Resources\TableResource;
 use App\Restaurant;
 use App\Table; 
@@ -16,7 +17,10 @@ class TableController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Table List!',
-                'data' => TableResource::collection($restaurant->tables),
+                'data' =>  TableResource::collection($restaurant->tables),
+                'restaurant'   => new RestaurantResource($restaurant), 
+
+
             ]);
         } else {
             return response()->json([

@@ -27,11 +27,14 @@ class RestaurantRequest extends FormRequest
             'first_name' => 'required', 
             'country_id' => 'required', 
             'category_id' => 'required', 
+            'opening_time' => 'required|before:closing_time', 
+            'closing_time' => 'required|after:opening_time', 
             'email'      => ['unique:users', 'string', 'email'], 
             'phone'      => ['required','unique:users', 'string','min:11','max:20'], 
             'address'    => 'required',  
             'photo'      => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
             'menu'       => 'mimes:pdf,jpg,png,xlx,csv|max:2048',
+
   
             // $table->foreignId('category_id')->constrained()->cascadeOnDelete()->nullable();;
             // $table->string('closing_time')->nullable();
