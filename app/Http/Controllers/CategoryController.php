@@ -57,7 +57,7 @@ class CategoryController extends Controller
                 "success" => true,
                 "message" => "Category updated successfully.",
                 "data"    => new CategoryResource($category),
-            ], 201);
+            ], 200);
         } else {
             return response()->json([
                 "success" => false,

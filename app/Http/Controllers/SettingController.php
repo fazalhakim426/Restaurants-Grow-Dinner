@@ -42,7 +42,7 @@ class SettingController extends Controller
                 "success" => true,
                 "message" => "Setting updated successfully.",
                 "data"    => $setting,
-            ], 201);
+            ], 200);
         } else {
             return response()->json([
                 "success" => false,

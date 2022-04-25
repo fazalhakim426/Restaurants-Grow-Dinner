@@ -43,7 +43,7 @@ class EmployeeController extends Controller
             "success" => true,
             "message" => "Employee created successfully.",
             "data"    => new EmployeeResource($employee),
-        ], 201);
+        ], 200);
     }
 
     public function update_employee(EmployeeUpdateRequest $request)

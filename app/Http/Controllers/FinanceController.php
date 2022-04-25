@@ -37,7 +37,7 @@ class FinanceController extends Controller
             "success" => true,
             "message" => "Finance created successfully.",
             "data"    => new FinanceResource($finance),
-        ], 201);
+        ], 200);
     }
 
     public function update(FinanceUpdateRequest $request, Finance $finance)

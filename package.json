@@ -12,6 +12,8 @@
     "devDependencies": {
         "axios": "^0.21.1",
         "cross-env": "^7.0",
+        "eslint": "^8.14.0",
+        "eslint-plugin-vue": "^8.7.1",
         "laravel-mix": "^5.0.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "~1.32.12",

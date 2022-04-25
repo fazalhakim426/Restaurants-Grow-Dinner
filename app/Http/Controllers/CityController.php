@@ -37,7 +37,7 @@ class CityController extends Controller
                 "success" => true,
                 "message" => "City updated successfully.",
                 "data"    => $city,
-            ], 201);
+            ], 200);
         } else {
             return response()->json([
                 "success" => false,

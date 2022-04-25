@@ -27,7 +27,7 @@ class EmployeeRestaurantRequest extends FormRequest
             'first_name' => 'required', 
             'email'      => ['unique:users', 'string', 'email'],
             'address'    => 'required',  
-            'phone'      => ['required','unique:users', 'string','min:11','max:14'], 
+            'phone'      => ['required','unique:users', 'string','min:11','max:20'], 
             'photo'      => 'required|mimes:pdf,jpg,png,xlx,csv|max:2048', 
             'menu'       => 'mimes:pdf,jpg,png,xlx,csv|max:2048', 
             'feedback'   => 'required', 

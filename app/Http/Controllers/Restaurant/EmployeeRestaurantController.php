@@ -137,7 +137,7 @@ class EmployeeRestaurantController extends Controller
             "success" => true,
             "message" => "Restaurant created successfully.",
             "data" => new RestaurantResource($restaurant),
-        ], 201);
+        ], 200);
     }
 
 

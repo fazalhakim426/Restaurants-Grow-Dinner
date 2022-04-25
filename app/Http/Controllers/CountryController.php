@@ -38,7 +38,7 @@ class CountryController extends Controller
                 "success" => true,
                 "message" => "Country updated successfully.",
                 "data"    => $country,
-            ], 201);
+            ], 200);
         } else {
             return response()->json([
                 "success" => false,

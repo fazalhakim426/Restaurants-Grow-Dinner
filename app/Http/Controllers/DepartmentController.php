@@ -25,7 +25,7 @@ class DepartmentController extends Controller
             "success" => true,
             "message" => "Department created successfully.",
             "data" => new DepartmentResource($country),
-        ], 201);
+        ], 200);
     }
 
     public function update(DepartmentUpdateRequest $request, $id)
@@ -36,7 +36,7 @@ class DepartmentController extends Controller
                 "success" => true,
                 "message" => "Department updated successfully.",
                 "data"    => new DepartmentResource($department),
-            ], 201);
+            ], 200);
         } else {
             return response()->json([
                 "success" => false,
