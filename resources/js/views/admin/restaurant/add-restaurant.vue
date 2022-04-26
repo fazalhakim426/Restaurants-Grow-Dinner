@@ -6,9 +6,7 @@ import vue2Dropzone from "vue2-dropzone";
 import Multiselect from "vue-multiselect";
 
 import Layout from "../../../layouts/admin/main";
-import PageHeader from "../../../components/page-header";
-
-import { required } from "vuelidate/lib/validators";
+import PageHeader from "../../../components/page-header"; 
 /**
  * Add-Restaurant component
  */
@@ -26,13 +24,16 @@ export default {
     PageHeader,
   },
   data() {
-    return {
+    return { 
+
+      APP_URL: process.env.APP_URL,
       title: "Add Restaurant",
       items: [
         {
           text: "Add Restaurant",
           active: true,
-        },
+        }
+        ,
       ],
       dropzoneOptions: {
         url: "https://httpbin.org/post",
@@ -43,45 +44,40 @@ export default {
           this.onAccept(file);
         },
       },
+      dropzoneMenuOptions: {
+        url: "https://httpbin.org/post",
+        acceptedFiles: "image/*",
+        method: "POST",
+        thumbnailHeight: 100,
+        accept: (file) => {
+          this.onAcceptMenu(file);
+        },
+      },
       formData: new FormData(),
       restaurant : {
-          
-      country_id:1,
-      category_id:1,
+      information_tags:'',
+      country_id:'',
+      category_id:'',
       password:null,
-      twitter_link: null,
-      facebook_link: null,
-      instagram_link: null,
-      website_link: null,
-        email : "" , 
+      twitter_link: '',
+      facebook_link: '',
+      instagram_link: '',
+      website_link: '',
+        email : "", 
         address:"",
-        phone: "" ,
-        first_name: "" ,
-        latitude: "" ,
+        phone: "",
+        first_name: "",
+        latitude: "",
         longitude: "" ,
-        opening_time: null ,
-        closing_time: null ,
+        opening_time: '',
+        closing_time: '',
       },
+      menuFile: "",
+      menuImage: "",
       image: "",
       file: "",
-      value: null,
-      value1: null,
-      options: [
-        "Alaska",
-        "Hawaii",
-        "California",
-        "Nevada",
-        "Oregon",
-        "Washington",
-        "Arizona",
-        "Colorado",
-        "Idaho",
-        "Montana",
-        "Nebraska",
-        "New Mexico",
-        "North Dakota",
-        "Utah",
-        "Wyoming",
+      value: null, 
+      options: [   
         "Alabama",
         "Arkansas",
         "Illinois",
@@ -106,22 +102,16 @@ export default {
         ],
         categories:[
         {
-            "id": 1,
-            "name": "omnis 0",
-            "icon": "http://localhost:8000/default.png",
-            "active": 1
+            id: 1,
+            name: "omnis 0", 
         },
         {
-            "id": 2,
-            "name": "id 1",
-            "icon": "http://localhost:8000/default.png",
-            "active": 1
+            id: 2,
+            name: "id 1", 
         },
         {
-            "id": 3,
-            "name": "tempore 2",
-            "icon": "http://localhost:8000/default.png",
-            "active": 1
+            id: 3,
+            name: "tempore 2", 
         }
         ],
       submitted: false,
@@ -135,6 +125,8 @@ export default {
       },
       avatar: null,
       avatarName: null,
+      menuAvatar: null,
+      menuAvatarName: null,
       showForm: true,
       user: null,
       errors: null,
@@ -149,6 +141,15 @@ export default {
     fileAdded(file) {
       this.avatar = file;
       this.avatarName = file.name;
+    },
+
+    onAcceptMenu(menuFile) {
+      this.menuImage = menuFile.name;
+      this.menuFile = menuFile;
+    },
+    menuFileAdded(menuFile) {
+      this.menuAvatar = menuFile;
+      this.menuAvatarName = menuFile.name;
     },
 
     restaurantAdd() {
@@ -167,7 +168,11 @@ export default {
           console.log(this.restaurant[key]);
           formData.append(key, this.restaurant[key]);
         }); 
+        if(this.file && this.image)
         formData.append("photo", this.file, this.image);
+
+        if(this.menuFile && this.menuImage)
+        formData.append("menu", this.menuFile, this.menuImage);
 
         //** Add Restaurant in api using post method *//
         axios({
@@ -180,7 +185,9 @@ export default {
           },
         })
           .then((res) => {
-            return res;
+            if(res.status==200||res.data.success){
+                window.location.replace("http://127.0.0.1:8000/admin/restaurant");
+            } 
           })
           .catch((err) => {
             if (err.response.status === 422) {
@@ -202,7 +209,7 @@ export default {
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Account Creations</h4>
+              <h4 class="card-title">Account Creations {{ APP_URL }} k</h4>
               <p class="card-title-desc">Login Informations</p>
 
               <div class="row">
@@ -258,11 +265,23 @@ export default {
                 <div class="col-sm-6">
                   <div class="mb-3">
                     <label class="control-label">Country</label>
-                    <multiselect
-                      v-model="restaurant.country_id"
-
-                      :options="countries"
-                    ></multiselect>
+                    <b-form-select
+                      v-model="restaurant.country_id" 
+                      :options="countries" 
+                      value-field="id"
+                      text-field="name"
+                      
+                      class="form-control"
+                       :class="{
+                        'is-invalid': errors && errors.country_id,
+                      }"
+                    ></b-form-select>
+                             <div
+                      v-if="errors && errors.country_id"
+                      class="invalid-feedback"
+                    >
+                     Please Select Country.
+                    </div>
                   </div>
 
                   <div class="mb-3">
@@ -324,7 +343,7 @@ export default {
                       id="restaurantname"
                       v-model="restaurant.latitude"
                       name="name"
-                      type="text"
+                      type="number"
                       class="form-control"
                       :class="{
                         'is-invalid': errors && errors.latitude,
@@ -344,7 +363,7 @@ export default {
                       id="restaurantname"
                       v-model="restaurant.longitude"
                       name="name"
-                      type="text"
+                      type="number"
                       class="form-control"
                       :class="{
                         'is-invalid': errors && errors.longitude,
@@ -373,7 +392,10 @@ export default {
                       v-if="errors && errors.opening_time"
                       class="invalid-feedback"
                     >
-                      Restaurant opening time is required.
+                    <div v-for="error in errors.opening_time " :key="error">
+
+                      {{ error }}
+                    </div>
                     </div>
                   </div>
                   <div class="mb-3">
@@ -396,7 +418,8 @@ export default {
                     </div>
                   </div>
 
-                  <label>Restaurant Photo</label>
+                  <label>Restaurant Photo 
+                  </label>
                   <vue-dropzone
                     id="image"
                     ref="myVueDropzone" 
@@ -423,20 +446,32 @@ export default {
 
                 <div class="col-sm-6">
                   <div class="mb-3">
-                    <label class="control-label">Category</label>
-                    <multiselect
+                    <label class="control-label">Category </label>
+                    <b-form-select
                       v-model="restaurant.category_id"
                       :options="categories"
-                    ></multiselect>
+                      value-field="id"
+                       :class="{
+                        'is-invalid': errors && errors.category_id,
+                      }" 
+                      class="form-control"
+                      text-field="name"
+                    ></b-form-select>
+                    <div
+                      v-if="errors && errors.category_id"
+                      class="invalid-feedback"
+                    >
+                      Please select a category.
+                    </div>
                   </div>
 
                   <div class="mb-3">
-                    <label class="control-label">Tags</label>
-                    <multiselect
-                      v-model="value1"
+                    <label class="control-label">Informational Tags {{ restaurant.information_tags }}</label>
+                    <b-form-tags
+                      v-model="restaurant.information_tags"
                       :options="options"
-                      :multiple="true"
-                    ></multiselect>
+                      class="form-control"
+                    ></b-form-tags>
                   </div>
 
                   <label>Menu Images</label>
@@ -444,9 +479,9 @@ export default {
                     id="menu"
                     ref="myVueDropzone"
                     :use-custom-slot="true"
-                    :options="dropzoneOptions"
-                  >
-                    <div class="dropzone-custom-content">
+                    :options="dropzoneMenuOptions"
+                  > 
+                   <div class="dropzone-custom-content">
                       <div class="mb-1">
                         <i class="display-4 text-muted bx bxs-cloud-upload"></i>
                       </div>
@@ -482,7 +517,7 @@ export default {
                      v-model="restaurant.instagram_link"
                       id="instagram_link"
                       name="instagram_link"
-                      type="text"
+                      type="link"
                       class="form-control"
                     />
                   </div>
@@ -493,7 +528,7 @@ export default {
                     v-model="restaurant.facebook_link"
                       id="facebook_link"
                       name="facebook_link"
-                      type="text"
+                      type="link"
                       class="form-control"
                     />
                   </div>
@@ -506,7 +541,7 @@ export default {
                     v-model="restaurant.twitter_link"
                       id="twitter_link"
                       name="twitter_link"
-                      type="text"
+                      type="link"
                       class="form-control"
                     />
                   </div>
@@ -517,7 +552,7 @@ export default {
                     v-model="restaurant.website_link"
                       id="website_link"
                       name="website_link"
-                      type="text"
+                      type="link"
                       class="form-control"
                     />
                   </div>

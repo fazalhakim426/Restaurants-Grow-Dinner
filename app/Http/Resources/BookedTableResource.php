@@ -18,8 +18,9 @@ class BookedTableResource extends JsonResource
             'id'         => $this->id,
             'time_slot'  => $this->time_slot,   
             'date'       => $this->date,
-            'created_at' => $this->created_at->diffForHumans(),
+            'created_at_for_hummans' => $this->created_at->diffForHumans(),
+            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at->diffForHumans(),
-            'table'      => new TableResource($this->table),
+            'table'      => new TableResource($this->table), 
         ]; 
        }}

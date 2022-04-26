@@ -16,11 +16,11 @@ class BookedTableController extends Controller
       {
           $auth_user = Auth::user();
           $customer =  $auth_user->userable;
-          $booked_table = $customer->bookedTable; 
+          $booked_table = $customer->bookedTable()->with('table.restaurant')->get(); 
           return response()->json([
               'success' => true,
               'message' => 'Booked Table',
-               'data' =>  BookedTableResource::collection($booked_table)
+               'data' =>  BookedTableResource::collection($booked_table) 
           ]); 
       }
 

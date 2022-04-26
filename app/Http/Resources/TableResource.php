@@ -21,7 +21,8 @@ class TableResource extends JsonResource
             'max_person'  => $this->max_person,
             'number'      => $this->number,
             'description' => $this->description,
-            'photo'       => env('APP_URL').'/'.$this->photo, 
+            'photo'       => env('APP_URL').'/'.$this->photo,  
+            'restaurant'      => new RestaurantResource($this->whenLoaded('restaurant')), 
         ];
     }
 }

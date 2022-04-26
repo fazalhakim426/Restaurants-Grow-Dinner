@@ -1,22 +1,27 @@
 <script>
 import VueSlideBar from "vue-slide-bar"; 
 import Layout from "../../../layouts/admin/main";
+import axios from "axios"
 import PageHeader from "../../../components/page-header";      
-import {
-    clothsData
-} from "./data-products"; 
+ 
 /**
  * Products component
  */
 export default {
+      props: {
+    access_token: {
+      type: String,
+      require: true,
+    },
+  },
     components: {
         VueSlideBar,
         Layout,
         PageHeader,
-    },
+    }, 
     data() {
         return {
-            clothsData: clothsData,
+            restaurantsData: [],
             title: "Restaurant",
             items: [ 
                 {
@@ -43,57 +48,61 @@ export default {
         },
     },
     mounted() {
-        // axios
-        //     .get("/api/products")
-        //     .then((response) => {
-        //         this.records = response.data.data;
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-
-        this.loadPrices();
+        this.loadRestaurants()
+ 
     },
-    methods: {
-        loadPrices() {},
-
-        valuechange(value) {
-            this.clothsData = clothsData.filter(function (product) {
-                return product.newprice <= value.currentValue;
+    methods: { 
+ loadRestaurants(){
+ axios({
+          method: "get",
+          url: "http://localhost:8000/api/admin/restaurant", 
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + this.access_token,
+          },
+        }) .then((response) => { 
+                // this.records = response.data.data;
+                this.restaurantsData = response.data.data;
+            })
+            .catch((err) => {
+                console.log(err);
             });
-        },
+ },
 
-        searchFilter(e) {
-            const searchStr = e.target.value;
-            this.clothsData = clothsData.filter((product) => {
+        searchFilter(e) { 
+            const searchStr = e.target.value;  
+            if(searchStr=='')
+                 this.loadRestaurants()
+            else
+            this.restaurantsData = this.restaurantsData.filter((restaurant) => { 
                 return (
-                    product.name.toLowerCase().search(searchStr.toLowerCase()) !== -1
+                    restaurant.first_name.toLowerCase().search(searchStr.toLowerCase()) !== -1
                 );
             });
         },
 
-        discountLessFilter(e, percentage) {
-            if (e === "accepted" && this.discountRates.length === 0) {
-                this.clothsData = clothsData.filter((product) => {
-                    return product.discount < percentage;
-                });
-            } else {
-                this.clothsData = clothsData.filter((product) => {
-                    return product.discount >= Math.max.apply(null, this);
-                }, this.discountRates);
-            }
-        },
+        // discountLessFilter(e, percentage) {
+        //     if (e === "accepted" && this.discountRates.length === 0) {
+        //         this.restaurantsData = restaurantsData.filter((product) => {
+        //             return product.discount < percentage;
+        //         });
+        //     } else {
+        //         this.restaurantsData = restaurantsData.filter((product) => {
+        //             return product.discount >= Math.max.apply(null, this);
+        //         }, this.discountRates);
+        //     }
+        // },
 
-        discountMoreFilter(e, percentage) {
-            if (e === "accepted") {
-                this.discountRates.push(percentage);
-            } else {
-                this.discountRates.splice(this.discountRates.indexOf(percentage), 1);
-            }
-            this.clothsData = clothsData.filter((product) => {
-                return product.discount >= Math.max.apply(null, this);
-            }, this.discountRates);
-        },
+        // discountMoreFilter(e, percentage) {
+        //     if (e === "accepted") {
+        //         this.discountRates.push(percentage);
+        //     } else {
+        //         this.discountRates.splice(this.discountRates.indexOf(percentage), 1);
+        //     }
+        //     this.restaurantsData = restaurantsData.filter((product) => {
+        //         return product.discount >= Math.max.apply(null, this);
+        //     }, this.discountRates);
+        // },
     },
 };
 </script>
@@ -136,8 +145,8 @@ export default {
 
             <div class="row">
                
-                <div v-for="(item, index) in clothsData" :key="index" class="col-xl-4 col-sm-6">
-                    <div class="card">
+                <div v-for="(item, index) in restaurantsData"  :key="index" class="col-xl-4 col-sm-6">
+                    <div class="card"  v-show="index+1 <= currentPage * 6 && index+1 >   (currentPage-1)*6"> 
                         <div class="card-body">
                             <div class="product-img position-relative">
                                 <div  class="avatar-sm product-ribbon">
@@ -147,22 +156,23 @@ export default {
                                         </span></a>
                                 </div>
                                 <a :href="`/admin/restaurant-detail`">
-                                    <img :src="`${item.product}`" alt class="img-fluid mx-auto d-block" />
+                                    <img :src="`${item.photo}`" alt class="img-fluid mx-auto d-block" />
                                 </a>
                             </div>
                             <div class="mt-4 text-center">
                                 <h5 class="mb-3 text-truncate">
-                                    <a class="text-dark" :href="`/admin/restaurant-detail${item.id}`">{{ item.name }}</a>
+                                    <a class="text-dark" :href="`/admin/restaurant-detail${item.id}`">{{ item.first_name }}</a>
                                 </h5>
                                 <p class="text-muted">
-                                    <i class="bx bx-star text-warning"></i>
-                                    <i class="bx bx-star text-warning"></i>
-                                    <i class="bx bx-star text-warning"></i>
-                                    <i class="bx bx-star text-warning"></i>
-                                    <i class="bx bx-star text-warning"></i>
-                                </p>
+
+                                    <i class="bx bx-star" :class="item.review_details.rating>0?'text-warning':'ml-1'"></i>
+                                    <i class="bx bx-star" :class="item.review_details.rating>1?'text-warning':'ml-1'"></i>
+                                    <i class="bx bx-star" :class="item.review_details.rating>2?'text-warning':'ml-1'"></i>
+                                    <i class="bx bx-star" :class="item.review_details.rating>3?'text-warning':'ml-1'"></i>
+                                    <i class="bx bx-star" :class="item.review_details.rating>4?'text-warning':'ml-1'"></i>                                 
+                                </p>   
                                 <h5 class="my-0">
-                                    <b># {{ item.phone }}</b>
+                                    <b>{{ item.phone }}</b>
                                 </h5>
                             </div>
                         </div>
@@ -172,8 +182,8 @@ export default {
             <!-- end row -->
 
             <div class="row">
-                <div class="col-lg-12">
-                    <b-pagination v-if="clothsData.length > 0" class="justify-content-center" pills v-model="currentPage" :total-rows="clothsData.length" :per-page="6" aria-controls="my-table"></b-pagination>
+                <div class="col-lg-12"> 
+                    <b-pagination v-if="restaurantsData.length > 0" class="justify-content-center" pills v-model="currentPage" :total-rows="restaurantsData.length" :per-page="6" aria-controls="my-table"></b-pagination>
                 </div>
             </div>
         </div>
