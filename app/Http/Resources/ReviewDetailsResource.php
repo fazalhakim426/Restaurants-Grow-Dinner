@@ -22,7 +22,9 @@ class ReviewDetailsResource extends JsonResource
                 '3'       => $this->reviews()->where('stars',3)->count(),
                 '2'       => $this->reviews()->where('stars',2)->count(),
                 '1'       => $this->reviews()->where('stars',1)->count(),
-                'reviews' => ReviewResource::collection($this->whenLoaded('reviews')), 
+                // 'reviews' => ReviewResource::collection($this->whenLoaded('reviews')), 
+                'reviews' => ReviewResource::collection($this->reviews), 
+                
            
         ];
         

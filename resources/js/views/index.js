@@ -28,6 +28,10 @@ Vue.component("add-restaurant",
     require("./admin/restaurant/add-restaurant").default
 );
 
+Vue.component("edit-restaurant",
+    require("./admin/restaurant/edit-restaurant").default
+);
+
 
 //employee routes
 Vue.component("employee_home", require("./employee/employee_home").default);  

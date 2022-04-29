@@ -154,14 +154,8 @@ export default {
 
     restaurantAdd() {
       this.submitted = true;
-      this.errors = [];
-      // stop here if form is invalid
-      // this.$v.$touch();
-
-      // if (this.$v.$invalid) {
-      if (false) {
-        return;
-      } else {
+      this.errors = []; 
+        
         let formData = new FormData();
 
         Object.keys(this.restaurant).forEach((key) => {
@@ -194,7 +188,7 @@ export default {
               this.errors = err.response.data.errors;
             }
           });
-      }
+       
     },
   },
 };
@@ -209,9 +203,8 @@ export default {
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title">Account Creations {{ APP_URL }} k</h4>
+              <h4 class="card-title">Account Creations  </h4>
               <p class="card-title-desc">Login Informations</p>
-
               <div class="row">
                 <div class="col-sm-6">
                   <div class="mb-3">
@@ -425,9 +418,7 @@ export default {
                     ref="myVueDropzone" 
                     :use-custom-slot="true"
                     :options="dropzoneOptions"
-                    :class="{
-                      'is-invalid': errors && errors.photo,
-                    }"
+                    :class="{ 'is-invalid': errors && errors.photo, }"
                   >
                     <div class="dropzone-custom-content">
                       <div class="mb-1">

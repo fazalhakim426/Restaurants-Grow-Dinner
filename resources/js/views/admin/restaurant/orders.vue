@@ -1,7 +1,7 @@
 <script>
 import Layout from '../../../layouts/admin/main'
 import PageHeader from '../../../components/page-header'
-
+import axios from 'axios'
 import Transaction from '../../../components/widgets/transaction'
 
 /**
@@ -9,9 +9,39 @@ import Transaction from '../../../components/widgets/transaction'
  */
 export default {
   components: { Layout, PageHeader, Transaction },
+    props: { 
+     access_token: {
+      type: String,
+      require: true,
+    },
+  },
+    mounted() {
+    const queryString = window.location.search; 
+    const urlParams = new URLSearchParams(queryString); 
+    this.restaurant_id = urlParams.get('restaurant_id')
+    this.getOrders(this.restaurant_id);
+  },
+  methods: {
+    getOrders(id){ 
+ axios({
+          method: "get",
+          url: "http://localhost:8000/api/admin/restaurant/"+id+'/booked-table', 
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + this.access_token,
+          },
+        }) .then((response) => {  
+                this.transactions = response.data.data;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+ }
+  },
   data() {
     return {
       title: 'Orders',
+      restaurant_id : null,
       items: [
         {
           text: 'Restaurants',
@@ -22,98 +52,7 @@ export default {
           active: true,
         },
       ],
-      transactions: [
-        {
-          id: '#SK2540',
-          name: 'Neal Matthews',
-          date: '07 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm',
-         phone_number :'33343434400',
-          status: 'Paid',
-          payment: ['fab fa-cc-mastercard', 'Mastercard'],
-          index: 1,
-        },
-        {
-          id: '#SK2541',
-          name: 'Jamal Burnett',
-          date: '07 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434380',
-          status: 'Chargeback',
-          payment: ['fab fa-cc-visa', 'Visa'],
-          index: 2,
-        },
-        {
-          id: '#SK2542',
-          name: 'Juan Mitchell',
-          date: '06 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434384',
-          status: 'Paid',
-          payment: ['fab fa-cc-paypal', 'Paypal'],
-          index: 3,
-        },
-        {
-          id: '#SK2543',
-          name: 'Barry Dick',
-          date: '05 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434412',
-          status: 'Paid',
-          payment: ['fab fa-cc-mastercard', 'Mastercard'],
-          index: 4,
-        },
-        {
-          id: '#SK2544',
-          name: 'Ronald Taylor',
-          date: '04 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434404',
-          status: 'Refund',
-          payment: ['fab fa-cc-visa', 'Visa'],
-          index: 5,
-        },
-        {
-          id: '#SK2545',
-          name: 'Jacob Hunter',
-          date: '04 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434392',
-          status: 'Paid',
-          payment: ['fab fa-cc-paypal', 'Paypal'],
-          index: 6,
-        },
-        {
-          id: '#SK2546',
-          name: 'William Cruz',
-          date: '03 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434374',
-          status: 'Paid',
-          payment: ['fas fa-money-bill-alt', 'COD'],
-          index: 7,
-        },
-        {
-          id: '#SK2547',
-          name: 'Dustin Moser',
-          date: '02 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434350',
-          status: 'Paid',
-          payment: ['fab fa-cc-mastercard', 'Mastercard'],
-          index: 8,
-        },
-        {
-          id: '#SK2548',
-          name: 'Clark Benson',
-          date: '01 Oct, 2019',
-         time_slot:'10:00 pm - 10:30 pm' ,
-phone_number :'33343434345',
-          status: 'Refund',
-          payment: ['fab fa-cc-visa', 'Visa'],
-          index: 9,
-        },
-      ],
+      transactions: [ ],
     }
   },
 }
@@ -134,8 +73,7 @@ phone_number :'33343434345',
                     <i class="bx bx-search-alt search-icon"></i>
                   </div>
                 </div>
-              </div>
-            
+              </div>            
               <!-- end col-->
             </div>
             <!-- Table data -->

@@ -22,5 +22,6 @@ class BookedTableResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at->diffForHumans(),
             'table'      => new TableResource($this->table), 
+            'customer'  => new CustomerResource($this->whenLoaded('customer')),
         ]; 
        }}

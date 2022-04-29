@@ -72,11 +72,16 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::resource('restaurant', Restaurant\AdminRestaurantController::class)
             ->only(['index', 'show', 'store', 'update', 'destroy']);
 
+            Route::post('update-restaurant/{id}',[App\Http\Controllers\Restaurant\AdminRestaurantController::class, 'update']);
+
         //table 
         Route::get('/restaurant/{id}/table', [App\Http\Controllers\TableController::class, 'index']);
         Route::resource('table', TableController::class)->only([
-            'store', 'update', 'destroy', 
+            'store','destroy', 
         ]);
+        Route::post('table-update/{id}',[App\Http\Controllers\TableController::class, 'update']);
+        Route::get('/restaurant/{id}/booked-table', [App\Http\Controllers\Customer\BookedTableController::class, 'restaurant_booking']);
+       
     });
 
 

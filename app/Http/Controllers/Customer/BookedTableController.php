@@ -5,18 +5,26 @@ namespace App\Http\Controllers\Customer;
 use App\BookedTable;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BookedTableResource;
+use App\Restaurant;
 use App\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookedTableController extends Controller
 {
-     
+     public function restaurant_booking($id)
+     {
+         $restaurant = Restaurant::find($id);
+
+         return response()->json([
+             'data' => BookedTableResource::collection($restaurant->bookedTables()->with('customer.user')->get()),
+         ]);
+     }
       public function index()
       {
           $auth_user = Auth::user();
           $customer =  $auth_user->userable;
-          $booked_table = $customer->bookedTable()->with('table.restaurant')->get(); 
+          $booked_table = $customer->bookedTable()->with('restaurant')->with('restaurant.reviews')->get(); 
           return response()->json([
               'success' => true,
               'message' => 'Booked Table',

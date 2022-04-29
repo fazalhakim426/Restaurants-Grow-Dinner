@@ -62,7 +62,9 @@ class TableController extends Controller
                 'message' => "Restaurant can't be change.",
             ]);
         }
-        if ($request->photo) {
+    //    return response ()->json(['pp'=>$$request->photo]);
+        if ($request->photo) 
+        {
             $fileName = time() . '.' . $request->photo->extension();
             $request->photo->move(public_path('uploads/restaurant/tables'), $fileName);
             $data['photo'] = 'uploads/restaurant/tables/' . $fileName;

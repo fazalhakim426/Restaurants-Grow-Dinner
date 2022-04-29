@@ -43,10 +43,10 @@ export default {
               data.id
             }}</a>
           </td>
-          <td>{{ data.name }}</td>
+          <td>{{ data.customer.user.first_name }}  {{" "+data.customer.user.first_name }}</td>
           <td>{{ data.date }}</td>
           <td>{{ data.time_slot }}</td>
-          <td>{{ data.phone_number }}</td>
+          <td>{{ data.customer.user.phone }}</td>
            
      
         </tr>

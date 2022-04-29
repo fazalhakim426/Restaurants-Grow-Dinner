@@ -9,6 +9,7 @@ use App\Http\Resources\RestaurantResource;
 use App\Restaurant;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AdminRestaurantController extends Controller
 {
@@ -41,11 +42,15 @@ class AdminRestaurantController extends Controller
     public function employee_major_query()
     {
         $q = request() -> q;
+        $id = request() -> id;
         $country_id = request() -> country_id;
         $category_id = request() -> category_id;
         return
             Restaurant::when($category_id, function ($q) use ($category_id) {
                 return $q -> where('category_id', $category_id);
+            })
+            ->when($id, function($q) use ($id) {
+                 $q->whereId($id);
             })
              -> whereHas('category', function ($query) {
                 $query -> where('active', isset(request() -> active) ? request() -> active : 1);
@@ -98,16 +103,33 @@ class AdminRestaurantController extends Controller
 
     public function update(RestaurantUpdateRequest $request, $id)
     {
-        $request -> validate([
-            'email' => ['unique:users', 'string', 'email'],
-            'phone' => ['unique:users', 'string', 'min:11', 'max:14'],
-        ]);
+       
         $restaurant = Restaurant::find($id);
         if ($restaurant) {
-            $restaurant -> update($request -> all());
-            $user = $restaurant -> user;
+            $data = $request -> all(); 
+            try {
+                 if ($request -> photo) 
+                 {
+                        $fileName = time() . '.' . $request -> photo -> extension();
+                        $request -> photo -> move(public_path('uploads/restaurant'), $fileName);
+                        $data['photo'] = 'uploads/restaurant/' . $fileName;
+                 } 
+            } catch (\Throwable $th) { 
+            }
+            try { 
+                 if ($request -> menu) 
+                 {
+                            $fileName = time() . '.' . $request -> menu -> extension();
+                            $request -> menu -> move(public_path('uploads/restaurant/menu'), $fileName);
+                            $data['menu'] = 'uploads/restaurant/menu/' . $fileName;
+                 } 
+            } catch (\Throwable $th) { 
+            } 
+            $restaurant -> update($data);
+            $user = $restaurant -> user;  
             $request -> validate([
-                'email' => 'email|unique:users,email,' . $user -> id,
+                'email' => 'unique:users,email,' . $user -> id,   
+                'phone' => 'unique:users,phone,' . $user -> id,
             ]);
             $user -> update($request -> all());
             if ($request -> documents) {

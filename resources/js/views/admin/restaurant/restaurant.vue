@@ -150,13 +150,13 @@ export default {
                         <div class="card-body">
                             <div class="product-img position-relative">
                                 <div  class="avatar-sm product-ribbon">
-                                       <a href="/admin/restaurant-orders?restaurant_id=2">
+                                       <a  :href="`/admin/restaurant-orders?restaurant_id=${item.id}`">
                                     <span class="avatar-title rounded-circle bg-primary">
                                      Orders
                                         </span></a>
                                 </div>
-                                <a :href="`/admin/restaurant-detail`">
-                                    <img :src="`${item.photo}`" alt class="img-fluid mx-auto d-block" />
+                                <a :href="`/admin/restaurant-detail?restaurant_id=${item.id}`">
+                                    <img :src="`${item.photo}`" :alt='item.first_name' class="img-fluid mx-auto d-block" />
                                 </a>
                             </div>
                             <div class="mt-4 text-center">
