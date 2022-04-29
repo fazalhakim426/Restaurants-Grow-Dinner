@@ -101,7 +101,7 @@ export default {
         <div class="navbar-brand-box">
           <a href="/" class="logo logo-dark">
             <span class="logo-sm">
-              <img src="/images/logo.svg" alt height="22" />
+              <img src="/images/logo.png" alt height="22" />
             </span>
             <span class="logo-lg">
               <img src="/images/logo-dark.png" alt height="17" />
@@ -110,10 +110,10 @@ export default {
 
           <a href="/" class="logo logo-light">
             <span class="logo-sm">
-              <img src="/images/logo-light.svg" alt height="22" />
+              <img src="/images/favicon.png" alt height="22" />
             </span>
             <span class="logo-lg">
-              <img src="/images/logo-light.png" alt height="19" />
+              <img src="/images/favicon.png" alt height="19" />
             </span>
           </a>
         </div>

@@ -52,7 +52,7 @@ export default {
                     <a href="/">
                         <div class="avatar-md profile-user-wid mb-4">
                             <span class="avatar-title rounded-circle bg-light">
-                                <img src="/images/logo.svg" alt height="34" />
+                                <img src="/images/logo.png" alt height="34" />
                             </span>
                         </div>
                     </a>
