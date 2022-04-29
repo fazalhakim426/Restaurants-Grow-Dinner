@@ -160,11 +160,7 @@ export default {
         <p>
           Already have an account ?
           <a href="/login" class="fw-medium text-primary">Login</a>
-        </p>
-        <p>
-          © {{ new Date().getFullYear() }} Skote. Crafted with
-          <i class="mdi mdi-heart text-danger"></i> by Themesbrand
-        </p>
+        </p> 
       </div>
     </div>
     <!-- end col -->
