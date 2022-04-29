@@ -23,18 +23,7 @@ export const menuItems = [
                 link: "/admin/restaurant",
                 parentId: 10
             },
-            {
-                id: 12,
-                label: "menuitems.restaurant.list.restaurantdetail",
-                link: "/admin/restaurant-detail",
-                parentId: 10
-            },
-            {
-                id: 13,
-                label: "menuitems.restaurant.list.orders",
-                link: "/admin/restaurant-orders",
-                parentId: 10
-            },
+        
             {
                 id: 14,
                 label: "menuitems.restaurant.list.customers",
