@@ -59,7 +59,7 @@ export default {
 </script>
 
 <template>
-  <Layout>
+  <Layout :access_token='access_token'>
     <PageHeader :title="title" :items="items" />
     <div class="row">
       <div class="col-12">

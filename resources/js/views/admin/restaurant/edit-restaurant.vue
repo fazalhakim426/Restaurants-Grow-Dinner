@@ -228,7 +228,7 @@ export default {
 </script>
 
 <template>
-  <Layout access_token='token'>
+  <Layout :access_token='access_token'>
     <PageHeader :title="title" :items="items" />
 
     <div class="row">
@@ -238,9 +238,7 @@ export default {
             <div class="card-body">
               <h4 class="card-title">Account Creations  </h4>
               <p class="card-title-desc">Login Informations</p>
-              {{file}}
-{{image}}
-
+               
               <div class="row">
                 <div class="col-sm-6">
                   <div class="mb-3">

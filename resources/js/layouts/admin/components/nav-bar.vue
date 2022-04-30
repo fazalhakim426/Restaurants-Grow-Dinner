@@ -2,75 +2,50 @@
 <script>
 import i18n from "../../../i18n";
 import simplebar from "simplebar-vue";
- 
+import axios from 'axios';
 export default {
     props: {
     access_token : {
       type: String, 
-      default:'...'
+      required:true, 
+      // default:'...'
     },
   },
   
   data() {
-    return {
-      languages: [
-      ],
-      lan: i18n.locale,
-      text: null,
-      flag: null,
-      value: null,
+    return {  
+      user:{},
     };
   },
   components: { simplebar },
   mounted() {
     console.log(
       'access_token',
-      this.access_token)
-    this.value = this.languages.find((x) => x.language === i18n.locale);
-    this.text = this.value.title;
-    this.flag = this.value.flag;
+      this.access_token) 
+        alert(3);
+    this.getUser()
   },
   methods: {
+      getUser(){
+             axios({
+              method: 'get',
+              url : process.env.MIX_API_URL+"user",
+              headers: {
+                  Authorization: 'Bearer ' + this.access_token
+              }
+             }).then((res) => {
+            if(res.status==200||res.data.success){  
+                 this.user = res.data
+                 }
+             })
+        },
     toggleMenu() {
       this.$parent.toggleMenu();
     },
     toggleRightSidebar() {
       this.$parent.toggleRightSidebar();
     },
-    initFullScreen() {
-      document.body.classList.toggle("fullscreen-enable");
-      if (
-        !document.fullscreenElement &&
-        /* alternative standard method */ !document.mozFullScreenElement &&
-        !document.webkitFullscreenElement
-      ) {
-        // current working methods
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-          document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          document.documentElement.webkitRequestFullscreen(
-            Element.ALLOW_KEYBOARD_INPUT
-          );
-        }
-      } else {
-        if (document.cancelFullScreen) {
-          document.cancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen();
-        }
-      }
-    },
-    setLanguage(locale, country, flag) {
-      this.lan = locale;
-      this.text = country;
-      this.flag = flag;
-      i18n.locale = locale;
-      localStorage.setItem("locale", locale);
-    },
+    
   },
 };
 </script>
@@ -122,7 +97,7 @@ export default {
               src="/images/users/avatar-1.jpg"
               alt="Header Avatar"
             /> -->
-            <span class="d-none d-xl-inline-block ms-1">{{ access_token }}</span>
+            <span class="d-none d-xl-inline-block ms-1">{{ user.first_name }}</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </template>
           <!-- item-->

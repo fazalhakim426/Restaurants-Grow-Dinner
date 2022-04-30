@@ -6,10 +6,16 @@ import Stat from "../../components/widgets/stat";
  * Dashboard Component
  */
 export default {
+  props: {
+    access_token: {
+      required:true,
+      type: String,
+    }
+  },
   components: { Layout,Stat },
   data() {
     return {
-      title: "Dashboard",
+      title: "Dashboard", 
       showModal: false,
       statData: [
         {
@@ -105,7 +111,7 @@ export default {
 </script>
 
 <template>
-  <Layout>
+  <Layout :access_token='access_token'>
  
     <!-- end page title -->
     <div class="row">
