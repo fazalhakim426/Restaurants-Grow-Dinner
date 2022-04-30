@@ -3,6 +3,12 @@ import Vertical from "./vertical";
 import Horizontal from "./horizontal";
 
 export default {
+  props: {
+     access_token: {
+       type: String,
+       required: true
+     }
+  },
   components: { Vertical, Horizontal },
   data() {
     return {};
@@ -22,7 +28,7 @@ export default {
 
 <template>
   <div>
-    <Vertical v-if="layoutType === 'vertical'">
+    <Vertical  :access_token="access_token" v-if="layoutType === 'vertical'">
       <slot />
     </Vertical>
 

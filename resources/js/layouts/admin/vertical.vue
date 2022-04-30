@@ -5,6 +5,12 @@ import RightBar from "./components/right-bar";
 import Footer from "../../components/footer";
 
 export default {
+    props: {
+     access_token: {
+         type : String,
+         required : true
+     }
+    },
     components: { NavBar, SideBar, RightBar, Footer },
     data() {
         return {
@@ -68,7 +74,7 @@ export default {
             </div>
         </div>
         <div id="layout-wrapper">
-            <NavBar />
+            <NavBar  :access_token='access_token' />
             <SideBar :is-condensed="isMenuCondensed" />
             <!-- ============================================================== -->
             <!-- Start Page Content here -->
@@ -76,7 +82,6 @@ export default {
 
             <div class="main-content">
                 <div class="page-content">
-                    <!-- Start Content-->
                     <div class="container-fluid">
                         <slot />
                     </div>

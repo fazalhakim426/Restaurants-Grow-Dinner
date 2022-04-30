@@ -2,14 +2,18 @@
 <script>
 import i18n from "../../../i18n";
 import simplebar from "simplebar-vue";
-
-/**
- * Nav-bar Component
- */
+ 
 export default {
+    props: {
+    access_token : {
+      type: String, 
+      default:'...'
+    },
+  },
+  
   data() {
     return {
-      languages: [ 
+      languages: [
       ],
       lan: i18n.locale,
       text: null,
@@ -19,6 +23,9 @@ export default {
   },
   components: { simplebar },
   mounted() {
+    console.log(
+      'access_token',
+      this.access_token)
     this.value = this.languages.find((x) => x.language === i18n.locale);
     this.text = this.value.title;
     this.flag = this.value.flag;
@@ -76,19 +83,19 @@ export default {
         <div class="navbar-brand-box">
           <a href="/" class="logo logo-dark">
             <span class="logo-sm">
-              <img src="/images/logo.png" alt height="30" />
+              <img src="/images/logo.png" alt height="60" />
             </span>
             <span class="logo-lg">
-              <img src="/images/logo-dark.png" alt height="27" />
+              <img src="/images/logo-dark.png" alt height="45"  />
             </span>
           </a>
 
           <a href="/" class="logo logo-light">
             <span class="logo-sm">
-              <img src="/images/logo-light.png" alt height="30" />
+              <img src="/images/logo-light.png" alt height="60" />
             </span>
             <span class="logo-lg">
-              <img src="/images/logo-light.png" alt height="27" />
+              <img src="/images/logo-light.png" alt height="45"  />
             </span>
           </a>
         </div>
@@ -110,12 +117,12 @@ export default {
 
         <b-dropdown right variant="black" toggle-class="header-item" menu-class="dropdown-menu-end">
           <template v-slot:button-content>
-            <img
+            <!-- <img
               class="rounded-circle header-profile-user"
               src="/images/users/avatar-1.jpg"
               alt="Header Avatar"
-            />
-            <span class="d-none d-xl-inline-block ms-1">{{ $t('navbar.dropdown.henry.text')}}</span>
+            /> -->
+            <span class="d-none d-xl-inline-block ms-1">{{ access_token }}</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </template>
           <!-- item-->

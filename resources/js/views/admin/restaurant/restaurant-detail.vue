@@ -89,7 +89,7 @@ export default {
     deleteRestaurant(id){
            axios({
           method: "delete",
-          url: "http://localhost:8000/api/admin/restaurant/"+id, 
+          url: process.env.MIX_API_URL+"admin/restaurant/"+id, 
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + this.access_token,
@@ -121,7 +121,7 @@ export default {
          //** Add Restaurant in api using post method *//
         axios({
           method: "delete",
-          url: "http://localhost:8000/api/admin/table/"+id, 
+          url: process.env.MIX_API_URL+"admin/table/"+id, 
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + this.access_token,
@@ -164,7 +164,7 @@ export default {
         //** Add Restaurant in api using post method *//
         axios({
           method: "post",
-          url: "http://localhost:8000/api/admin/table",
+          url: process.env.MIX_API_URL+"admin/table",
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -207,7 +207,7 @@ export default {
         //** edit Restaurant in api using put method *//
         axios({
           method: "post",
-          url: "http://localhost:8000/api/admin/table-update/"+this.table.id,
+          url: process.env.MIX_API_URL+"admin/table-update/"+this.table.id,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -234,7 +234,7 @@ export default {
     getRestaurant(){
           axios({
           method: "get",
-          url: "http://localhost:8000/api/admin/restaurant/"+this.restaurant_id+'/table', 
+          url: process.env.MIX_API_URL+"admin/restaurant/"+this.restaurant_id+'/table', 
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + this.access_token,

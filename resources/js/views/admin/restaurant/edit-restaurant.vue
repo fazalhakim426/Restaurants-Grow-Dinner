@@ -28,6 +28,8 @@ export default {
     const urlParams = new URLSearchParams(queryString); 
     this.restaurant_id = urlParams.get('restaurant_id')
     this.getRestaurant(this.restaurant_id);
+    this.getCategories()
+    this.getCountries()
   },
 
   data() {
@@ -93,37 +95,8 @@ export default {
         "Illinois",
         "Iowa",
       ],
-      countries : [
-        {
-            "id": 1,
-            "name": "Afghanistan",
-            "code": "AF"
-        },
-        {
-            "id": 2,
-            "name": "Åland Islands",
-            "code": "AX"
-        },
-        {
-            "id": 3,
-            "name": "Albania",
-            "code": "AL"
-        }
-        ],
-        categories:[
-        {
-            id: 1,
-            name: "omnis 0", 
-        },
-        {
-            id: 2,
-            name: "id 1", 
-        },
-        {
-            id: 3,
-            name: "tempore 2", 
-        }
-        ],
+      countries : [],
+        categories:[],
       submitted: false,
       formData: {
         first_name: null,
@@ -144,6 +117,33 @@ export default {
   },
 
   methods: {
+    
+    getCategories(){
+      axios.get(process.env.MIX_API_URL+"category").then((res) => {
+            if(res.status==200||res.data.success){
+              this.categories = res.data.data
+             } 
+          });
+    },
+    getCountries(){ 
+         axios({
+          method: "get",
+          url: process.env.MIX_API_URL+"country",
+           
+        })
+          .then((res) => {
+            if(res.status==200||res.data.success){
+              this.countries = res.data.data
+                } 
+          })
+          .catch((err) => {
+            if (err.response.status === 422) {
+              this.errors = err.response.data.errors;
+            }
+          });
+
+    },
+
     onAccept(file) {
       this.image = file.name;
       this.file = file;
@@ -164,7 +164,7 @@ export default {
    getRestaurant(){
           axios({
           method: "get",
-          url: "http://localhost:8000/api/admin/restaurant/?id="+this.restaurant_id, 
+          url: process.env.MIX_API_URL+"admin/restaurant/?id="+this.restaurant_id, 
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + this.access_token,
@@ -204,7 +204,7 @@ export default {
         //** Add Restaurant in api using post method *//
         axios({
           method: "post",
-          url: "http://localhost:8000/api/admin/update-restaurant/"+this.restaurant.id,
+          url: process.env.MIX_API_URL+"admin/update-restaurant/"+this.restaurant.id,
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -228,7 +228,7 @@ export default {
 </script>
 
 <template>
-  <Layout>
+  <Layout access_token='token'>
     <PageHeader :title="title" :items="items" />
 
     <div class="row">
@@ -509,6 +509,24 @@ export default {
                       class="form-control"
                     ></b-form-tags>
                   </div> -->
+
+                  
+                  <div class="mb-3">
+                    <label for="description">Description</label>
+                    <textarea
+                      id="description"
+                      class="form-control"
+                      rows="2"
+                      v-model="restaurant.description"
+                      :class="{
+                        'is-invalid': errors && errors.address,
+                      }"
+                    ></textarea>
+                      <div v-if="errors && errors.description" class="invalid-feedback">
+                       {{ errors.description[0] }}
+                    </div>
+                  </div>
+
 
                   <label>          
                   <button

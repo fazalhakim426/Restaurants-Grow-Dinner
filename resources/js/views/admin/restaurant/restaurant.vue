@@ -47,15 +47,16 @@ export default {
             deep: true,
         },
     },
-    mounted() {
+    mounted() { 
         this.loadRestaurants()
  
     },
+    
     methods: { 
  loadRestaurants(){
  axios({
           method: "get",
-          url: "http://localhost:8000/api/admin/restaurant", 
+          url: process.env.MIX_API_URL+"admin/restaurant", 
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + this.access_token,

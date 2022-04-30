@@ -25,7 +25,7 @@ export default {
     getOrders(id){ 
  axios({
           method: "get",
-          url: "http://localhost:8000/api/admin/restaurant/"+id+'/booked-table', 
+          url: process.env.MIX_API_URL+"admin/restaurant/"+id+'/booked-table', 
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + this.access_token,

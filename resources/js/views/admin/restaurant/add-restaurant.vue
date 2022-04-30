@@ -83,37 +83,8 @@ export default {
         "Illinois",
         "Iowa",
       ],
-      countries : [
-        {
-            "id": 1,
-            "name": "Afghanistan",
-            "code": "AF"
-        },
-        {
-            "id": 2,
-            "name": "Åland Islands",
-            "code": "AX"
-        },
-        {
-            "id": 3,
-            "name": "Albania",
-            "code": "AL"
-        }
-        ],
-        categories:[
-        {
-            id: 1,
-            name: "omnis 0", 
-        },
-        {
-            id: 2,
-            name: "id 1", 
-        },
-        {
-            id: 3,
-            name: "tempore 2", 
-        }
-        ],
+      countries : [],
+      categories:[],
       submitted: false,
       formData: {
         first_name: null,
@@ -132,7 +103,10 @@ export default {
       errors: null,
     };
   },
-
+mounted() {
+  this.getCountries()
+  this.getCategories()
+},
   methods: {
     onAccept(file) {
       this.image = file.name;
@@ -150,6 +124,33 @@ export default {
     menuFileAdded(menuFile) {
       this.menuAvatar = menuFile;
       this.menuAvatarName = menuFile.name;
+    },
+    getCategories(){
+      axios.get(process.env.MIX_API_URL+"category").then((res) => {
+            if(res.status==200||res.data.success){
+              this.categories = res.data.data
+             } 
+          });
+    },
+    getCountries(){
+ 
+
+              axios({
+          method: "get",
+          url: process.env.MIX_API_URL+"country",
+           
+        })
+          .then((res) => {
+            if(res.status==200||res.data.success){
+              this.countries = res.data.data
+                } 
+          })
+          .catch((err) => {
+            if (err.response.status === 422) {
+              this.errors = err.response.data.errors;
+            }
+          });
+
     },
 
     restaurantAdd() {
@@ -171,7 +172,7 @@ export default {
         //** Add Restaurant in api using post method *//
         axios({
           method: "post",
-          url: "http://localhost:8000/api/admin/restaurant",
+          url: process.env.MIX_API_URL+"admin/restaurant",
           data: formData,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -197,7 +198,6 @@ export default {
 <template>
   <Layout>
     <PageHeader :title="title" :items="items" />
-
     <div class="row">
       <form @submit.prevent="restaurantAdd">
         <div class="col-12">
@@ -442,11 +442,11 @@ export default {
                       v-model="restaurant.category_id"
                       :options="categories"
                       value-field="id"
+                      text-field="name"
                        :class="{
                         'is-invalid': errors && errors.category_id,
                       }" 
-                      class="form-control"
-                      text-field="name"
+                      class="form-control" 
                     ></b-form-select>
                     <div
                       v-if="errors && errors.category_id"
@@ -457,12 +457,28 @@ export default {
                   </div>
 
                   <div class="mb-3">
-                    <label class="control-label">Informational Tags {{ restaurant.information_tags }}</label>
+                    <label class="control-label">Informational Tags </label>
                     <b-form-tags
                       v-model="restaurant.information_tags"
                       :options="options"
                       class="form-control"
                     ></b-form-tags>
+                  </div> 
+
+                  <div class="mb-3">
+                    <label for="description">Description</label>
+                    <textarea
+                      id="description"
+                      class="form-control"
+                      rows="2"
+                      v-model="restaurant.description"
+                      :class="{
+                        'is-invalid': errors && errors.address,
+                      }"
+                    ></textarea>
+                      <div v-if="errors && errors.description" class="invalid-feedback">
+                       {{ errors.description[0] }}
+                    </div>
                   </div>
 
                   <label>Menu Images</label>
